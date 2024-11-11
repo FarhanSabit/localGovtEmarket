@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 //const db = require('../app.js');
-const db = require('../models/db');
+const db = require('../db/db.js');
 
 // Multer setup for file uploads
 const upload = multer({ dest: 'public/uploads/' });
@@ -33,7 +33,7 @@ router.post('/login', (req, res) => {
         const user = results[0];
         const token = jwt.sign({ id: user.id, role: user.user_role }, 'jwt_secret_key', { expiresIn: '1h' });
         req.session.token = token;
-        res.redirect('/dashboard');
+        res.redirect('/index');
     });
 });
 
@@ -44,6 +44,8 @@ router.get('/logout', (req, res) => {
 });
 
 // Dashboard route
+router.get('/index', (req, res) => res.render('index'));
+
 router.get('/dashboard', /*authenticateToken,*/ (req, res) => {
     db.query('SELECT * FROM users', (err, users) => {
         if (err) throw err;
