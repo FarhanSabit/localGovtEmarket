@@ -43,11 +43,16 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
+// Index route
+router.get('/index', /*authenticateToken,*/ async (req, res) => {
+    const users = await db.query('SELECT * FROM users', (err, users) => {
+        if (err) throw err;
+        res.render('index', { users });
+    });
+});
 // Dashboard route
-router.get('/index', (req, res) => res.render('index'));
-
-router.get('/dashboard', /*authenticateToken,*/ (req, res) => {
-    db.query('SELECT * FROM users', (err, users) => {
+router.get('/dashboard', /*authenticateToken,*/ async (req, res) => {
+    const user = await db.query('SELECT * FROM users', (err, users) => {
         if (err) throw err;
         res.render('dashboard', { users });
     });
