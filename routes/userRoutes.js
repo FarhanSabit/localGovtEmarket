@@ -1,101 +1,42 @@
+// routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const multer = require('multer');
-//const db = require('../app.js');
-const db = require('../db/db.js');
+const userController = require('../controllers/user.controller.js');
 
 // Multer setup for file uploads
 const upload = multer({ dest: 'public/uploads/' });
 
 // Register route
-router.get('/register', (req, res) => res.render('register'));
-router.post('/register', async (req, res) => {
-    const { first_name, last_name, user_name, email, phone, user_role, is_active, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = { first_name, last_name, user_name, email, phone, user_role, is_active, password: hashedPassword };
-
-    db.query('INSERT INTO users SET ?', user, (err, results) => {
-        if (err) throw err;
-        res.redirect('/login');
-    });
-});
+router.get('/register', userController.registerPage);
+router.post('/register', userController.registerUser);
 
 // Login route
-router.get('/login', (req, res) => res.render('login'));
-router.post('/login', (req, res) => {
-    const { email, password } = req.body;
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (err || results.length === 0 || !await bcrypt.compare(password, results[0].password)) {
-            return res.send('Invalid credentials');
-        }
-        const user = results[0];
-        const token = jwt.sign({ id: user.id, role: user.user_role }, 'jwt_secret_key', { expiresIn: '1h' }); //jwt_secret_key
-        req.session.token = token;
-        res.redirect('/index');
-    });
-});
+router.get('/login', userController.loginPage);
+router.post('/login', userController.loginUser);
 
 // Logout route
-router.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/login');
-});
+router.get('/logout', userController.logoutUser);
 
 // Index route
-router.get('/index', /*authenticateToken,*/ async (req, res) => {
-    const user = await db.query('SELECT * FROM users', (err, users) => {
-        if (err) throw err;
-        res.render('index', { users });
-    });
-});
+router.get('/index', /*authenticateToken,*/ userController.indexPage);
+
 // Users route
-router.get('/users', /*authenticateToken,*/ async (req, res) => {
-    const user = await db.query('SELECT * FROM users', (err, users) => {
-        if (err) throw err;
-        res.render('users', { users });
-    });
-});
+router.get('/users', /*authenticateToken,*/ userController.usersPage);
 
-// Add user route
-router.get('/add-user', /*authenticateToken,*/ (req, res) => res.render('add-user'));
-router.post('/add-user', /*authenticateToken, upload.single('photo'),*/ (req, res) => {
-    const { first_name, last_name, user_name, email, phone, user_role, is_active } = req.body;
-    const password = bcrypt.hashSync(req.body.password, 10);
-    const photo = req.file ? `/uploads/${req.file.filename}` : null;
+// Add user routes
+router.get('/add-user', /*authenticateToken,*/ userController.addUserPage);
+router.post('/add-user', /*authenticateToken, upload.single('photo'),*/ userController.addUser);
 
-    db.query('INSERT INTO users SET ?', { first_name, last_name, user_name, email, phone, user_role, is_active, photo, password }, (err, results) => {
-        if (err) throw err;
-        res.redirect('/users');
-    });
-});
-
-// Edit user route
-router.get('/edit-user/:id', /*authenticateToken,*/ (req, res) => {
-    const { id } = req.params;
-    db.query('SELECT * FROM users WHERE id = ?', [id], (err, users) => {
-        if (err) throw err;
-        res.render('edit-user', { user: users[0] });
-    });
-});
-
-router.post('/edit-user/:id', /*authenticateToken,*/ (req, res) => {
-    const { id } = req.params;
-    const { first_name, last_name, user_name, email, phone, user_role, is_active } = req.body;
-    db.query('UPDATE users SET ? WHERE id = ?', [{ first_name, last_name, user_name, email, phone, user_role, is_active }, id], (err) => {
-        if (err) throw err;
-        res.redirect('/users');
-    });
-});
+// Edit user routes
+router.get('/edit-user/:id', /*authenticateToken,*/ userController.editUserPage);
+router.post('/edit-user/:id', /*authenticateToken,*/ userController.updateUser);
 
 // Delete user route
-router.get('/delete-user/:id', /*authenticateToken,*/ (req, res) => {
-    const { id } = req.params;
-    db.query('DELETE FROM users WHERE id = ?', [id], (err) => {
-        if (err) throw err;
-        res.redirect('/users');
-    });
-});
+router.get('/delete-user/:id', /*authenticateToken,*/ userController.deleteUser);
+
+// Profile route
+router.get('/profile/:id', /*authenticateToken,*/ userController.userProfile);
+
 
 module.exports = router;

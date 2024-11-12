@@ -21,6 +21,7 @@
                     <td><%= user.user_role %></td>
                     <td><%= user.is_active ? 'Active' : 'Inactive' %></td>
                     <td>
+                        <a href="/profile/<%= user.id %>" class="btn btn-success btn-sm"><i class="fas fa-view"></i> View</a>
                         <a href="/edit-user/<%= user.id %>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                         <a href="/delete-user/<%= user.id %>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
                     </td>

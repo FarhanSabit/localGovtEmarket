@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Bootstrap CSS and Font Awesome Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">User Profile</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- Profile Header -->
+                <div class="text-center mb-4">
+                    <% if (user.photo) { %>
+                        <img src="<%= user.photo %>" alt="User Photo" class="rounded-circle img-thumbnail mb-3" width="150">
+                    <% } else { %>
+                        <img src="/images/default-avatar.png" alt="Default Avatar" class="rounded-circle img-thumbnail mb-3" width="150">
+                    <% } %>
+                    <h2><%= user.first_name %> <%= user.last_name %></h2>
+                    <p class="text-muted"><%= user.user_role %></p>
+                    <span class="badge <%= user.is_active ? 'bg-success' : 'bg-secondary' %>">
+                        <%= user.is_active ? 'Active' : 'Inactive' %>
+                    </span>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <strong>Email:</strong>
+                        <p><%= user.email %></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Phone:</strong>
+                        <p><%= user.phone %></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Username:</strong>
+                        <p><%= user.user_name %></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Role:</strong>
+                        <p><%= user.user_role %></p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="/edit-user/<%= user.id %>" class="btn btn-warning"><i class="fas fa-edit"></i> Edit Profile</a>
+                    <a href="/delete-user/<%= user.id %>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Profile</a>
+                    <a href="/users" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Users List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Font Awesome -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
