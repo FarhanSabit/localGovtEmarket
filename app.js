@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
 const bcrypt = require('bcryptjs');
@@ -23,17 +24,34 @@ db.connect((err) => {
     if (err) throw err;
     console.log('Connected to the database');
 });*/
-
+/*
 // Middleware to protect routes
-/*const authenticateToken = (req, res, next) => {
+const authenticateToken = (req, res, next) => {
     const token = req.session.token;
     if (!token) return res.redirect('/login');
-    jwt.verify(token, 'tanvir', (err, user) => { //jwt_secret_key
+    jwt.verify(token, '4715aed3c946f7b0a38e6b534a9583628d84e96d10fbc04700770d572af3dce43625dd', (err, user) => { //jwt_secret_key
         if (err) return res.redirect('/login');
         req.user = user;
         next();
     });
 };*/
+/*
+// Function to authenticate JWT
+const authenticateJWT = (req, res, next) => {
+    const token = req.header('Authorization') && req.header('Authorization').split(' ')[1]; // Bearer token
+  
+    if (!token) {
+      return res.status(401).send('Access Denied: No token provided');
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+      if (err) {
+        return res.status(403).send('Invalid token');
+      }
+      req.user = user;
+      next();
+    });
+  };*/
 
 // Routes
 const userRoutes = require('./routes/userRoutes');

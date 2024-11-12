@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
             return res.send('Invalid credentials');
         }
         const user = results[0];
-        const token = jwt.sign({ id: user.id, role: user.user_role }, 'jwt_secret_key', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id, role: user.user_role }, 'jwt_secret_key', { expiresIn: '1h' }); //jwt_secret_key
         req.session.token = token;
         res.redirect('/index');
     });
@@ -45,7 +45,7 @@ router.get('/logout', (req, res) => {
 
 // Index route
 router.get('/index', /*authenticateToken,*/ async (req, res) => {
-    const users = await db.query('SELECT * FROM users', (err, users) => {
+    const user = await db.query('SELECT * FROM users', (err, users) => {
         if (err) throw err;
         res.render('index', { users });
     });
