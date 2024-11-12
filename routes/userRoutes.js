@@ -50,11 +50,11 @@ router.get('/index', /*authenticateToken,*/ async (req, res) => {
         res.render('index', { users });
     });
 });
-// Dashboard route
-router.get('/dashboard', /*authenticateToken,*/ async (req, res) => {
+// Users route
+router.get('/users', /*authenticateToken,*/ async (req, res) => {
     const user = await db.query('SELECT * FROM users', (err, users) => {
         if (err) throw err;
-        res.render('dashboard', { users });
+        res.render('users', { users });
     });
 });
 
@@ -67,7 +67,7 @@ router.post('/add-user', /*authenticateToken, upload.single('photo'),*/ (req, re
 
     db.query('INSERT INTO users SET ?', { first_name, last_name, user_name, email, phone, user_role, is_active, photo, password }, (err, results) => {
         if (err) throw err;
-        res.redirect('/dashboard');
+        res.redirect('/users');
     });
 });
 
@@ -85,7 +85,7 @@ router.post('/edit-user/:id', /*authenticateToken,*/ (req, res) => {
     const { first_name, last_name, user_name, email, phone, user_role, is_active } = req.body;
     db.query('UPDATE users SET ? WHERE id = ?', [{ first_name, last_name, user_name, email, phone, user_role, is_active }, id], (err) => {
         if (err) throw err;
-        res.redirect('/dashboard');
+        res.redirect('/users');
     });
 });
 
@@ -94,7 +94,7 @@ router.get('/delete-user/:id', /*authenticateToken,*/ (req, res) => {
     const { id } = req.params;
     db.query('DELETE FROM users WHERE id = ?', [id], (err) => {
         if (err) throw err;
-        res.redirect('/dashboard');
+        res.redirect('/users');
     });
 });
 
