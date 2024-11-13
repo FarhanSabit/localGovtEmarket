@@ -29,7 +29,7 @@ exports.loginUser = (req, res) => {
             return res.send('Invalid credentials');
         }
         const user = results[0];
-        const token = jwt.sign({ id: user.id, role: user.user_role }, 'jwt_secret_key', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id, role: user.user_role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
         req.session.token = token;
         res.redirect('/index');
     });
@@ -43,7 +43,8 @@ exports.logoutUser = (req, res) => {
 
 // Render index page with all users
 exports.indexPage = (req, res) => {
-    db.query('SELECT * FROM users', (err, users) => {
+    const userId = req.session.token;
+    db.query('SELECT * FROM users where id = ?',[userId.id], (err, users) => {
         if (err) throw err;
         res.render('index', { users });
     });
