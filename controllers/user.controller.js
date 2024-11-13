@@ -100,6 +100,7 @@ exports.deleteUser = (req, res) => {
     });
 };
 
+
 // controllers/userController.js
 exports.userProfile = (req, res) => {
     const userId = req.params.id; // Assuming user ID is passed as a route parameter
@@ -119,3 +120,14 @@ exports.userProfile = (req, res) => {
     });
 };
 
+// Render dummy page 1
+exports.dummy1Page = (req, res) => {
+    // You can pass data to the page if needed, here it's just a simple example
+    res.render('SupplieReportPage', { message: 'Welcome to Dummy Page 1!' });
+};
+
+// Render dummy page 2
+exports.dummy2Page = (req, res) => {
+    // You can pass data to the page if needed, here it's just a simple example
+    res.render('AddSuppliers', { message: 'Welcome to Dummy Page 2!' });
+};

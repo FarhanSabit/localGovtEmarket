@@ -38,5 +38,9 @@ router.get('/delete-user/:id', /*authenticateToken,*/ userController.deleteUser)
 // Profile route
 router.get('/profile/:id', /*authenticateToken,*/ userController.userProfile);
 
+// Dummy routes
+router.get('/SupplieReportPage', userController.dummy1Page); // Dummy page 1
+router.get('/AddSuppliers', userController.dummy2Page); // Dummy page 2
+
 
 module.exports = router;
