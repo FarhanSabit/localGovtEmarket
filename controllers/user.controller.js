@@ -41,16 +41,42 @@ exports.logoutUser = (req, res) => {
     res.redirect('/login');
 };
 
-// Render index page with all users
+// Render index page with logged in user
 exports.indexPage = (req, res) => {
-    const userId = req.session.token;
-    db.query('SELECT * FROM users where id = ?',[userId.id], (err, users) => {
-        if (err) throw err;
-        res.render('index', { users });
+    // Extract the token from the session
+    const token = req.session.token;
+
+    if (!token) {
+        return res.redirect('/login');  // Redirect to login if no token
+    }
+
+    // Verify and decode the JWT
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+        if (err) {
+            return res.redirect('/login');  // Redirect if JWT is invalid or expired
+        }
+
+        // The decoded user data is now available
+        const { id } = user;
+
+        // Query to fetch user details from the database using the decoded ID
+        db.query('SELECT * FROM users WHERE id = ?', [id], (err, users) => {
+            if (err) throw err;
+            // Query to get the total number of users
+            db.query('SELECT COUNT(*) AS total_users FROM users', (err, countResults) => {
+                if (err) throw err;
+
+            const totalUsers = countResults[0].total_users;
+            // Render the 'index' page and pass the user data to the view
+            res.render('index', { user: users[0],totalUsers: totalUsers });
+            });
+        });
     });
 };
 
-// Render users page
+
+
+// Render index page with all users
 exports.usersPage = (req, res) => {
     db.query('SELECT * FROM users', (err, users) => {
         if (err) throw err;
