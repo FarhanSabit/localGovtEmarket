@@ -14,9 +14,17 @@ app.use(express.static('public'));
 app.use(session({ secret: 'secret_key', resave: false, saveUninitialized: true }));
 
 
-// Routes
+/*// Routes
 const userRoutes = require('./routes/userRoutes');
-app.use('/', userRoutes);
+app.use('/', userRoutes);*/
+// Import and use route files
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+
+app.use(authRoutes); // Handles authentication-related routes
+app.use(userRoutes); // Handles user-related routes
+app.use(dashboardRoutes); // Handles dashboard-related routes
 
 //const PORT = 3000;
 app.listen(process.env.PORT || 8000, () => {
