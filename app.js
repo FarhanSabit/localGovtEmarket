@@ -18,7 +18,7 @@ app.use(session({ secret: 'secret_key', resave: false, saveUninitialized: true }
 const userRoutes = require('./routes/userRoutes');
 app.use('/', userRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+//const PORT = 3000;
+app.listen(process.env.PORT || 8000, () => {
+    console.log(`Server running on port ${process.env.PORT}`);
 });
