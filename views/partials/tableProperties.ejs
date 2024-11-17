@@ -1,0 +1,81 @@
+<!-- partials/suppliersTable.ejs -->
+<style>
+    .table-responsive { margin-top: 20px; }
+    .pagination { justify-content: center; padding-left: 0; list-style: none; display: flex; margin-top: 15px; margin-bottom: 15px; }
+    .pagination li { margin: 0 5px; }
+    .pagination .page-item { border: 1px solid #ddd; border-radius: 5px; }
+    .pagination .page-link { border: 1px solid #ddd; border-radius: 5px; padding: 8px 12px; color: #007bff; font-size: 14px; background-color: white; }
+    .pagination .page-link:hover { background-color: #007bff; color: white; }
+    #exportCSV, #exportExcel, #exportPDF { font-size: 14px; padding: 8px 12px; border-radius: 5px; }
+    #exportCSV:hover, #exportExcel:hover, #exportPDF:hover { background-color: #3b2491; color: white; transition: background-color 0.3s; }
+    .table-bordered { border: 1px solid #ddd; }
+    .table thead { background-color: #f8f9fa; font-weight: bold; }
+    .table th, .table td { padding: 10px; vertical-align: middle; }
+    .table tbody tr:hover { background-color: #f1f1f1; cursor: pointer; }
+    #tableSearch { width: 100%; margin-bottom: 20px; font-size: 14px; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
+  </style>
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.19/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+      var table = $('#<%= table_id %>').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthChange: true,
+        lengthMenu: [ [10, 25, 50, 100], [10, 25, 50, 100] ], // Entries per page dropdown
+        searching: true,  // Enable the built-in search box of DataTable (to be controlled by custom search box)
+        info: true,
+        dom: '<"top"i>rt<"bottom"flp><"clear">',  // Custom layout of table elements
+        language: {
+          paginate: {
+            previous: '<',
+            next: '>',
+          }
+        }
+      });
+  
+      // Custom Search Box (triggering DataTable's internal search)
+      $('#tableSearch').on('input', function () {
+        var searchTerm = this.value;
+        table.search(searchTerm).draw();  // Use DataTable's internal search
+      });
+  
+      // CSV Export
+      $('#exportCSV').on('click', function() {
+        const table = document.getElementById('<%= table_id %>');
+        const csvData = [];
+        const rows = table.querySelectorAll('tr');
+        rows.forEach(row => {
+          const rowData = [];
+          row.querySelectorAll('td, th').forEach(cell => {
+            rowData.push(cell.innerText.trim());
+          });
+          csvData.push(rowData.join(','));
+        });
+        const csvFile = new Blob([csvData.join('\n')], { type: 'text/csv' });
+        saveAs(csvFile, '<%= table_id %>.csv');
+      });
+  
+      // Excel Export
+      $('#exportExcel').on('click', function() {
+        const table = document.getElementById('<%= table_id %>');
+        const wb = XLSX.utils.table_to_book(table);
+        XLSX.writeFile(wb, '<%= table_id %>.xlsx');
+      });
+  
+      // PDF Export with autoTable
+      $('#exportPDF').on('click', function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.autoTable({ html: '#<%= table_id %>' });  // Use autoTable to export the table
+        doc.save('<%= table_id %>.pdf');
+      });
+    });
+  </script>
+  
