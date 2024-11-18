@@ -1,0 +1,68 @@
+<%- include('partials/header') %>
+              <div class="card w-100">
+                <div class="card-body">
+                  <div class="col-lg-12">
+                    <div class="row d-flex align-items-center justify-content-between">
+                      <div class="col-md-8">
+                        <h4 class="card-title">Vehicle Type List</h4>
+                        <p class="card-description">
+                          Table: <code>Vehicle Types</code>
+                        </p>
+                      </div>
+                      <div class="col-md-4 d-flex justify-content-end">
+                        <a href="New folder/AddVehicleTypes.ejs" class="btn btn-primary btn-sm" role="button">
+                          <i class="ti-user"></i>                      
+                          Add Vehicle Type
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>                  
+              <div class="card w-100">
+                <div class="card-body">
+                  <div class="col-lg-12">
+                    <div class="row d-flex align-items-center justify-content-between">      
+                      <div class="table-responsive pt-3">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>
+                                #
+                              </th>
+                              <th>
+                                Vehicle ID
+                              </th>
+                              <th>
+                                Vehicle Name
+                              </th>
+                              <th>
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                1
+                              </td>
+                              <td>
+                                DBX1234
+                              </td>
+                              <td>
+                                Toyota
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+<%- include('partials/footer') %>
