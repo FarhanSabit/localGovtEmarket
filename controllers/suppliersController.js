@@ -96,7 +96,7 @@ exports.deleteSuppliers = async (req, res) => {
         res.status(500).send('Error deleting Suppliers');
     }
 };
-/*
+
 // Render user profile
 exports.SuppliersProfile = async (req, res) => {
     try {
@@ -109,9 +109,9 @@ exports.SuppliersProfile = async (req, res) => {
             });
         });
 
-        res.render('profile', { supplier });
+        res.render('suppliersProfile', { supplier });
     } catch (error) {
         console.error('Error fetching Suppliers profile:', error);
         res.status(500).send(error.message || 'Error fetching Suppliers profile');
     }
-};*/
+};

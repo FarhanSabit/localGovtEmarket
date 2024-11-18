@@ -20,9 +20,9 @@ router.post('/editSuppliers/:id', authenticateToken, suppliersController.updateS
 
 // Delete user route
 router.get('/deleteSuppliers/:id', authenticateToken, suppliersController.deleteSuppliers);
-/*
-// Profile route
-router.get('/profile/:id', authenticateToken, suppliersController.SuppliersProfile);
 
-*/
+// Profile route
+router.get('/suppliersProfile/:id', authenticateToken, suppliersController.SuppliersProfile);
+
+
 module.exports = router;
