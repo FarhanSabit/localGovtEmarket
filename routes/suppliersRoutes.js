@@ -13,16 +13,16 @@ router.get('/SupplieReportPage', authenticateToken, suppliersController.supplier
 // Add user routes
 router.get('/AddSuppliers', authenticateToken, suppliersController.addSuppliersPage);
 router.post('/AddSuppliers', authenticateToken, upload.single('photo'), suppliersController.addSuppliers);
-/*
+
 // Edit user routes
-router.get('/edit-user/:id', authenticateToken, suppliersController.editUserPage);
-router.post('/edit-user/:id', authenticateToken, suppliersController.updateUser);
+router.get('/editSuppliers/:id', authenticateToken, suppliersController.editSuppliersPage);
+router.post('/editSuppliers/:id', authenticateToken, suppliersController.updateSuppliers);
 
 // Delete user route
-router.get('/delete-user/:id', authenticateToken, suppliersController.deleteUser);
-
+router.get('/deleteSuppliers/:id', authenticateToken, suppliersController.deleteSuppliers);
+/*
 // Profile route
-router.get('/profile/:id', authenticateToken, suppliersController.userProfile);
+router.get('/profile/:id', authenticateToken, suppliersController.SuppliersProfile);
 
 */
 module.exports = router;

@@ -36,6 +36,7 @@ exports.loginUser = async (req, res) => {
             const user = results[0];
             const token = jwt.sign({ id: user.id, role: user.user_role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
             req.session.token = token;
+            console.log('Token:', token);
             res.redirect('/index');
         });
     } catch (error) {

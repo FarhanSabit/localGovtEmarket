@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+              <div class="card w-100">
+                <div class="card-body">
+                  <h4 class="card-title">Add Suppliers Form</h4>
+                  <p class="card-description">
+                    Add a new Supplier
+                  </p>
+                  <form action="/editSuppliers/<%= supplier.id %>" method="POST">
+                    <div class="mb-3">
+                      <label class="form-label">Name</label>
+                      <input type="text" name="name" class="form-control" value="<%= supplier.name %>" placeholder="Name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Nin</label>
+                      <input type="text" name="nin" class="form-control" value="<%= supplier.nin %>" placeholder="Nin" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Phone Number</label>
+                      <input type="text" name="phone_no" class="form-control" value="<%= supplier.phone_no %>" placeholder="Phone Number" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Category</label>
+                      <select name="category" class="form-control" required>
+                          <option value="TEXTILE" <%= supplier.category === 'TEXTILE' ? 'selected' : '' %>>TEXTILE</option>
+                          <option value="FRESH FOOD" <%= supplier.category === 'FRESH FOOD' ? 'selected' : '' %>>FRESH FOOD</option>
+                          <option value="DRY FISH" <%= supplier.category === 'DRY FISH' ? 'selected' : '' %>>DRY FISH</option>
+                          <option value="DRY FOOD" <%= supplier.category === 'DRY FOOD' ? 'selected' : '' %>>DRY FOOD</option>
+                          <option value="FF" <%= supplier.category === 'FF' ? 'selected' : '' %>>FF</option>
+                          <option value="CRAFTS" <%= supplier.category === 'CRAFTS' ? 'selected' : '' %>>CRAFTS</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Fc Number</label>
+                      <input type="text" name="fc_no" class="form-control" value="<%= supplier.fc_no %>" placeholder="Fc Number" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Monthly Pay (000s)</label>
+                      <input type="text" name="mth_pay" class="form-control" value="<%= supplier.mth_pay %>" placeholder="Monthly Pay (000s)" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a href="/SupplieReportPage" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
+                  </form>
+                </div>
+              
+
+
+
+ <%- include('partials/footer') %>

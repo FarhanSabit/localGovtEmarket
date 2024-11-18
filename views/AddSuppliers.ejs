@@ -5,22 +5,22 @@
                   <p class="card-description">
                     Add a new Supplier
                   </p>
-                  <form class="forms-sample">
-                    <div class="form-group">
-                      <label for="exampleInputUsername1">Name</label>
-                      <input type="text" class="form-control" id="name" placeholder="Name">
+                  <form action="/AddSuppliers" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                      <label class="form-label">Name</label>
+                      <input type="text" name="name" class="form-control"placeholder="Phone Number" required>
                     </div>
-                    <div class="form-group">
-                      <label for="exampleInputMobile">Nin</label>
-                      <input type="text" class="form-control" id="nin" placeholder="Nin">
+                    <div class="mb-3">
+                      <label class="form-label">Nin</label>
+                      <input type="text" name="nin" class="form-control" placeholder="Phone Number" required>
                     </div>
-                    <div class="form-group">
-                      <label for="exampleInputMobile">Phone Number</label>
-                      <input type="text" class="form-control" id="phone_no" placeholder="Phone Number">
+                    <div class="mb-3">
+                      <label class="form-label">Phone Number</label>
+                      <input type="text" name="phone_no" class="form-control" placeholder="Phone Number" required>
                     </div>
-                    <div class="form-group">
-                      <label for="exampleSelectGender">Category</label>
-                        <select class="form-control" id="category">
+                    <div class="mb-3">
+                      <label class="form-label">Category</label>
+                      <select name="category" class="form-control" required>
                           <option>TEXTILE</option>
                           <option>FRESH FOOD</option>
                           <option>DRY FISH</option>
@@ -29,13 +29,13 @@
                           <option>CRAFTS</option>
                         </select>
                     </div>
-                    <div class="form-group"></div>
-                      <label for="exampleInputMobile">Fc Number</label>
-                      <input type="text" class="form-control" id="fc_no" placeholder="Fc Number">
+                    <div class="mb-3">
+                      <label class="form-label">Fc Number</label>
+                      <input type="text" name="fc_no" class="form-control" placeholder="Fc Number" required>
                     </div>
-                    <div class="form-group"></div>
-                      <label for="exampleInputMobile">Monthly Pay (000s)</label>
-                      <input type="text" class="form-control" id="mth_pay" placeholder="Monthly Pay (000s)">
+                    <div class="mb-3">
+                      <label class="form-label">Monthly Pay (000s)</label>
+                      <input type="text" name="mth_pay" class="form-control" placeholder="Monthly Pay (000s)" required>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="/SupplieReportPage" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>

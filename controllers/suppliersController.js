@@ -40,18 +40,18 @@ exports.addSuppliers = async (req, res) => {
         res.status(500).send('Error adding Suppliers');
     }
 };
-/*
+
 // Render edit user page
 exports.editSuppliersPage = async (req, res) => {
     try {
         const { id } = req.params;
-        const Suppliers = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM users WHERE id = ?', [id], (err, results) => {
+        const supplier = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM customer WHERE id = ?', [id], (err, results) => {
                 if (err) reject(err);
                 resolve(results[0]);
             });
         });
-        res.render('edit-user', { Suppliers });
+        res.render('editSuppliers', { supplier });
     } catch (error) {
         console.error('Error fetching Suppliers for edit:', error);
         res.status(500).send('Error fetching Suppliers');
@@ -62,10 +62,10 @@ exports.editSuppliersPage = async (req, res) => {
 exports.updateSuppliers = async (req, res) => {
     try {
         const { id } = req.params;
-        const { first_name, last_name, user_name, email, phone, user_role, is_active } = req.body;
+        const { name, nin, phone_no, category, fc_no, mth_pay } = req.body;
 
         await new Promise((resolve, reject) => {
-            db.query('UPDATE customer SET ? WHERE id = ?', [{ first_name, last_name, user_name, email, phone, user_role, is_active }, id], (err) => {
+            db.query('UPDATE customer SET ? WHERE id = ?', [{ name, nin, phone_no, category, fc_no, mth_pay }, id], (err) => {
                 if (err) reject(err);
                 resolve();
             });
@@ -96,20 +96,20 @@ exports.deleteSuppliers = async (req, res) => {
         res.status(500).send('Error deleting Suppliers');
     }
 };
-
+/*
 // Render user profile
 exports.SuppliersProfile = async (req, res) => {
     try {
-        const SuppliersId = req.params.id;
-        const Suppliers = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM customer WHERE id = ?', [SuppliersId], (err, results) => {
+        const supplierId = req.params.id;
+        const supplier = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM customer WHERE id = ?', [supplierId], (err, results) => {
                 if (err) reject(err);
                 if (results.length === 0) reject(new Error('Suppliers not found'));
                 resolve(results[0]);
             });
         });
 
-        res.render('profile', { Suppliers });
+        res.render('profile', { supplier });
     } catch (error) {
         console.error('Error fetching Suppliers profile:', error);
         res.status(500).send(error.message || 'Error fetching Suppliers profile');
