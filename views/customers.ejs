@@ -1,0 +1,82 @@
+<%- include('partials/header') %>
+  <div class="row d-flex align-items-center justify-content-between">
+    <div class="col-md-8">
+      <h4 class="card-title">Users Table</h4>
+      <p class="card-description">
+        User Type: <code>Customers</code>
+      </p>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end">
+      <a href="/addCustomers" class="btn btn-primary btn-sm" role="button">
+        <i class="ti-user"></i>                      
+        Add Customers
+      </a>
+    </div>
+  </div>                    
+    
+  <div class="table-responsive pt-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            #
+          </th>
+          <th>
+            Market
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Email
+          </th>
+          <th>
+            Phone
+          </th>
+          <th>
+            Gender
+          </th>
+          <th>
+            Role
+          </th>
+          <th>
+            Control
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            1
+          </td>
+          <td>
+            Mbarara
+          </td>
+          <td>
+            kintu obwona
+          </td>
+          <td>
+            obwona@example.com
+          </td>
+          <td>
+            0123456789
+          </td>
+          <td>
+            Male
+          </td>
+          <td>
+            Customer
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm">            
+              View
+            </button>
+            <button type="button" class="btn btn-warning btn-sm">                                                
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<%- include('partials/footer') %>

@@ -4,6 +4,12 @@ const router = express.Router();
 const dummyController = require('../controllers/dummyController.js');
 const authenticateToken = require('../Middleware/authenticateToken.js');
 
+//user section
+router.get('/customers', authenticateToken, dummyController.customers);
+router.get('/addCustomers', authenticateToken, dummyController.addCustomers);
+
+router.get('/members', authenticateToken, dummyController.members);
+router.get('/addMembers', authenticateToken, dummyController.addMembers);
 // Dummy routes
 router.get('/GlobalMarketStockReport', authenticateToken, dummyController.GlobalMarketStockReport); // Dummy page 1
 //router.get('/AddSuppliers', authenticateToken, dashboardController.dummy2Page); // Dummy page 2

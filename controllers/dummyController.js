@@ -1,7 +1,11 @@
 // controllers/userController.js
 const db = require('../db/db');
 
+exports.customers = (req, res) => {res.render('customers');};
+exports.addCustomers = (req, res) => {res.render('addCustomers');};
 
+exports.members = (req, res) => {res.render('members');};
+exports.addMembers = (req, res) => {res.render('addMembers');};
 // Render dummy exports.GlobalMarketStockReport = (req, res) => {res.render('GlobalMarketStockReport');};
 exports.GlobalMarketStockReport = (req, res) => {res.render('GlobalMarketStockReport');};
 //exports.dummy2Page = (req, res) => {res.render('AddSuppliers');};
