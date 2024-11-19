@@ -7,7 +7,23 @@
 			                  <h4 class="card-title">Global Market Stocks Table</h4>     
                       </div>             
                       <div class="table-responsive pt-3">
-                        <table class="table table-bordered">
+                          <!-- Search Box and Table -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="tableSearch">Search Users:</label>
+            <input type="text" id="tableSearch" class="form-control" placeholder="Search for a Users...">
+          </div>
+        </div>
+      </div>
+  
+      <!-- Export Options -->
+      <div class="d-flex justify-content-between pt-3">
+        <button class="btn btn-secondary btn-sm" id="exportCSV">Export to CSV</button>
+        <button class="btn btn-secondary btn-sm" id="exportExcel">Export to Excel</button>
+        <button class="btn btn-secondary btn-sm" id="exportPDF">Export to PDF</button>
+      </div>
+                        <table class="table table-bordered" id="GlobalMarketStock">
                             <thead>
                               <tr>
                                 <th>
@@ -68,3 +84,6 @@
               </div>
 
 <%- include('partials/footer') %>
+<%- include('partials/tableProperties', {
+  table_id: 'GlobalMarketStock'
+}) %>
