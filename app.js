@@ -23,7 +23,7 @@ const userRoutes = require('./routes/userRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const suppliersRoutes = require('./routes/suppliersRoutes');
 
-app.use(authRoutes); // Handles authentication-related routes
+app.use('/',authRoutes); // Handles authentication-related routes
 app.use(userRoutes); // Handles user-related routes
 app.use(dashboardRoutes); // Handles dashboard-related routes
 app.use(suppliersRoutes); // Handles suppliers-related routes
