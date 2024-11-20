@@ -7,6 +7,7 @@ const path = require('path');
 const db = require('./db/db');// Import database connection
 
 const app = express();
+app.set('views', path.join(__dirname, 'views')); // Ensure the views directory is properly set
 app.set('view engine', 'ejs');
 
 // Middleware
