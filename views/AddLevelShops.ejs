@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Level Shop Form</h4>
+        <p class="card-description">
+          Add a new Level Shop
+        </p>
+        <form class="forms-sample">
+          <div class="form-group">
+            <label for="exampleInputUsername1">Level</label>
+            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Level">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputUsername1">Name</label>
+            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Name">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputUsername1">Shop Number</label>
+            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Shop Number">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputUsername1">Amount</label>
+            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Amount">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Rent Status</label>
+            <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+              <option>Available</option>
+              <option>N/A</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Status</label>
+            <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+          <button class="btn btn-light">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/footer') %>

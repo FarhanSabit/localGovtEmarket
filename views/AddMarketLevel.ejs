@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Add Market Level Form</h4>
+            <p class="card-description">
+              Add a new Market Level
+            </p>
+            <form class="forms-sample">
+              <div class="form-group">
+                <label for="exampleInputUsername1">Market Level</label>
+                <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Market Level">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputCity1">Shop name</label>
+                <input type="text" class="form-control" id="exampleInputCity1" placeholder="Enter Shop Name">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Status</label>
+                <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                  <option>Active</option>
+                  <option>Inactive</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button class="btn btn-light">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <%- include('partials/footer') %>

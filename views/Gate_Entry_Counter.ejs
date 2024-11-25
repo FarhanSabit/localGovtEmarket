@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+  <div class="col-lg-12">
+    <div class="row d-flex align-items-center justify-content-between">
+      <div class="col-md-8">
+        <h4 class="card-title">Gate-entry List</h4>
+      </div>
+      <div class="col-md-4 d-flex justify-content-end">
+        <a href="/AddCustomers" class="btn btn-primary btn-sm" role="button">
+          <i class="ti-user"></i>                      
+          Add User
+        </a>
+      </div>
+    </div>                    
+  <div class="table-responsive pt-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>                            #                          </th>
+          <th>                            Code					           </th>
+          <th>                            Market                          </th>
+          <th>                            Name                          </th>
+          <th>                            Email                          </th>
+          <th>                            Phone                          </th>
+          <th>                            Role                          </th>
+          <th>                            Actions                          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>            1          </td>
+          <td>            AU9zA8ap			          </td>
+          <td>            Mbarara          </td>
+          <td>            drake ludu          </td>
+          <td>            drakeludu@example.com          </td>
+          <td>            07774567898109          </td>
+          <td>            Gate Counter          </td>
+          <td>
+            <a href="#" class="btn btn-success btn-sm"><i class="fas fa-view"></i> View</a>
+            <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+            <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<%- include('partials/footer') %>

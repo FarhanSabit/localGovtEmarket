@@ -10,6 +10,12 @@ router.get('/addCustomers', authenticateToken, dummyController.addCustomers);
 
 router.get('/members', authenticateToken, dummyController.members);
 router.get('/addMembers', authenticateToken, dummyController.addMembers);
+
+router.get('/Gate_Entry_Counter', authenticateToken, dummyController.Gate_Entry_Counter);
+
+router.get('/Stock_Counter', authenticateToken, dummyController.Stock_Counter);
+
+router.get('/Vat_Payment', authenticateToken, dummyController.Vat_Payment);
 // Dummy routes
 router.get('/GlobalMarketStockReport', authenticateToken, dummyController.GlobalMarketStockReport); // Dummy page 1
 //router.get('/AddSuppliers', authenticateToken, dashboardController.dummy2Page); // Dummy page 2
@@ -26,5 +32,28 @@ router.get('/AddCustomerModal', authenticateToken, dummyController.AddCustomerMo
 router.get('/DeliveryEntryCounterPage', authenticateToken, dummyController.DeliveryEntryCounterPage);
 router.get('/AddSupplierModal', authenticateToken, dummyController.AddSupplierModal);
 router.get('/ExitEntryCounterPage', authenticateToken, dummyController.ExitEntryCounterPage);
+
+//dummy Shop Management Route
+router.get('/MarketLeveListPage', authenticateToken, dummyController.MarketLeveListPage);
+router.get('/AddMarketLevel', authenticateToken, dummyController.AddMarketLevel);
+
+router.get('/MarketLevelShopList', authenticateToken, dummyController.MarketLevelShopList);
+router.get('/AddLevelShops', authenticateToken, dummyController.AddLevelShops);
+
+//dummy Member Section Route
+router.get('/ninMember', authenticateToken, dummyController.ninMember);
+router.get('/addMember', authenticateToken, dummyController.addMember);
+
+router.get('/withoutNin', authenticateToken, dummyController.withoutNin);
+router.get('/addWithoutNin', authenticateToken, dummyController.addWithoutNin);
+
+router.get('/occupationType', authenticateToken, dummyController.occupationType);
+router.get('/addoccupationType', authenticateToken, dummyController.addoccupationType);
+
+router.get('/shopRents', authenticateToken, dummyController.shopRents);
+router.get('/addshopRents', authenticateToken, dummyController.addshopRents);
+
+router.get('/rentPayments', authenticateToken, dummyController.rentPayments);
+router.get('/addrentPayments', authenticateToken, dummyController.addrentPayments);
 
 module.exports = router;
