@@ -32,6 +32,20 @@ exports.DeliveryEntryCounterPage = (req, res) => {res.render('DeliveryEntryCount
 exports.AddSupplierModal = (req, res) => {res.render('AddSupplierModal');};
 exports.ExitEntryCounterPage = (req, res) => {res.render('ExitEntryCounterPage');};
 
+
+//dummy Stock Section Controller
+exports.allStockEntry = (req, res) => {res.render('allStockEntry');};
+exports.purchaseStockEntry = (req, res) => {res.render('purchaseStockEntry');};
+exports.delivaryStockEntry = (req, res) => {res.render('delivaryStockEntry');};
+
+//dummy Vat Section Controller
+exports.allVatEntries = (req, res) => {res.render('allVatEntries');};
+exports.vatPaymentCounter = (req, res) => {res.render('vatPaymentCounter');};
+
+//dummy Product Request Controller
+exports.productRequestList = (req, res) => {res.render('productRequestList');};
+exports.addProductRequest = (req, res) => {res.render('addProductRequest');};
+
 //dummy Shop manage Controller
 exports.MarketLeveListPage = (req, res) => {res.render('MarketLeveListPage');};
 exports.AddMarketLevel = (req, res) => {res.render('AddMarketLevel');};

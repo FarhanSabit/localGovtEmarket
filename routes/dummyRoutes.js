@@ -33,6 +33,20 @@ router.get('/DeliveryEntryCounterPage', authenticateToken, dummyController.Deliv
 router.get('/AddSupplierModal', authenticateToken, dummyController.AddSupplierModal);
 router.get('/ExitEntryCounterPage', authenticateToken, dummyController.ExitEntryCounterPage);
 
+
+//dummy Stock Section Route
+router.get('/allStockEntry', authenticateToken, dummyController.allStockEntry);
+router.get('/purchaseStockEntry', authenticateToken, dummyController.purchaseStockEntry);
+router.get('/delivaryStockEntry', authenticateToken, dummyController.delivaryStockEntry);
+
+//dummy Vat Section Route
+router.get('/allVatEntries', authenticateToken, dummyController.allVatEntries);
+router.get('/vatPaymentCounter', authenticateToken, dummyController.vatPaymentCounter);
+
+//dummy Product Request Route
+router.get('/productRequestList', authenticateToken, dummyController.productRequestList);
+router.get('/addProductRequest', authenticateToken, dummyController.addProductRequest);
+
 //dummy Shop Management Route
 router.get('/MarketLeveListPage', authenticateToken, dummyController.MarketLeveListPage);
 router.get('/AddMarketLevel', authenticateToken, dummyController.AddMarketLevel);

@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+
+    <div class="col-lg-10 container-fluid">
+        <div class="card mt-3">
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3>Add Product Request</h3>
+                <a class="btn btn-primary btn-md" href="./ProductRequestListPage.ejs" role="button">
+                    Product Request List
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="forms-sample">
+                <div class="col-md-3 col-lg-3 col-sm-12">
+                    <div class="form-group">
+                        <label for="check_in_date">Check In Date</label>
+                        <input class="form-control " type="datetime-local" placeholder="Select Date" name="check_in_date" id="check_in_date" value="">                                                                  
+                    </div>
+                </div>
+                <div class="d-auto" id="product_entry_card">
+                    <table style="padding: 0px; margin: 0px" class="table table-striped table-bordered " id="product_table">
+                        <thead>
+                        <tr>
+                            <td width="55%">Product</td>
+                            <td width="20%">Quantity</td>
+                            <td width="20%">Action</td>
+                        </tr>
+                        </thead>
+                        <tbody id="TextBoxContainer"></tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="2">
+                                <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="tooltip" data-original-title="Add more controls">
+                                    ADD
+                                </button>
+                            </th>
+                            <th>
+                                <button class="btn btn-info btn-md" type="submit">
+                                    SAVE ENTRY
+                                </button>
+                            </th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+
+<script type="text/javascript">
+    var last_options = '<option data-qty=""  value="11">Tennis Balls (kcYMpxNu ) /Sports Equipment /</option>'
+    var options = '<option value="">Please Select</option>' + last_options;
+</script>
+
+<script>
+    $(function () {
+        $('#create_product_modal').on('hidden.bs.modal', function (e) {
+            $(this).find('#product_create_form')[0].reset();
+        });
+
+        $("#btnAdd").bind("click", function () {
+            div = $("<tr />");
+            div.html(GetDynamicTextBox(""));
+            $("#TextBoxContainer").append(div);
+            selectRefresh()
+            $('.gate_entry_btn').prop("disabled", false)
+        });
+        $("body").on("click", ".remove", function () {
+            $(this).closest("tr").remove();
+            var colCount = $("#product_table tbody tr").length;
+            if (colCount < 1) {
+                $('.gate_entry_btn').prop("disabled", true)
+            }
+        });
+    });
+
+    function GetDynamicTextBox(value) {
+        var amountField = '';
+            return '<td><select class="form-control select2 product_id product_check" name="product_id[]" required>' 
+                + options + '</select></td>' + '<td><input class="form-control qty" min="1" name="qty[]" placeholder="Qty" type="number" value="" /></td>' 
+                + amountField + '<td><button type="button" class="btn btn-danger remove">DELETE</button></td>';
+    }
+</script>
+<%- include('partials/footer') %>
