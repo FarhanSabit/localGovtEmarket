@@ -38,6 +38,7 @@ router.get('/ExitEntryCounterPage', authenticateToken, dummyController.ExitEntry
 router.get('/allStockEntry', authenticateToken, dummyController.allStockEntry);
 router.get('/purchaseStockEntry', authenticateToken, dummyController.purchaseStockEntry);
 router.get('/delivaryStockEntry', authenticateToken, dummyController.delivaryStockEntry);
+//router.get('/dummyWebcam', authenticateToken, dummyController.dummyWebcam);
 
 //dummy Vat Section Route
 router.get('/allVatEntries', authenticateToken, dummyController.allVatEntries);

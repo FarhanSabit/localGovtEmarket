@@ -1,201 +1,166 @@
-<!DOCTYPE html>
-<html style="height: auto;">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">   
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="ZEIMPngdBU6WbAVLAg4rMjwJlaM0wtm9IGFOyxoC">
-    <title>E-Market Portal Panel</title>
-    <link href="./Delivery Stock Entry_files/bootstrap.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/select2.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/adminltev3.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="./Delivery Stock Entry_files/icheck-bootstrap.min.css">
-    <link href="./Delivery Stock Entry_files/css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/select.dataTables.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/buttons.dataTables.min.css" rel="stylesheet">
-    <link href="./Delivery Stock Entry_files/dropzone.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./Delivery Stock Entry_files/toastr.min.css">
-    <link href="./Delivery Stock Entry_files/custom.css" rel="stylesheet">
-    
-    <style>
-        .result {
-            background-color: green;
-            color: #fff;
-            padding: 20px;
-        }
+<%- include('partials/header') %>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Stock Entry</title>
+<style>
+    /* CSS to structure the layout */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
 
-        .row {
-            display: flex;
-        }
+    .card {
+        margin: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        #reader {
-            background: black;
-            width: 500px;
+    .card-body {
+        padding: 20px;
+    }
+
+    .col-lg-12 {
+        width: 100%;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+    }
+
+    /* Centering the camera box */
+    .camera-box {
+        text-align: center;
+        margin: 20px auto;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    #webcam {
+        width: 100%;
+        height: auto;
+        border: 1px solid #000000;
+        border-radius: 4px;
+    }
+
+    #status {
+        margin-top: 10px;
+        font-size: 16px;
+        color: rgb(103, 10, 179);
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: rgb(67, 29, 155);
+        color: white;
+    }
+
+    button:hover {
+        background-color: #260879;
+    }
+
+    /* Styling for the form below the camera box */
+    #stockEntryForm {
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 16px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .form-actions button {
+        width: 100%;
+        padding: 15px;
+        background-color: rgb(67, 29, 155);
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .form-actions button:hover {
+        background-color: #260879;
+    }
+
+    /* Media query for responsiveness */
+    @media (max-width: 768px) {
+        .camera-box {
+            max-width: 100%;
         }
 
         button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 6px;
+            width: 100%;
         }
-
-        a#reader__dashboard_section_swaplink {
-            background-color: blue; /* Green */
-            border: none;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-
-        span a {
-            display: none
-        }
-
-        #reader__camera_selection {
-            background: blueviolet;
-            color: aliceblue;
-        }
-
-        #reader__dashboard_section_csr span {
-            color: red
-        }
-    </style>
-
-    <script type="text/javascript" class="flasher-js">
-(function() {    var rootScript = 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.1/dist/flasher.min.js';    var FLASHER_FLASH_BAG_PLACE_HOLDER = {};    var options = mergeOptions([], FLASHER_FLASH_BAG_PLACE_HOLDER);    function mergeOptions(first, second) {        return {            context: merge(first.context || {}, second.context || {}),            envelopes: merge(first.envelopes || [], second.envelopes || []),            options: merge(first.options || {}, second.options || {}),            scripts: merge(first.scripts || [], second.scripts || []),            styles: merge(first.styles || [], second.styles || []),        };    }    function merge(first, second) {        if (Array.isArray(first) && Array.isArray(second)) {            return first.concat(second).filter(function(item, index, array) {                return array.indexOf(item) === index;            });        }        return Object.assign({}, first, second);    }    function renderOptions(options) {        if(!window.hasOwnProperty('flasher')) {            console.error('Flasher is not loaded');            return;        }        requestAnimationFrame(function () {            window.flasher.render(options);        });    }    function render(options) {        if ('loading' !== document.readyState) {            renderOptions(options);            return;        }        document.addEventListener('DOMContentLoaded', function() {            renderOptions(options);        });    }    if (1 === document.querySelectorAll('script.flasher-js').length) {        document.addEventListener('flasher:render', function (event) {            render(event.detail);        });    }    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {        render(options);    } else {        var tag = document.createElement('script');        tag.setAttribute('src', rootScript);        tag.setAttribute('type', 'text/javascript');        tag.onload = function () {            render(options);        };        document.head.appendChild(tag);    }})();   
-    </script>
-    <script src="./Delivery Stock Entry_files/flasher.min.js.download" type="text/javascript"></script>
-
+    }
+</style>
 </head>
-
-<body class="sidebar-mini layout-fixed" style="height: auto;" onload="myPreloader()">
-<div id="loading" style="background: url(&quot;/image/loader.gif&quot;) center center no-repeat rgb(255, 255, 255); display: none;"></div>
-<div class="wrapper">
-<div class="content-wrapper" style="min-height: 591.4px;">
-    <!-- Main content -->
-    <section class="content" style="padding-top: 20px">
-        <div class="row">        
-            <div class="col-md-8 col-lg-8 col-sm-12 m-auto">
-            <div class="card">
-                <div class="card-header">Delivery Stock Entry</div>
-                <div class="card-body">
-                    <form class="form-group">
-                        <input type="hidden" name="_token" value="ZEIMPngdBU6WbAVLAg4rMjwJlaM0wtm9IGFOyxoC" autocomplete="off">
-                        <input type="hidden" name="gate_entry_id" id="gate_entry_id">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12 col-sm-12">
-                                <div id="reader" style="width: 100% !important; position: relative; padding: 0px; border: 1px solid silver;">
-                                    <div style="text-align: left; margin: 0px; padding: 5px; font-size: 20px; border-bottom: 1px solid rgba(192, 192, 192, 0.18);">
-                                        <span>
-                                            <a href="https://github.com/mebjas/html5-qrcode">Code Scanner</a>
-                                        </span>
-                                        <span id="reader__status_span" style="float: right; padding: 5px 7px; font-size: 14px; background: rgb(238, 238, 255); border: 1px solid rgba(0, 0, 0, 0); color: rgb(17, 17, 17);">IDLE</span>
-
-                                        <div id="reader__header_message" style="display: none; font-size: 14px; padding: 2px 10px; margin-top: 4px; border-top: 1px solid rgb(246, 246, 246);"></div>
-                                    </div>
-                                    <div id="reader__scan_region" style="width: 100%; min-height: 100px; text-align: center;"></div>
-                                    <div id="reader__dashboard" style="width: 100%;">
-                                        <div id="reader__dashboard_section" style="width: 100%; padding: 10px; text-align: left;">
-                                            <div>
-                                                <div id="reader__dashboard_section_csr" style="display: block;">
-                                                    <div style="text-align: center;">
-                                                        <button>Request Camera Permissions</button>
-                                                    </div>
-                                                </div>
-                                                <div id="reader__dashboard_section_fsr" style="text-align: center; display: none;"><input id="reader__filescan_input" accept="image/*" type="file" disabled="" style="width: 200px;">
-                                                    <span>&nbsp; Select Image</span>
-                                                </div>
-                                            </div>
-                                            <div style="text-align: center;">
-                                                <a id="reader__dashboard_section_swaplink" href="#scan-using-file" style="text-decoration: underline;">Scan an Image File</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-12 col-sm-12">
-                                <div class="form-group">
-                                    <label class="required" for="entry_token">Gate Entry Token</label>
-                                    <div class="input-group input-group-sm">
-                                        <input class="form-control " type="text" name="entry_token" id="entry_token" value="" placeholder="Type Token">
-                                        <span class="input-group-append">
-                                        <button style="margin: 0" type="button" id="check_entry_token" class="btn btn-info btn-flat">Check <i id="check_icon" class=""></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-12 col-sm-12 d-none" id="entry_token_details">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <span class="text-bold">Token Type: </span> <span id="entry_token_type"></span>,
-                                        <span class="text-bold">User Code: </span> <span id="entry_user_code"></span>,
-                                        <span class="text-bold">Vehicle Type: </span> <span id="entry_vehicle_type"></span>,
-                                        <span class="text-bold">Vehicle Number: </span> <span id="entry_vehicle_number"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-12 col-sm-12 d-none" id="product_entry_card">
-                                <table style="padding: 0px; margin: 0px" class="table table-striped table-bordered " id="product_table">
-                                    <thead>
-                                    <tr>
-                                        <td width="55%">Product</td>
-                                        <td width="13%">Quantity</td>
-                                        <td width="19%">Amount</td>
-                                        <td width="10%">Action</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="TextBoxContainer">
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th colspan="2">
-                                            <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="tooltip" data-original-title="Add more controls">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                        </th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn form-control btn-primary gate_entry_btn" disabled="" type="submit">
-                                Product Stock In
-                            </button>
-                        </div>
-                    </form>
+<body>
+    <div class="card w-100">
+        <div class="card-body">
+            <div class="row d-flex align-items-center justify-content-between">
+                <div class="col-md-8">
+                    <h1 class="card-title">Delivery Stock Entry</h1>
+                    <div class="camera-box">
+                        <video id="webcam" autoplay></video>
+                        <p id="status">IDLE</p>
+                        <button id="request-permission">Request Camera Permissions</button>
+                        <button id="scan-file">Scan an Image File</button>
+                        <input type="file" id="file-input" accept="image/*" style="display:none;">
+                    </div>
                 </div>
             </div>
+            
+            <!-- Form placed under the camera box -->
+            <div class="row d-flex align-items-center justify-content-between">
+                <form id="stockEntryForm">
+                    <div class="form-group">
+                        <label for="gateToken">Gate Entry Token <span style="color: red;">*</span></label>
+                        <input type="text" id="gateToken" placeholder="Type Token" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Product Stock In</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="row mt-5">
-        <div class="col-md-10 col-lg-10 col-sm-12 m-auto">
-            <div class="card">
-                <div class="card-header">
-                    Last Delivery Stock Entries
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable last_entries_table">
-                        <thead>
+    </div>
+
+    <div>&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;</div>
+
+    <div class="card w-100">
+        <div class="card-body">
+            <h1 class="card-title">Last Delivery Stock Entries</h1>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover datatable last_entries_table">
+                    <thead>
                         <tr>
                             <th>Vat Token</th>
                             <th>Gate Token</th>
@@ -205,628 +170,122 @@
                             <th>Vat Amount</th>
                             <th>Entry Time</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>453453</th>
-                                <th>45454</th>
-                                <th>556668</th>
-                                <th>Tennis Ball</th>
-                                <th>20</th>
-                                <th>100</th>
-                                <th>10AM 24/11/2024</th>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>453453</th>
+                            <th>45454</th>
+                            <th>556668</th>
+                            <th>Tennis Ball</th>
+                            <th>20</th>
+                            <th>100</th>
+                            <th>10AM 24/11/2024</th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        </div>
-    </section>
-    <!-- /.content -->
-</div>
-</div>
-<script src="./Delivery Stock Entry_files/jquery.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/bootstrap.min.js.download"></script>
+    </div>
 
-<script src="./Delivery Stock Entry_files/popper.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/select2.full.min.js.download"></script>
-<script type="text/javascript" src="./Delivery Stock Entry_files/toastr.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/moment.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/jquery.dataTables.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/dataTables.bootstrap4.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/dataTables.buttons.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/dataTables.select.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/buttons.flash.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/buttons.html5.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/buttons.print.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/buttons.colVis.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/pdfmake.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/vfs_fonts.js.download"></script>
-<script src="./Delivery Stock Entry_files/jszip.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/ckeditor.js.download"></script>
-<script src="./Delivery Stock Entry_files/bootstrap-datetimepicker.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/dropzone.min.js.download"></script>
-<script src="./Delivery Stock Entry_files/main.js.download"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <script>
+        const webcamElement = document.getElementById("webcam");
+        const requestPermissionButton = document.getElementById("request-permission");
+        const statusElement = document.getElementById("status");
+        const scanFileButton = document.getElementById("scan-file");
+        const fileInput = document.getElementById("file-input");
 
-<script>
-    // $(document).ready(function(){
-    // 	$('div#loading').removeAttr('id');
-    // });
-    var preloader = document.getElementById("loading");
-    // window.addEventListener('load', function(){
-    // 	preloader.style.display = 'none';
-    // 	})
+        let scannerInterval;
 
-    function myPreloader() {
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 1000)
-
-    };
-</script>
-
-<script>
-    $(function () {
-        let copyButtonTrans = 'Copy'
-        let csvButtonTrans = 'CSV'
-        let excelButtonTrans = 'Excel'
-        let pdfButtonTrans = 'PDF'
-        let printButtonTrans = 'Print'
-        let colvisButtonTrans = 'Columns'
-        let selectAllButtonTrans = 'Select all'
-        let selectNoneButtonTrans = 'Deselect all'
-
-        let languages = {
-            'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json'
-        };
-
-        $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {className: 'btn'})
-        $.extend(true, $.fn.dataTable.defaults, {
-            language: {
-                url: languages['en']
-            },
-            order: [],
-            scrollX: true,
-            pageLength: 100,
-            dom: 'lBfrtip<"actions">',
-            buttons: [
-                {
-                    extend: 'selectAll',
-                    className: 'btn-primary',
-                    text: selectAllButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    },
-                    action: function (e, dt) {
-                        e.preventDefault()
-                        dt.rows().deselect();
-                        dt.rows({search: 'applied'}).select();
-                    }
-                },
-                {
-                    extend: 'selectNone',
-                    className: 'btn-primary',
-                    text: selectNoneButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'copy',
-                    className: 'btn-default',
-                    text: copyButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn-default',
-                    text: csvButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn-default',
-                    text: excelButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    className: 'btn-default',
-                    text: pdfButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'print',
-                    className: 'btn-default',
-                    text: printButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    className: 'btn-default',
-                    text: colvisButtonTrans,
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                }
-            ]
+        // Request camera permission and start scanning
+        requestPermissionButton.addEventListener("click", async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                webcamElement.srcObject = stream;
+                webcamElement.style.display = "block";
+                statusElement.textContent = "LIVE";
+                statusElement.style.color = "green";
+                
+                // Start QR code scanning every 500ms
+                scannerInterval = setInterval(scanQRCode, 500);
+            } catch (error) {
+                alert("Camera permission denied or unavailable.");
+            }
         });
 
-        $.fn.dataTable.ext.classes.sPageButton = '';
-    });
-</script>
+        // Scan QR Code from the webcam stream
+        function scanQRCode() {
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
 
-<script>
-    !function (e, t) {
-        "object" == typeof exports && "undefined" != typeof module ? t(exports) : "function" == typeof define && define.amd ? define(["exports"], t) : t(e.adminlte = {})
-    }(this, function (e) {
-        "use strict";
-        var i, t, o, n, r, a, s, c, f, l, u, d, h, p, _, g, y, m, v, C, D, E, A, O, w, b, L, S, j, T, I, Q, R, P, x, B,
-            M, k, H, N, Y, U, V, G, W, X, z, F, q, J, K, Z, $, ee, te,
-            ne = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (e) {
-                return typeof e
-            } : function (e) {
-                return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e
-            }, ie = function (e, t) {
-                if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function")
-            },
-            oe = (i = jQuery, t = "ControlSidebar", o = "lte.control.sidebar", n = i.fn[t], r = ".control-sidebar", a = '[data-widget="control-sidebar"]', s = ".main-header", c = "control-sidebar-open", f = "control-sidebar-slide-open", l = {slide: !0}, u = function () {
-                function n(e, t) {
-                    ie(this, n), this._element = e, this._config = this._getConfig(t)
-                }
+            canvas.height = webcamElement.videoHeight;
+            canvas.width = webcamElement.videoWidth;
 
-                return n.prototype.show = function () {
-                    this._config.slide ? i("body").removeClass(f) : i("body").removeClass(c)
-                }, n.prototype.collapse = function () {
-                    this._config.slide ? i("body").addClass(f) : i("body").addClass(c)
-                }, n.prototype.toggle = function () {
-                    this._setMargin(), i("body").hasClass(c) || i("body").hasClass(f) ? this.show() : this.collapse()
-                }, n.prototype._getConfig = function (e) {
-                    return i.extend({}, l, e)
-                }, n.prototype._setMargin = function () {
-                    i(r).css({top: i(s).outerHeight()})
-                }, n._jQueryInterface = function (t) {
-                    return this.each(function () {
-                        var e = i(this).data(o);
-                        if (e || (e = new n(this, i(this).data()), i(this).data(o, e)), "undefined" === e[t]) throw new Error(t + " is not a function");
-                        e[t]()
-                    })
-                }, n
-            }(), i(document).on("click", a, function (e) {
-                e.preventDefault(), u._jQueryInterface.call(i(this), "toggle")
-            }), i.fn[t] = u._jQueryInterface, i.fn[t].Constructor = u, i.fn[t].noConflict = function () {
-                return i.fn[t] = n, u._jQueryInterface
-            }, u),
-            re = (d = jQuery, h = "Layout", p = "lte.layout", _ = d.fn[h], g = ".main-sidebar", y = ".main-header", m = ".content-wrapper", v = ".main-footer", C = "hold-transition", D = function () {
-                function n(e) {
-                    ie(this, n), this._element = e, this._init()
-                }
+            context.drawImage(webcamElement, 0, 0, canvas.width, canvas.height);
 
-                return n.prototype.fixLayoutHeight = function () {
-                    var e = {
-                        window: d(window).height(),
-                        header: d(y).outerHeight(),
-                        footer: d(v).outerHeight(),
-                        sidebar: d(g).height()
-                    }, t = this._max(e);
-                    d(m).css("min-height", e.window - e.header - e.footer), d(g).css("min-height", e.window - e.header)
-                }, n.prototype._init = function () {
-                    var e = this;
-                    d("body").removeClass(C), this.fixLayoutHeight(), d(g).on("collapsed.lte.treeview expanded.lte.treeview collapsed.lte.pushmenu expanded.lte.pushmenu", function () {
-                        e.fixLayoutHeight()
-                    }), d(window).resize(function () {
-                        e.fixLayoutHeight()
-                    }), d("body, html").css("height", "auto")
-                }, n.prototype._max = function (t) {
-                    var n = 0;
-                    return Object.keys(t).forEach(function (e) {
-                        t[e] > n && (n = t[e])
-                    }), n
-                }, n._jQueryInterface = function (t) {
-                    return this.each(function () {
-                        var e = d(this).data(p);
-                        e || (e = new n(this), d(this).data(p, e)), t && e[t]()
-                    })
-                }, n
-            }(), d(window).on("load", function () {
-                D._jQueryInterface.call(d("body"))
-            }), d.fn[h] = D._jQueryInterface, d.fn[h].Constructor = D, d.fn[h].noConflict = function () {
-                return d.fn[h] = _, D._jQueryInterface
-            }, D), ae = (E = jQuery, A = "PushMenu", w = "." + (O = "lte.pushmenu"), b = E.fn[A], L = {
-                COLLAPSED: "collapsed" + w,
-                SHOWN: "shown" + w
-            }, S = {screenCollapseSize: 768}, j = {
-                TOGGLE_BUTTON: '[data-widget="pushmenu"]',
-                SIDEBAR_MINI: ".sidebar-mini",
-                SIDEBAR_COLLAPSED: ".sidebar-collapse",
-                BODY: "body",
-                OVERLAY: "#sidebar-overlay",
-                WRAPPER: ".wrapper"
-            }, T = "sidebar-collapse", I = "sidebar-open", Q = function () {
-                function n(e, t) {
-                    ie(this, n), this._element = e, this._options = E.extend({}, S, t), E(j.OVERLAY).length || this._addOverlay()
-                }
-
-                return n.prototype.show = function () {
-                    E(j.BODY).addClass(I).removeClass(T);
-                    var e = E.Event(L.SHOWN);
-                    E(this._element).trigger(e)
-                }, n.prototype.collapse = function () {
-                    E(j.BODY).removeClass(I).addClass(T);
-                    var e = E.Event(L.COLLAPSED);
-                    E(this._element).trigger(e)
-                }, n.prototype.toggle = function () {
-                    (E(window).width() >= this._options.screenCollapseSize ? !E(j.BODY).hasClass(T) : E(j.BODY).hasClass(I)) ? this.collapse() : this.show()
-                }, n.prototype._addOverlay = function () {
-                    var e = this, t = E("<div />", {id: "sidebar-overlay"});
-                    t.on("click", function () {
-                        e.collapse()
-                    }), E(j.WRAPPER).append(t)
-                }, n._jQueryInterface = function (t) {
-                    return this.each(function () {
-                        var e = E(this).data(O);
-                        e || (e = new n(this), E(this).data(O, e)), t && e[t]()
-                    })
-                }, n
-            }(), E(document).on("click", j.TOGGLE_BUTTON, function (e) {
-                e.preventDefault();
-                var t = e.currentTarget;
-                "pushmenu" !== E(t).data("widget") && (t = E(t).closest(j.TOGGLE_BUTTON)), Q._jQueryInterface.call(E(t), "toggle")
-            }), E.fn[A] = Q._jQueryInterface, E.fn[A].Constructor = Q, E.fn[A].noConflict = function () {
-                return E.fn[A] = b, Q._jQueryInterface
-            }, Q), se = (R = jQuery, P = "Treeview", B = "." + (x = "lte.treeview"), M = R.fn[P], k = {
-                SELECTED: "selected" + B,
-                EXPANDED: "expanded" + B,
-                COLLAPSED: "collapsed" + B,
-                LOAD_DATA_API: "load" + B
-            }, H = ".nav-item", N = ".nav-treeview", Y = ".menu-open", V = "menu-open", G = {
-                trigger: (U = '[data-widget="treeview"]') + " " + ".nav-link",
-                animationSpeed: 300,
-                accordion: !0
-            }, W = function () {
-                function i(e, t) {
-                    ie(this, i), this._config = t, this._element = e
-                }
-
-                return i.prototype.init = function () {
-                    this._setupListeners()
-                }, i.prototype.expand = function (e, t) {
-                    var n = this, i = R.Event(k.EXPANDED);
-                    if (this._config.accordion) {
-                        var o = t.siblings(Y).first(), r = o.find(N).first();
-                        this.collapse(r, o)
-                    }
-                    e.slideDown(this._config.animationSpeed, function () {
-                        t.addClass(V), R(n._element).trigger(i)
-                    })
-                }, i.prototype.collapse = function (e, t) {
-                    var n = this, i = R.Event(k.COLLAPSED);
-                    e.slideUp(this._config.animationSpeed, function () {
-                        t.removeClass(V), R(n._element).trigger(i), e.find(Y + " > " + N).slideUp(), e.find(Y).removeClass(V)
-                    })
-                }, i.prototype.toggle = function (e) {
-                    var t = R(e.currentTarget), n = t.next();
-                    if (n.is(N)) {
-                        e.preventDefault();
-                        var i = t.parents(H).first();
-                        i.hasClass(V) ? this.collapse(R(n), i) : this.expand(R(n), i)
-                    }
-                }, i.prototype._setupListeners = function () {
-                    var t = this;
-                    R(document).on("click", this._config.trigger, function (e) {
-                        t.toggle(e)
-                    })
-                }, i._jQueryInterface = function (n) {
-                    return this.each(function () {
-                        var e = R(this).data(x), t = R.extend({}, G, R(this).data());
-                        e || (e = new i(R(this), t), R(this).data(x, e)), "init" === n && e[n]()
-                    })
-                }, i
-            }(), R(window).on(k.LOAD_DATA_API, function () {
-                R(U).each(function () {
-                    W._jQueryInterface.call(R(this), "init")
-                })
-            }), R.fn[P] = W._jQueryInterface, R.fn[P].Constructor = W, R.fn[P].noConflict = function () {
-                return R.fn[P] = M, W._jQueryInterface
-            }, W), ce = (X = jQuery, z = "Widget", q = "." + (F = "lte.widget"), J = X.fn[z], K = {
-                EXPANDED: "expanded" + q,
-                COLLAPSED: "collapsed" + q,
-                REMOVED: "removed" + q
-            }, $ = "collapsed-card", ee = {
-                animationSpeed: "normal",
-                collapseTrigger: (Z = {
-                    DATA_REMOVE: '[data-widget="remove"]',
-                    DATA_COLLAPSE: '[data-widget="collapse"]',
-                    CARD: ".card",
-                    CARD_HEADER: ".card-header",
-                    CARD_BODY: ".card-body",
-                    CARD_FOOTER: ".card-footer",
-                    COLLAPSED: ".collapsed-card"
-                }).DATA_COLLAPSE,
-                removeTrigger: Z.DATA_REMOVE
-            }, te = function () {
-                function n(e, t) {
-                    ie(this, n), this._element = e, this._parent = e.parents(Z.CARD).first(), this._settings = X.extend({}, ee, t)
-                }
-
-                return n.prototype.collapse = function () {
-                    var e = this;
-                    this._parent.children(Z.CARD_BODY + ", " + Z.CARD_FOOTER).slideUp(this._settings.animationSpeed, function () {
-                        e._parent.addClass($)
-                    });
-                    var t = X.Event(K.COLLAPSED);
-                    this._element.trigger(t, this._parent)
-                }, n.prototype.expand = function () {
-                    var e = this;
-                    this._parent.children(Z.CARD_BODY + ", " + Z.CARD_FOOTER).slideDown(this._settings.animationSpeed, function () {
-                        e._parent.removeClass($)
-                    });
-                    var t = X.Event(K.EXPANDED);
-                    this._element.trigger(t, this._parent)
-                }, n.prototype.remove = function () {
-                    this._parent.slideUp();
-                    var e = X.Event(K.REMOVED);
-                    this._element.trigger(e, this._parent)
-                }, n.prototype.toggle = function () {
-                    this._parent.hasClass($) ? this.expand() : this.collapse()
-                }, n.prototype._init = function (e) {
-                    var t = this;
-                    this._parent = e, X(this).find(this._settings.collapseTrigger).click(function () {
-                        t.toggle()
-                    }), X(this).find(this._settings.removeTrigger).click(function () {
-                        t.remove()
-                    })
-                }, n._jQueryInterface = function (t) {
-                    return this.each(function () {
-                        var e = X(this).data(F);
-                        e || (e = new n(X(this), e), X(this).data(F, "string" == typeof t ? e : t)), "string" == typeof t && t.match(/remove|toggle/) ? e[t]() : "object" === ("undefined" == typeof t ? "undefined" : ne(t)) && e._init(X(this))
-                    })
-                }, n
-            }(), X(document).on("click", Z.DATA_COLLAPSE, function (e) {
-                e && e.preventDefault(), te._jQueryInterface.call(X(this), "toggle")
-            }), X(document).on("click", Z.DATA_REMOVE, function (e) {
-                e && e.preventDefault(), te._jQueryInterface.call(X(this), "remove")
-            }), X.fn[z] = te._jQueryInterface, X.fn[z].Constructor = te, X.fn[z].noConflict = function () {
-                return X.fn[z] = J, te._jQueryInterface
-            }, te);
-        e.ControlSidebar = oe, e.Layout = re, e.PushMenu = ae, e.Treeview = se, e.Widget = ce, Object.defineProperty(e, "__esModule", {value: !0})
-    });
-
-</script>
-
-<script src="./Delivery Stock Entry_files/html5-qrcode.min_.js.download"></script>
-
-<script type="text/javascript">
-    var last_options = ''
-    var options = '<option value="">Please Select</option>' + last_options;
-    $(function () {
-        $('#check_entry_token').on('click', function (e) {
-            e.preventDefault();
-            $("#entry_token_details").addClass('d-none');
-            document.getElementById('check_icon').className = '';
-            let entry_token = $('#entry_token').val();
-            let entry_type = 'Delivery';
-            $.ajax({
-                url: "https://marketmaster-bimotion.org/ajax/check-entry-token",
-                type: "POST",
-                data: {
-                    "_token": "ZEIMPngdBU6WbAVLAg4rMjwJlaM0wtm9IGFOyxoC",
-                    entry_token: entry_token,
-                    entry_type: entry_type,
-                },
-                beforeSend: function () {
-                    $("#check_icon").addClass('fas fa-spinner fa-spin');
-                },
-                success: function (response) {
-                    if (response.status === "success") {
-                        $("#entry_token").find('input').removeAttr('required');
-                        // $('#entry_token').val(response.entry_token)
-                        $('#entry_token').removeClass('is-invalid');
-                        $("#check_icon").removeClass('fas fa-spinner fa-spin');
-                        $("#entry_token_details").removeClass('d-none');
-                        $("#product_entry_card").removeClass('d-none');
-                        $('#gate_entry_id').val(response.id)
-                        $('#entry_token_type').text(capitalize(response.type))
-                        $('#entry_user_code').text(response.user_code)
-                        $('#entry_vehicle_type').text(capitalize(response.vehicle_type))
-                        $('#entry_vehicle_number').text(response.vehicle_number)
-                    }
-                    if (response.status === "error") {
-                        $("#entry_token_details").addClass('d-none');
-                        $("#product_entry_card").addClass('d-none');
-                        $('#entry_token').addClass('is-invalid');
-                        $("#check_icon").removeClass('fas fa-spinner fa-spin');
-                        
-                        
-
-                    }
-                },
-                error: function (response) {
-                    $("#check_icon").removeClass('fas fa-spinner fa-spin');    
-                },
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const code = jsQR(imageData.data, canvas.width, canvas.height, {
+                inversionAttempts: "dontInvert",
             });
-        });
-    })
-</script>
 
-<script>
-    function selectRefresh() {
-        $('#product_entry_card .select2').select2({
-            placeholder: "Select an Option",
-            width: '100%'
-        });
-    }
-
-    $(document).on('change', '.product_id', function () {
-        let ids = $("select[name='product_id[]']").map(function () {
-            return $(this).val();
-        }).get()
-        ids.splice(-1)
-        let current_id = $(this).val();
-        if (checkArrayValue(current_id, ids)) {
-            toastr.options.positionClass = 'toast-top-right';
-            toastr.error('', "This product already selected");
-            $(this).val(null);
-
-        }
-        let qty = $(this).find(':selected').data('qty')
-        console.log(qty)
-        $(this).closest('tr').attr('data-qty', qty)
-        selectRefresh()
-    })
-            $(document).on('change', '.qty', function () {
-        let qty = $(this).closest('tr').data('qty')
-        let current_qty = $(this).val();
-        if (qty < current_qty) {
-            toastr.options.positionClass = 'toast-top-right';
-            toastr.error('', "This amount of quantity not available in market");
-            $(this).val(1)
-        }
-    })
-            $(function () {
-
-
-        $('#create_product_modal').on('hidden.bs.modal', function (e) {
-            $(this).find('#product_create_form')[0].reset();
-        });
-
-        $("#btnAdd").bind("click", function () {
-            div = $("<tr />");
-            div.html(GetDynamicTextBox(""));
-            $("#TextBoxContainer").append(div);
-            selectRefresh()
-            $('.gate_entry_btn').prop("disabled", false)
-        });
-        $("body").on("click", ".remove", function () {
-            $(this).closest("tr").remove();
-            var colCount = $("#product_table tbody tr").length;
-            if (colCount < 1) {
-                $('.gate_entry_btn').prop("disabled", true)
+            if (code) {
+                statusElement.textContent = "QR Code Scanned!";
+                statusElement.style.color = "blue";
+                alert("Scanned QR Code: " + code.data);  // Show the scanned QR code data
+                clearInterval(scannerInterval);  // Stop scanning after a successful scan
             }
-        });
-    });
-
-    function GetDynamicTextBox(value) {
-        return '<td><select class="mt-3 form-control select2 product_id product_check" name="product_id[]" required>' + options + '</select></td>' + '<td><input class="form-control qty" min="1" name="qty[]" placeholder="Qty" type="number" value="" /></td>' + '<td><input class="form-control amount" name="amount[]" min="1" placeholder="Amount" type="number" value="" /></td>' + '<td><button type="button" class="btn btn-danger remove"><i class="fas fa-times text-white"></i></button></td>';
-    }
-</script>
-
-<script type="text/javascript">
-
-    $('.product_create_form').on('submit', function (e) {
-        e.preventDefault();
-        $('.product_create_overlay').removeClass('d-none')
-        let name = $('#product_name').val();
-        let category_id = $('#category_id').val();
-        let sub_category_id = $('#sub_category_id').val();
-        let supplier_vat = $('#supplier_vat').val();
-        let supplier_vat_type = $('#supplier_vat_type').val();
-        let customer_vat = $('#customer_vat').val();
-        let customer_vat_type = $('#customer_vat_type').val();
-        let unite = $('#unite').val();
-        $.ajax({
-            url: "https://marketmaster-bimotion.org/ajax/product-store",
-            type: "POST",
-            data: {
-                "_token": "ZEIMPngdBU6WbAVLAg4rMjwJlaM0wtm9IGFOyxoC",
-                name,
-                category_id,
-                sub_category_id,
-                supplier_vat,
-                supplier_vat_type,
-                customer_vat,
-                customer_vat_type,
-                unite,
-            },
-            success: function (response) {
-                $('#create_product_modal').modal('hide')
-                let title = response.name + '(' + response.code + ') /' + response.category + '/' + response.sub_category;
-                options += '<option value="' + response.id + '">' + title + '</option>';
-                $('.product_create_overlay').addClass('d-none')
-                
-                
-            },
-            error: function (response) {
-                $('.product_create_overlay').addClass('d-none')
-                $('#error_msg').removeClass('d-none').text(response.responseJSON.errors.message);
-            },
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    // after success to play camera Webcam Ajax paly to send data to Controller
-    function onScanSuccess(data) {
-        $.ajax({
-            type: "POST",
-            cache: true,
-            url: "https://marketmaster-bimotion.org/ajax/check-get-entry/stock-entry",
-            data: {"_token": "ZEIMPngdBU6WbAVLAg4rMjwJlaM0wtm9IGFOyxoC", data: data, entry_type: "Delivery"},
-            success: function (response) {
-                if (response.status === "success") {
-                    $('#entry_token').removeClass('is-invalid');
-                    $("#check_icon").removeClass('fas fa-spinner fa-spin');
-                    $("#entry_token_details").removeClass('d-none');
-                    $("#product_entry_card").removeClass('d-none');
-                    $('#gate_entry_id').val(response.id)
-                    $('#entry_token_type').text(capitalize(response.type))
-                    $('#entry_user_code').text(response.user_code)
-                    $('#entry_vehicle_type').text(capitalize(response.vehicle_type))
-                    $('#entry_vehicle_number').text(response.vehicle_number)
-                }
-                if (response.status === "error") {
-                    $("#entry_token_details").addClass('d-none');
-                    $("#product_entry_card").addClass('d-none');
-                    $('#entry_token').addClass('is-invalid');
-                    $("#check_icon").removeClass('fas fa-spinner fa-spin');
-                    
-                    
-
-                }
-            }
-            // after success to get Answer from controller if User Registered login user by scanner
-            // and page change to Home blade
-            
-            
-            
-            
-            
-            
-
-        })
-    }
-
-    function onScanFailure(error) {
-        // handle scan failure, usually better to ignore and keep scanning.
-        // for example:
-        console.warn(`Code scan error = ${error}`);
-    }
-
-    var html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader", {fps: 10, qrbox: 250, rememberLastUsedCamera: true});
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-</script>
-
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    });
-</script>
 
-</body>
-</html>
+        // Handle image file input for scanning QR codes
+        scanFileButton.addEventListener("click", () => {
+            fileInput.click();  // Trigger file input when button is clicked
+        });
+
+        fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const context = canvas.getContext("2d");
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0);
+
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, canvas.width, canvas.height, {
+                        inversionAttempts: "dontInvert",
+                    });
+
+                    if (code) {
+                        statusElement.textContent = "QR Code Scanned!";
+                        statusElement.style.color = "blue";
+                        alert("Scanned QR Code from Image: " + code.data);  // Show the scanned QR code data
+                    } else {
+                        statusElement.textContent = "No QR code found in the image.";
+                        statusElement.style.color = "red";
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);  // Read the file as a data URL
+        });
+
+        // Form submission logic
+        document.getElementById("stockEntryForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const token = document.getElementById("gateToken").value;
+            if (!token) {
+                alert("Please enter the Gate Entry Token.");
+                return;
+            }
+            alert("Processing stock entry for token: " + token);
+            // Add integration logic here
+        });
+    </script>
+    
+<%- include('partials/footer') %>

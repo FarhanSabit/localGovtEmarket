@@ -37,6 +37,7 @@ exports.ExitEntryCounterPage = (req, res) => {res.render('ExitEntryCounterPage')
 exports.allStockEntry = (req, res) => {res.render('allStockEntry');};
 exports.purchaseStockEntry = (req, res) => {res.render('purchaseStockEntry');};
 exports.delivaryStockEntry = (req, res) => {res.render('delivaryStockEntry');};
+//exports.dummyWebcam = (req, res) => {res.render('dummyWebcam');};
 
 //dummy Vat Section Controller
 exports.allVatEntries = (req, res) => {res.render('allVatEntries');};
