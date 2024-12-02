@@ -23,43 +23,54 @@ exports.ninMember = async (req, res) => {
     }
 };
 
-// Render add suppliers page
-exports.addMember = (req, res) => res.render('addMember');
+// Render add members page
+exports.addMemberPage = (req, res) => res.render('addMember');
 
-// Add a new Member
+//add member
 exports.addMember = async (req, res) => {
     try {
-        // Extract fields from req.body and provide default values if missing
+        // Extract fields from req.body, allowing for null values
         const {
-            f_name = null, l_name = null, email = null,
-            phone_no = null, nin = null, issued_card = null, gender = null,
-            occupation = null, floor_type = null, shop_no = null
+            f_name, l_name, email, 
+            phone_no, nin, issued_card, gender, 
+            occupation, floor_type, shop_no
         } = req.body;
 
-        // Validate required fields
-        if (!nin || !f_name || !l_name) {
-            throw new Error('NIN, first name, and last name are required.');
-        }
+        /*// Validate required fields (if needed)
+        if (!f_name) {
+            throw new Error('First Name is a required field.');
+        }*/
+
+        // Prepare the data for insertion
+        const memberData = {
+            f_name: f_name || null,
+            l_name: l_name || null,
+            email: email || null,
+            phone_no: phone_no || null,
+            nin: nin || null,
+            issued_card: issued_card || null,
+            gender: gender || null,
+            occupation: occupation || null,
+            floor_type: floor_type || null,
+            shop_no: shop_no || null,
+        };
 
         // Insert data into the database
         await new Promise((resolve, reject) => {
-            db.query(
-                'INSERT INTO members SET ?', 
-                { f_name, l_name, email, phone_no, nin, issued_card, gender, occupation, floor_type, shop_no },
-                (err) => {
-                    if (err) reject(err);
-                    resolve();
-                }
-            );
+            db.query('INSERT INTO members SET ?', memberData, (err) => {
+                if (err) reject(err);
+                resolve();
+            });
         });
 
-        // Redirect to the members list page after successful insertion
+        // Redirect after successful insertion
         res.redirect('/ninMember');
     } catch (error) {
         console.error('Error adding Member:', error.message);
         res.status(500).send(error.message || 'Error adding Member');
     }
 };
+
 
 /*
 // Render edit user page

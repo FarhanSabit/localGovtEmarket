@@ -12,7 +12,7 @@ router.get('/ninMember', authenticateToken, membersController.ninMember);
 
 
 // Add user routes
-router.get('/addMember', authenticateToken, membersController.addMember);
+router.get('/addMember', authenticateToken, membersController.addMemberPage);
 router.post('/addMember', authenticateToken,/* upload.single('photo'), */membersController.addMember);
 /*
 router.get('/AddSuppliers', authenticateToken, suppliersController.addSuppliersPage);
