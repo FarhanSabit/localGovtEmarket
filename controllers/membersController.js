@@ -1,5 +1,6 @@
 //const bcrypt = require('bcryptjs');
 const db = require('../db/db');
+const upload = require('../Middleware/upload');
 
 /*
 INSERT INTO `members` (`id`, `f_name`, `l_name`, `email`, 
@@ -29,45 +30,46 @@ exports.addMemberPage = (req, res) => res.render('addMember');
 //add member
 exports.addMember = async (req, res) => {
     try {
-        // Extract fields from req.body, allowing for null values
+        // File uploads
+        const photo = req.files && req.files.photo ? `/uploads/${req.files.photo[0].filename}` : null;
+        const qr = req.files && req.files.qr ? `/uploads/${req.files.qr[0].filename}` : null;
+
+        // Extract other fields
         const {
-            f_name, l_name, email, 
-            phone_no, nin, issued_card, gender, 
-            occupation, floor_type, shop_no
+            f_name, l_name, email,
+            phone_no, nin, issued_card,
+            gender, occupation, floor_type, shop_no
         } = req.body;
 
-        /*// Validate required fields (if needed)
-        if (!f_name) {
-            throw new Error('First Name is a required field.');
-        }*/
-
-        // Prepare the data for insertion
-        const memberData = {
-            f_name: f_name || null,
-            l_name: l_name || null,
-            email: email || null,
-            phone_no: phone_no || null,
-            nin: nin || null,
-            issued_card: issued_card || null,
-            gender: gender || null,
-            occupation: occupation || null,
-            floor_type: floor_type || null,
-            shop_no: shop_no || null,
-        };
-
-        // Insert data into the database
+        // Insert into the database
         await new Promise((resolve, reject) => {
-            db.query('INSERT INTO members SET ?', memberData, (err) => {
-                if (err) reject(err);
-                resolve();
-            });
+            db.query(
+                'INSERT INTO members SET ?',
+                {
+                    f_name,
+                    l_name,
+                    email,
+                    phone_no,
+                    nin,
+                    issued_card,
+                    gender,
+                    occupation,
+                    floor_type,
+                    shop_no,
+                    photo,
+                    qr,
+                },
+                (err) => {
+                    if (err) reject(err);
+                    resolve();
+                }
+            );
         });
 
-        // Redirect after successful insertion
         res.redirect('/ninMember');
     } catch (error) {
-        console.error('Error adding Member:', error.message);
-        res.status(500).send(error.message || 'Error adding Member');
+        console.error('Error adding member:', error);
+        res.status(500).send('Error adding member');
     }
 };
 
