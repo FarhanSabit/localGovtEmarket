@@ -8,41 +8,42 @@
         <p class="card-description">
           Add a new NIN Member
         </p>
+        <form action="/addMember" method="POST" enctype="multipart/form-data"></form>
         <div class="forms-sample">
             <div class="form-group row">
               <div class="col-md-6">
                   <label>First Name:</label>
-                  <input type="text" class="form-control" placeholder="Enter First Name" />
+                  <input type="text" name="f_name" class="form-control" placeholder="Enter First Name" required/>
               </div>
               <div class="col-md-6">
                   <label>Last Name:</label>
-                  <input type="text" class="form-control" placeholder="Enter Last Name"/>
+                  <input type="text" name="l_name" class="form-control" placeholder="Enter Last Name"/>
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-6">
                 <label>Email:</label>
-                <input type="text" class="form-control" placeholder="Enter Email" />
+                <input type="text" name="email" class="form-control" placeholder="Enter Email" />
               </div>
               <div class="col-md-6">
                 <label>Phone No:</label>
-                <input type="text" class="form-control" placeholder="Enter Mobile No" />
+                <input type="text" name="phone_no" class="form-control" placeholder="Enter Mobile No" />
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-6">
                 <label>NIN:</label>
-                <input type="text" class="form-control" placeholder="Enter NIN" />
+                <input type="text" name="nin" class="form-control" placeholder="Enter NIN" />
               </div>
               <div class="col-md-6">
                 <label>Issued Card:</label>
-                <input type="text" class="form-control" placeholder="Enter Card Number" />
+                <input type="text" name="issued_card" class="form-control" placeholder="Enter Card Number" />
               </div>
               </div>
         <div class="form-group row">
           <div class="col-md-6">
             <label for="exampleSelectGender">Gender:</label>
-              <select class="form-control" id="exampleSelectGender">
+              <select class="form-control" name="gender" id="gender">
                 <option>Select Gender</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -50,7 +51,7 @@
           </div>
           <div class="col-md-6">
             <label for="exampleSelectOccupation">Occupation:</label>
-              <select class="form-control" id="exampleSelectGender">
+              <select class="form-control" name="occupation" id="occupation">
                 <option>Select Occupation</option>
                 <option>Business</option>
                 <option>Public Service</option>
@@ -64,7 +65,7 @@
         <div class="form-group row">
         <div class="col-md-6">
           <label for="exampleSelectFloorType">Floor Type:</label>
-            <select class="form-control" id="exampleSelectFloorNo">
+            <select class="form-control" name="floor_type" id="floor_type">
               <option>Select Floor:</option>
               <option>Ground Floor</option>
               <option>Level 1</option>
@@ -76,7 +77,7 @@
         </div>
         <div class="col-md-6">
           <label for="exampleSelectShopNo">Shop No:</label>
-            <select class="form-control" id="exampleSelectFloorNo">
+            <select class="form-control" name="shop_no" id="shop_no">
               <option>Select Shop:</option>
               <option>A1</option>
               <option>A2</option>
@@ -92,7 +93,7 @@
             <label>Photo:</label>
             <input type="file" name="img[]" class="file-upload-default">
             <div class="input-group col-xs-12">
-              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+              <input type="text" name="photo" class="form-control file-upload-info" disabled placeholder="Upload Image">
               <span class="input-group-append">
                 <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
               </span>
@@ -102,7 +103,7 @@
             <label>QR Code:</label>
             <input type="file" name="img[]" class="file-upload-default">
             <div class="input-group col-xs-12">
-              <input type="text" class="form-control file-upload-info" disabled placeholder="QR Code">
+              <input type="text" name="qr" class="form-control file-upload-info" disabled placeholder="QR Code">
               <span class="input-group-append">
                 <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
               </span>
@@ -112,6 +113,7 @@
             <button type="submit" class="btn btn-primary mr-2">Submit</button>
             <button class="btn btn-light">Cancel</button>
         </div>
+      </form>
       </div>
     </div>
   </div>

@@ -56,8 +56,8 @@ router.get('/MarketLevelShopList', authenticateToken, dummyController.MarketLeve
 router.get('/AddLevelShops', authenticateToken, dummyController.AddLevelShops);
 
 //dummy Member Section Route
-router.get('/ninMember', authenticateToken, dummyController.ninMember);
-router.get('/addMember', authenticateToken, dummyController.addMember);
+/*router.get('/ninMember', authenticateToken, dummyController.ninMember);
+router.get('/addMember', authenticateToken, dummyController.addMember);*/
 
 router.get('/withoutNin', authenticateToken, dummyController.withoutNin);
 router.get('/addWithoutNin', authenticateToken, dummyController.addWithoutNin);

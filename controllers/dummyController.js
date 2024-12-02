@@ -55,9 +55,10 @@ exports.MarketLevelShopList = (req, res) => {res.render('MarketLevelShopList');}
 exports.AddLevelShops = (req, res) => {res.render('AddLevelShops');};
 
 //dummy Member Section Controller
+/*
 exports.ninMember = (req, res) => {res.render('ninMember');};
 exports.addMember = (req, res) => {res.render('addMember');};
-
+*/
 exports.withoutNin = (req, res) => {res.render('withoutNin');};
 exports.addWithoutNin = (req, res) => {res.render('addWithoutNin');};
 
