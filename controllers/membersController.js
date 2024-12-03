@@ -1,6 +1,6 @@
 //const bcrypt = require('bcryptjs');
 const db = require('../db/db');
-const upload = require('../Middleware/upload');
+//const upload = require('../Middleware/upload');
 
 /*
 INSERT INTO `members` (`id`, `f_name`, `l_name`, `email`, 
@@ -31,8 +31,8 @@ exports.addMemberPage = (req, res) => res.render('addMember');
 exports.addMember = async (req, res) => {
     try {
         // File uploads
-        const photo = req.files && req.files.photo ? '../public/upload/${req.files.photo[0].filename}' : null;
-        const qr = req.files && req.files.qr ? '../public/upload/${req.files.qr[0].filename}' : null;
+        //const photo = req.files && req.files.photo ? '../public/upload/${req.files.photo[0].filename}' : null;
+        //const qr = req.files && req.files.qr ? '../public/upload/${req.files.qr[0].filename}' : null;
 
         // Extract other fields
         const {
@@ -56,8 +56,8 @@ exports.addMember = async (req, res) => {
                     occupation,
                     floor_type,
                     shop_no,
-                    photo,
-                    qr,
+                    //photo,
+                    //qr,
                 },
                 (err) => {
                     if (err) reject(err);
