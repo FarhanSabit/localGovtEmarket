@@ -31,7 +31,14 @@ exports.indexPage = async (req, res) => {
             });
         });
 
-        res.render('index', { user: userQuery, totalUsers: totalUsersQuery, total_suppliers: totalSuppliersQuery });
+        const totalMembersQuery = await new Promise((resolve, reject) => {
+            db.query('SELECT COUNT(*) AS total_members FROM members', (err, results) => {
+                if (err) reject(err);
+                resolve(results[0].total_members);
+            });
+        });
+
+        res.render('index', { user: userQuery, totalUsers: totalUsersQuery, total_suppliers: totalSuppliersQuery , total_members: totalMembersQuery });
     } catch (error) {
         console.error('Error rendering index page:', error);
         res.status(500).send('Error rendering index page');
