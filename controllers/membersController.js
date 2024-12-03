@@ -24,18 +24,16 @@ exports.addMemberPage = (req, res) => res.render('addMember');
 //add member
 exports.addMember = async (req, res) => {
     try {
-        // File uploads
-        //const photo = req.files && req.files.photo ? '../public/upload/${req.files.photo[0].filename}' : null;
-        //const qr = req.files && req.files.qr ? '../public/upload/${req.files.qr[0].filename}' : null;
-
-        // Extract other fields
+        // Extract fields from req.body
         const {
             f_name, l_name, email,
             phone_no, nin, issued_card,
             gender, occupation, floor_type, shop_no
         } = req.body;
 
-        // Insert into the database
+        const loggedInUserId = req.user.id; // Assuming `req.user.id` contains the logged-in user ID
+
+        // Insert into the database with create_by field
         await new Promise((resolve, reject) => {
             db.query(
                 'INSERT INTO members SET ?',
@@ -50,8 +48,7 @@ exports.addMember = async (req, res) => {
                     occupation,
                     floor_type,
                     shop_no,
-                    //photo,
-                    //qr,
+                    create_by: loggedInUserId, // Set logged-in user ID as create_by
                 },
                 (err) => {
                     if (err) reject(err);
@@ -60,12 +57,14 @@ exports.addMember = async (req, res) => {
             );
         });
 
+        // Redirect after successful insertion
         res.redirect('/ninMember');
     } catch (error) {
         console.error('Error adding member:', error);
         res.status(500).send('Error adding member');
     }
 };
+
 
 // Render edit member page
 exports.editMembersPage = async (req, res) => {
@@ -135,79 +134,40 @@ exports.updateMembers = async (req, res) => {
 };
 
 
-/*
-// Render edit user page
-exports.editSuppliersPage = async (req, res) => {
+// Delete a member
+exports.deleteMembers = async (req, res) => {
     try {
         const { id } = req.params;
-        const supplier = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM customer WHERE id = ?', [id], (err, results) => {
-                if (err) reject(err);
-                resolve(results[0]);
-            });
-        });
-        res.render('editSuppliers', { supplier });
-    } catch (error) {
-        console.error('Error fetching Suppliers for edit:', error);
-        res.status(500).send('Error fetching Suppliers');
-    }
-};
-
-// Update an existing Suppliers
-exports.updateSuppliers = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { name, nin, phone_no, category, fc_no, mth_pay } = req.body;
 
         await new Promise((resolve, reject) => {
-            db.query('UPDATE customer SET ? WHERE id = ?', [{ name, nin, phone_no, category, fc_no, mth_pay }, id], (err) => {
+            db.query('DELETE FROM members WHERE id = ?', [id], (err) => {
                 if (err) reject(err);
                 resolve();
             });
         });
 
-        res.redirect('/SupplieReportPage');
+        res.redirect('/ninMember');
     } catch (error) {
-        console.error('Error updating Suppliers:', error);
-        res.status(500).send('Error updating Suppliers');
+        console.error('Error deleting Members:', error);
+        res.status(500).send('Error deleting Members');
     }
 };
 
-// Delete a user
-exports.deleteSuppliers = async (req, res) => {
+// Render member profile
+exports.MembersProfile = async (req, res) => {
     try {
         const { id } = req.params;
-
-        await new Promise((resolve, reject) => {
-            db.query('DELETE FROM customer WHERE id = ?', [id], (err) => {
+        const member = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM members WHERE id = ?', [id], (err, results) => {
                 if (err) reject(err);
-                resolve();
-            });
-        });
-
-        res.redirect('/SupplieReportPage');
-    } catch (error) {
-        console.error('Error deleting Suppliers:', error);
-        res.status(500).send('Error deleting Suppliers');
-    }
-};
-
-// Render user profile
-exports.SuppliersProfile = async (req, res) => {
-    try {
-        const supplierId = req.params.id;
-        const supplier = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM customer WHERE id = ?', [supplierId], (err, results) => {
-                if (err) reject(err);
-                if (results.length === 0) reject(new Error('Suppliers not found'));
+                if (results.length === 0) reject(new Error('Member not found'));
                 resolve(results[0]);
             });
         });
 
-        res.render('suppliersProfile', { supplier });
+        res.render('membersProfile', { member });
     } catch (error) {
-        console.error('Error fetching Suppliers profile:', error);
-        res.status(500).send(error.message || 'Error fetching Suppliers profile');
+        console.error('Error fetching Member profile:', error);
+        res.status(500).send(error.message || 'Error fetching Member profile');
     }
 };
-*/

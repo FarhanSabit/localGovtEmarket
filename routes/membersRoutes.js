@@ -18,12 +18,12 @@ router.post('/addMember', authenticateToken,upload.single('photo'), membersContr
 // Edit user routes
 router.get('/editMember/:id', authenticateToken, membersController.editMembersPage);
 router.post('/editMember/:id', authenticateToken, membersController.updateMembers);
-/*
+
 // Delete user route
-router.get('/deleteSuppliers/:id', authenticateToken, suppliersController.deleteSuppliers);
+router.get('/deleteMembers/:id', authenticateToken, membersController.deleteMembers);
 
 // Profile route
-router.get('/suppliersProfile/:id', authenticateToken, suppliersController.SuppliersProfile);
-*/
+router.get('/MembersProfile/:id', authenticateToken, membersController.MembersProfile);
+
 
 module.exports = router;
