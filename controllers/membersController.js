@@ -31,8 +31,8 @@ exports.addMemberPage = (req, res) => res.render('addMember');
 exports.addMember = async (req, res) => {
     try {
         // File uploads
-        const photo = req.files && req.files.photo ? `/uploads/${req.files.photo[0].filename}` : null;
-        const qr = req.files && req.files.qr ? `/uploads/${req.files.qr[0].filename}` : null;
+        const photo = req.files && req.files.photo ? '../public/upload/${req.files.photo[0].filename}' : null;
+        const qr = req.files && req.files.qr ? '../public/upload/${req.files.qr[0].filename}' : null;
 
         // Extract other fields
         const {

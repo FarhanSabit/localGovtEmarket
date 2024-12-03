@@ -6,14 +6,14 @@ const membersController = require('../controllers/membersController.js');
 const authenticateToken = require('../Middleware/authenticateToken.js');
 
 // Multer setup for file uploads
-const upload = multer({ dest: 'public/uploads/' });
+const upload = multer({ dest: '../public/uploads/' });
 // suppliers routes
 router.get('/ninMember', authenticateToken, membersController.ninMember);
 
 
 // Add user routes
 router.get('/addMember', authenticateToken, membersController.addMemberPage);
-router.post('/addMember', authenticateToken,/* upload.single('photo'), */membersController.addMember);
+router.post('/addMember', authenticateToken,upload.single('photo'), membersController.addMember);
 /*
 router.get('/AddSuppliers', authenticateToken, suppliersController.addSuppliersPage);
 router.post('/AddSuppliers', authenticateToken, upload.single('photo'), suppliersController.addSuppliers);
