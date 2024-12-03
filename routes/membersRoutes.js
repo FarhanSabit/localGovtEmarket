@@ -14,14 +14,11 @@ router.get('/ninMember', authenticateToken, membersController.ninMember);
 // Add user routes
 router.get('/addMember', authenticateToken, membersController.addMemberPage);
 router.post('/addMember', authenticateToken,upload.single('photo'), membersController.addMember);
-/*
-router.get('/AddSuppliers', authenticateToken, suppliersController.addSuppliersPage);
-router.post('/AddSuppliers', authenticateToken, upload.single('photo'), suppliersController.addSuppliers);
 
 // Edit user routes
-router.get('/editSuppliers/:id', authenticateToken, suppliersController.editSuppliersPage);
-router.post('/editSuppliers/:id', authenticateToken, suppliersController.updateSuppliers);
-
+router.get('/editMembers/:id', authenticateToken, membersController.editMembersPage);
+router.post('/editMembers/:id', authenticateToken, membersController.updateMembers);
+/*
 // Delete user route
 router.get('/deleteSuppliers/:id', authenticateToken, suppliersController.deleteSuppliers);
 

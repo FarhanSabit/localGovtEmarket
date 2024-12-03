@@ -2,12 +2,6 @@
 const db = require('../db/db');
 //const upload = require('../Middleware/upload');
 
-/*
-INSERT INTO `members` (`id`, `f_name`, `l_name`, `email`, 
-`phone_no`, `nin`, `issued_card`, `gender`, `occupation`, 
-`floor_type`, `shop_no`, `create_by`, `create_date`, `update_by`, `update_date`) 
-VALUES (NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-*/
 // Render suppliers page
 exports.ninMember = async (req, res) => {
     try {
@@ -70,6 +64,73 @@ exports.addMember = async (req, res) => {
     } catch (error) {
         console.error('Error adding member:', error);
         res.status(500).send('Error adding member');
+    }
+};
+
+// Render edit member page
+exports.editMembersPage = async (req, res) => {
+    try {
+        const { id } = req.params; // Get member ID from URL params
+        const member = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM members WHERE id = ?', [id], (err, results) => {
+                if (err) reject(err);
+                resolve(results[0]); // Resolve with the member data
+            });
+        });
+        /*
+        if (!member) {
+            return res.status(404).send('Member not found');
+        }
+        */
+        res.render('editMember', { member }); // Render edit page with member data
+    } catch (error) {
+        console.error('Error fetching member for edit:', error);
+        res.status(500).send('Error fetching member for edit');
+    }
+};
+
+// Update an existing member
+exports.updateMembers = async (req, res) => {
+    try {
+        const { id } = req.params; // Get member ID from URL params
+        const {
+            f_name, l_name, email,
+            phone_no, nin, issued_card,
+            gender, occupation, floor_type, shop_no
+        } = req.body; // Extract fields from request body
+
+        const loggedInUserId = req.user.id; // Assuming `req.user.id` contains the logged-in user ID
+
+        await new Promise((resolve, reject) => {
+            db.query(
+                'UPDATE members SET ?, update_date = NOW(), update_by = ? WHERE id = ?',
+                [
+                    {
+                        f_name,
+                        l_name,
+                        email,
+                        phone_no,
+                        nin,
+                        issued_card,
+                        gender,
+                        occupation,
+                        floor_type,
+                        shop_no,
+                    },
+                    loggedInUserId, // Logged-in user ID
+                    id, // Member ID
+                ],
+                (err) => {
+                    if (err) reject(err);
+                    resolve();
+                }
+            );
+        });
+
+        res.redirect('/ninMember'); // Redirect to members page after successful update
+    } catch (error) {
+        console.error('Error updating member:', error);
+        res.status(500).send('Error updating member');
     }
 };
 

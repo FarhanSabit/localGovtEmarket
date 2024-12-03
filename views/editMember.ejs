@@ -1,0 +1,102 @@
+<%- include('partials/header') %>
+
+<body>
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Update Member (NIN) Form</h4>
+        <p class="card-description">
+          Update NIN Member
+        </p>
+        <!-- Form action contains the member ID -->
+        <form action="/editMembers/<%= member ? member.id : '' %>" method="POST" enctype="multipart/form-data">
+          <div class="forms-sample">
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label>First Name:</label>
+                <input type="text" name="f_name" class="form-control" placeholder="Enter First Name" value="<%= member ? member.f_name : '' %>" required />
+              </div>
+              <div class="col-md-6">
+                <label>Last Name:</label>
+                <input type="text" name="l_name" class="form-control" placeholder="Enter Last Name" value="<%= member ? member.l_name : '' %>" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label>Email:</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter Email" value="<%= member ? member.email : '' %>" />
+              </div>
+              <div class="col-md-6">
+                <label>Phone No:</label>
+                <input type="text" name="phone_no" class="form-control" placeholder="Enter Mobile No" value="<%= member ? member.phone_no : '' %>" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label>NIN:</label>
+                <input type="text" name="nin" class="form-control" placeholder="Enter NIN" value="<%= member ? member.nin : '' %>" required />
+              </div>
+              <div class="col-md-6">
+                <label>Issued Card:</label>
+                <input type="text" name="issued_card" class="form-control" placeholder="Enter Card Number" value="<%= member ? member.issued_card : '' %>" />
+              </div>
+            </div>
+            <!-- Gender & Occupation -->
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="gender">Gender:</label>
+                <select class="form-control" name="gender" id="gender">
+                  <option value="">Select Gender</option>
+                  <option value="Male" <%= member && member.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                  <option value="Female" <%= member && member.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="occupation">Occupation:</label>
+                <select class="form-control" name="occupation" id="occupation">
+                  <option value="">Select Occupation</option>
+                  <option value="Business" <%= member && member.occupation === 'Business' ? 'selected' : '' %>>Business</option>
+                  <option value="Public Service" <%= member && member.occupation === 'Public Service' ? 'selected' : '' %>>Public Service</option>
+                  <option value="Private Service" <%= member && member.occupation === 'Private Service' ? 'selected' : '' %>>Private Service</option>
+                  <option value="Self-Employed" <%= member && member.occupation === 'Self-Employed' ? 'selected' : '' %>>Self-Employed</option>
+                  <option value="Others" <%= member && member.occupation === 'Others' ? 'selected' : '' %>>Others</option>
+                  <option value="Aspirant" <%= member && member.occupation === 'Aspirant' ? 'selected' : '' %>>Aspirant</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Floor Type & Shop Number -->
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label for="floor_type">Floor Type:</label>
+                <select class="form-control" name="floor_type" id="floor_type">
+                  <option value="">Select Floor:</option>
+                  <option value="Ground Floor" <%= member && member.floor_type === 'Ground Floor' ? 'selected' : '' %>>Ground Floor</option>
+                  <option value="Level 1" <%= member && member.floor_type === 'Level 1' ? 'selected' : '' %>>Level 1</option>
+                  <option value="Level 2" <%= member && member.floor_type === 'Level 2' ? 'selected' : '' %>>Level 2</option>
+                  <option value="Level 3" <%= member && member.floor_type === 'Level 3' ? 'selected' : '' %>>Level 3</option>
+                  <option value="Level 4" <%= member && member.floor_type === 'Level 4' ? 'selected' : '' %>>Level 4</option>
+                  <option value="Food Court" <%= member && member.floor_type === 'Food Court' ? 'selected' : '' %>>Food Court</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="shop_no">Shop No:</label>
+                <select class="form-control" name="shop_no" id="shop_no">
+                  <option value="">Select Shop:</option>
+                  <option value="A1" <%= member && member.shop_no === 'A1' ? 'selected' : '' %>>A1</option>
+                  <option value="A2" <%= member && member.shop_no === 'A2' ? 'selected' : '' %>>A2</option>
+                  <option value="A3" <%= member && member.shop_no === 'A3' ? 'selected' : '' %>>A3</option>
+                  <option value="A4" <%= member && member.shop_no === 'A4' ? 'selected' : '' %>>A4</option>
+                  <option value="A5" <%= member && member.shop_no === 'A5' ? 'selected' : '' %>>A5</option>
+                  <option value="A6" <%= member && member.shop_no === 'A6' ? 'selected' : '' %>>A6</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
+            <a href="/ninMember" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
+          </div>
+        </form>        
+      </div>
+    </div>
+  </div>
+<%- include('partials/footer') %>
