@@ -16,8 +16,8 @@ router.get('/addMember', authenticateToken, membersController.addMemberPage);
 router.post('/addMember', authenticateToken,upload.single('photo'), membersController.addMember);
 
 // Edit user routes
-router.get('/editMembers/:id', authenticateToken, membersController.editMembersPage);
-router.post('/editMembers/:id', authenticateToken, membersController.updateMembers);
+router.get('/editMember/:id', authenticateToken, membersController.editMembersPage);
+router.post('/editMember/:id', authenticateToken, membersController.updateMembers);
 /*
 // Delete user route
 router.get('/deleteSuppliers/:id', authenticateToken, suppliersController.deleteSuppliers);
