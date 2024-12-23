@@ -12,7 +12,8 @@ exports.registerPage = (req, res) => {
         }
 
         // Render the registration page with markets data
-        res.render('register', { markets });
+        res.render('register', { markets, error: '' });
+        //res.render('login', { markets, email: '', market_id: '', error: '' });
     });
 };
 
@@ -21,6 +22,19 @@ exports.registerUser = async (req, res) => {
     try {
         const { first_name, last_name, user_name, email, phone, user_role, is_active, password, market_id } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
+        // Check if email already exists
+        const existingUser = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+                if (err) reject(err);
+                resolve(results[0]);
+            });
+        });
+
+        if (existingUser) {
+            //return res.status(400).send('Email is already in use.');
+            return res.status(401).render('register', { error: 'Email is already in use.', markets: [] });
+        }
+
         const user = { first_name, last_name, user_name, email, phone, user_role, is_active, password: hashedPassword, market_id };
 
         db.query('INSERT INTO users SET ?', user, (err) => {

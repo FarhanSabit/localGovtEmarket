@@ -42,6 +42,14 @@
                     </select>
                 </div>
 
+                <!-- Display Error Message -->
+                <% if (error && error.length > 0) { %>
+                    <div class="alert alert-danger mt-3" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+
+
                 <button type="submit" class="btn btn-primary w-100">Register</button>
                 <p class="text-center mt-3"><a href="/login">Login</a></p>
             </form>
