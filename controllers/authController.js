@@ -73,10 +73,12 @@ exports.loginUser = async (req, res) => {
                 return res.status(401).render('login', { error: 'Invalid credentials', email, market_id, markets: [] });
             }
 
+            /*
             // Check if market_id matches the user's assigned market_id
             if (user.market_id !== parseInt(market_id)) {
                 return res.status(401).render('login', { error: 'You have selected the wrong market', email, market_id, markets: [] });
             }
+            */
 
             // Generate JWT token
             const token = jwt.sign({ id: user.id, role: user.user_role, market_id: user.market_id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });

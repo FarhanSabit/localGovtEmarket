@@ -1,12 +1,12 @@
-//const bcrypt = require('bcryptjs');
 const db = require('../db/db');
-//const upload = require('../Middleware/upload');
 
 // Render suppliers page
 exports.ninMember = async (req, res) => {
     try {
+        const marketId = req.user.market_id; // Assuming `req.user.market_id` contains the logged-in user's market ID
+
         const members = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM members', (err, results) => {
+            db.query('SELECT * FROM members WHERE market_id = ?', [marketId], (err, results) => {
                 if (err) reject(err);
                 resolve(results);
             });
@@ -21,19 +21,18 @@ exports.ninMember = async (req, res) => {
 // Render add members page
 exports.addMemberPage = (req, res) => res.render('addMember');
 
-//add member
+// Add member
 exports.addMember = async (req, res) => {
     try {
-        // Extract fields from req.body
         const {
             f_name, l_name, email,
             phone_no, nin, issued_card,
             gender, occupation, floor_type, shop_no
         } = req.body;
 
-        const loggedInUserId = req.user.id; // Assuming `req.user.id` contains the logged-in user ID
+        const loggedInUserId = req.user.id;
+        const marketId = req.user.market_id;
 
-        // Insert into the database with create_by field
         await new Promise((resolve, reject) => {
             db.query(
                 'INSERT INTO members SET ?',
@@ -48,6 +47,7 @@ exports.addMember = async (req, res) => {
                     occupation,
                     floor_type,
                     shop_no,
+                    market_id: marketId, // Set market ID
                     create_by: loggedInUserId, // Set logged-in user ID as create_by
                 },
                 (err) => {
@@ -57,7 +57,6 @@ exports.addMember = async (req, res) => {
             );
         });
 
-        // Redirect after successful insertion
         res.redirect('/ninMember');
     } catch (error) {
         console.error('Error adding member:', error);
@@ -65,23 +64,20 @@ exports.addMember = async (req, res) => {
     }
 };
 
-
 // Render edit member page
 exports.editMembersPage = async (req, res) => {
     try {
-        const { id } = req.params; // Get member ID from URL params
+        const { id } = req.params;
+        const marketId = req.user.market_id;
+
         const member = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM members WHERE id = ?', [id], (err, results) => {
+            db.query('SELECT * FROM members WHERE id = ? AND market_id = ?', [id, marketId], (err, results) => {
                 if (err) reject(err);
-                resolve(results[0]); // Resolve with the member data
+                resolve(results[0]);
             });
         });
-        /*
-        if (!member) {
-            return res.status(404).send('Member not found');
-        }
-        */
-        res.render('editMember', { member }); // Render edit page with member data
+
+        res.render('editMember', { member });
     } catch (error) {
         console.error('Error fetching member for edit:', error);
         res.status(500).send('Error fetching member for edit');
@@ -91,18 +87,19 @@ exports.editMembersPage = async (req, res) => {
 // Update an existing member
 exports.updateMembers = async (req, res) => {
     try {
-        const { id } = req.params; // Get member ID from URL params
+        const { id } = req.params;
         const {
             f_name, l_name, email,
             phone_no, nin, issued_card,
             gender, occupation, floor_type, shop_no
-        } = req.body; // Extract fields from request body
+        } = req.body;
 
-        const loggedInUserId = req.user.id; // Assuming `req.user.id` contains the logged-in user ID
+        const loggedInUserId = req.user.id;
+        const marketId = req.user.market_id;
 
         await new Promise((resolve, reject) => {
             db.query(
-                'UPDATE members SET ?, update_date = NOW(), update_by = ? WHERE id = ?',
+                'UPDATE members SET ?, update_date = NOW(), update_by = ? WHERE id = ? AND market_id = ?',
                 [
                     {
                         f_name,
@@ -116,8 +113,9 @@ exports.updateMembers = async (req, res) => {
                         floor_type,
                         shop_no,
                     },
-                    loggedInUserId, // Logged-in user ID
-                    id, // Member ID
+                    loggedInUserId,
+                    id,
+                    marketId
                 ],
                 (err) => {
                     if (err) reject(err);
@@ -126,21 +124,21 @@ exports.updateMembers = async (req, res) => {
             );
         });
 
-        res.redirect('/ninMember'); // Redirect to members page after successful update
+        res.redirect('/ninMember');
     } catch (error) {
         console.error('Error updating member:', error);
         res.status(500).send('Error updating member');
     }
 };
 
-
 // Delete a member
 exports.deleteMembers = async (req, res) => {
     try {
         const { id } = req.params;
+        const marketId = req.user.market_id;
 
         await new Promise((resolve, reject) => {
-            db.query('DELETE FROM members WHERE id = ?', [id], (err) => {
+            db.query('DELETE FROM members WHERE id = ? AND market_id = ?', [id, marketId], (err) => {
                 if (err) reject(err);
                 resolve();
             });
@@ -157,8 +155,10 @@ exports.deleteMembers = async (req, res) => {
 exports.MembersProfile = async (req, res) => {
     try {
         const { id } = req.params;
+        const marketId = req.user.market_id;
+
         const member = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM members WHERE id = ?', [id], (err, results) => {
+            db.query('SELECT * FROM members WHERE id = ? AND market_id = ?', [id, marketId], (err, results) => {
                 if (err) reject(err);
                 if (results.length === 0) reject(new Error('Member not found'));
                 resolve(results[0]);
