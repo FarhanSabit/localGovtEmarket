@@ -9,9 +9,17 @@ exports.indexPage = async (req, res) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const userId = decoded.id;
+        const marketId = decoded.market_id;
 
         const userQuery = await new Promise((resolve, reject) => {
             db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
+                if (err) reject(err);
+                resolve(results[0]);
+            });
+        });
+
+        const marketQuery = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM markets WHERE id = ?', [marketId], (err, results) => {
                 if (err) reject(err);
                 resolve(results[0]);
             });
@@ -38,7 +46,7 @@ exports.indexPage = async (req, res) => {
             });
         });
 
-        res.render('index', { user: userQuery, totalUsers: totalUsersQuery, total_suppliers: totalSuppliersQuery , total_members: totalMembersQuery });
+        res.render('index', { user: userQuery, market: marketQuery, totalUsers: totalUsersQuery, total_suppliers: totalSuppliersQuery , total_members: totalMembersQuery });
     } catch (error) {
         console.error('Error rendering index page:', error);
         res.status(500).send('Error rendering index page');
