@@ -15,7 +15,7 @@ const uploadController = async (req, res) => {
     const sheet = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: null });
 
     // Check headers
-    const expectedHeaders = ["name", "nin", "phone_no", "category", "fc_no", "mth_pay", "market_id"];
+    const expectedHeaders = ["name", "nin", "phone_no", "category", "fc_no", "mth_pay", "market_id","is_active","sex","fc_type"];
     const fileHeaders = Object.keys(sheet[0]);
     const mismatchedHeaders = expectedHeaders.filter(header => !fileHeaders.includes(header));
 
@@ -26,7 +26,7 @@ const uploadController = async (req, res) => {
     // Validate rows
     const errors = [];
     const validRows = [];
-    const loggedInUser = req.session.userId; // Replace with your session user ID logic
+    const loggedInUserId = req.user.id; // Replace with your session user ID logic
 
     sheet.forEach((row, index) => {
       const rowErrors = [];
@@ -44,8 +44,11 @@ const uploadController = async (req, res) => {
           fc_no: row.fc_no,
           mth_pay: row.mth_pay,
           market_id: row.market_id,
-          create_by: loggedInUser,
+          create_by: loggedInUserId,
           create_date: new Date(),
+          is_active: 1,
+          sex: row.sex,
+          fc_type: row.fc_type,
         });
       }
     });
@@ -58,13 +61,13 @@ const uploadController = async (req, res) => {
     //const db = req.app.locals.db; // Use your existing database connection
     const query = `
       INSERT INTO customer 
-      (name, nin, phone_no, category, fc_no, mth_pay, market_id, create_by, create_date)
+      (name, nin, phone_no, category, fc_no, mth_pay, market_id, create_by, create_date,is_active,sex,fc_type)
       VALUES ?
     `;
     const values = validRows.map(row => Object.values(row));
     await db.query(query, [values]);
 
-    //res.status(200).json({ message: "File processed successfully!", rowsInserted: validRows.length });
+    res.status(200).json({ message: "File processed successfully!", rowsInserted: validRows.length });
   } catch (err) {
     console.error("Error during file upload:", err); // Log the full error
     res.status(500).json({ error: "Internal server error", details: err.message });
