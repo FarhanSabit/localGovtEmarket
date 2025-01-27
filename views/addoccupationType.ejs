@@ -1,25 +1,29 @@
-<%- include('partials/header') %>
 
-          <div class="row">
-              <div class="card">
+        <%- include('partials/header') %>
+
+        <div class="row">
+            <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Add Occupation Type Form</h4>
-                  <p class="card-description">
-                    Add a new Occupation
-                  </p>
-                  <form class="forms-sample">
-                    <div class="form-group">
-                      <label for="exampleInputUsername1">Occupation ID</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Occupation ID Number">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputCity1">Occupation Name</label>
-                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Occupation Name">
-                    </div>
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
-                  </form>
-              </div>
+                    <h4 class="card-title">Add Occupation Type Form1</h4>
+                    <p class="card-description">Add a new Occupation</p>
+                    <form class="forms-sample" action="/addoccupationType" method="POST">
+                        <div class="form-group">
+                            <label for="occupationName">Occupation Name</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="occupationName" 
+                                name="occupation_name" 
+                                placeholder="Enter Occupation Name" 
+                                required 
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a href="/occupationType" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
             </div>
-          </div>
-          <%- include('partials/footer') %>
+        </div>
+        
+        <%- include('partials/footer') %>
+                  

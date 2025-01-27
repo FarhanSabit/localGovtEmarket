@@ -61,10 +61,10 @@ router.get('/addMember', authenticateToken, dummyController.addMember);*/
 
 router.get('/withoutNin', authenticateToken, dummyController.withoutNin);
 router.get('/addWithoutNin', authenticateToken, dummyController.addWithoutNin);
-
+/*
 router.get('/occupationType', authenticateToken, dummyController.occupationType);
 router.get('/addoccupationType', authenticateToken, dummyController.addoccupationType);
-
+*/
 router.get('/shopRents', authenticateToken, dummyController.shopRents);
 router.get('/addshopRents', authenticateToken, dummyController.addshopRents);
 

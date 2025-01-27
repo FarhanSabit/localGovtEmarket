@@ -1,62 +1,207 @@
 <%- include('partials/header') %>
 
-        <div class="col-lg-12">
-          <div class="row d-flex align-items-center justify-content-between">
-              <h4 class="card-title">Occupation Type List
-              </h4>
-              <p class="card-description">
-                Table: <code>Occupation Types</code>
-              </p>
-            <div class="col-md-4 d-flex justify-content-end">
-              <a href="/addOccupationType" class="btn btn-primary btn-sm" role="button">
-                <i class="ti-user"></i>                      
-                Add Occupation Type
-              </a>
-            </div>
-          </div>                    
-          
-        <div class="table-responsive pt-3">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>
-                  #
-                </th>
-                <th>
-                  ID
-                </th>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Members
-                </th>
-                <th>
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  1
-                </td>
-                <td>
-                  DBX1234
-                </td>
-                <td>
-                  Toyota
-                </td>
-                <td>
-                  N/A
-                </td>
-                <td>
-                  <button type="button" class="btn btn-warning btn-sm">Edit</button>
-                  <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<div class="col-lg-12">
+  <div class="row d-flex align-items-center justify-content-between">
+    <h4 class="card-title">Occupation Type List</h4>
+    <p class="card-description">Table: <code>Occupation Types</code></p>
+    <div class="col-md-4 d-flex justify-content-end">
+      <a href="/addoccupationType" class="btn btn-primary btn-sm" role="button">
+        <i class="ti-user"></i>
+        Add Occupation Type
+      </a>
+    </div>
+  </div>
+
+  <div class="table-responsive pt-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Serial</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Members</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% occupations.forEach((occupation, index) => { %>
+        <tr>
+          <th><%= index + 1 %></th>
+          <td><%= occupation.id %></td>
+          <td><%= occupation.occupation_name %></td>
+          <td><%= occupation.market_name %></td>
+          <td>
+            <button 
+              class="btn btn-warning btn-sm edit-btn" 
+              data-id="<%= occupation.id %>" 
+              data-name="<%= occupation.occupation_name %>">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <a href="/deleteOccupationType/<%= occupation.id %>" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash"></i> Delete
+            </a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Occupation Type</h5>
+        <!-- Cross (X) Button -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="editForm" method="POST">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="occupation_name" class="form-label">Occupation Name</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="occupation_name" 
+              name="occupation_name" 
+              required>
+          </div>
         </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+          <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
-        <%- include('partials/footer') %>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    const editForm = document.getElementById('editForm');
+    const occupationNameInput = document.getElementById('occupation_name');
+
+    // Add click listeners to all edit buttons
+    editButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name');
+
+        occupationNameInput.value = name; // Set the input value
+        editForm.action = `/updateOccupationType/${id}`; // Set form action dynamically
+
+        editModal.show(); // Show the modal
+      });
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
+
+<!--
+<%- include('partials/header') %>
+
+<div class="col-lg-12">
+  <div class="row d-flex align-items-center justify-content-between">
+    <h4 class="card-title">Occupation Type List</h4>
+    <p class="card-description">Table: <code>Occupation Types</code></p>
+    <div class="col-md-4 d-flex justify-content-end">
+      <a href="/addoccupationType" class="btn btn-primary btn-sm" role="button">
+        <i class="ti-user"></i>
+        Add Occupation Type
+      </a>
+    </div>
+  </div>
+
+  <div class="table-responsive pt-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Serial</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Members</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% occupations.forEach((occupation, index) => { %>
+        <tr>
+          <th><%= index + 1 %></th>
+          <td><%= occupation.id %></td>
+          <td><%= occupation.occupation_name %></td>
+          <td><%= occupation.market_name %></td>
+          <td>
+            <button 
+              class="btn btn-warning btn-sm edit-btn" 
+              data-id="<%= occupation.id %>" 
+              data-name="<%= occupation.occupation_name %>">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <a href="/deleteOccupationType/<%= occupation.id %>" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash"></i> Delete
+            </a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Occupation Type</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="editForm" method="POST">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="occupation_name" class="form-label">Occupation Name</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="occupation_name" 
+              name="occupation_name" 
+              required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    const editForm = document.getElementById('editForm');
+    const occupationNameInput = document.getElementById('occupation_name');
+
+    editButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name');
+
+        occupationNameInput.value = name;
+        editForm.action = `/updateOccupationType/${id}`;
+
+        editModal.show();
+      });
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
+-->
