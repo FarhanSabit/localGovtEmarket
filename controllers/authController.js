@@ -98,7 +98,7 @@ exports.loginUser = async (req, res) => {
             const token = jwt.sign(
                 { 
                     id: user.id, 
-                    role: user.user_role, 
+                    user_role: user.user_role, 
                     market_id: user.market_id 
                 }, 
                 process.env.JWT_SECRET_KEY, 
@@ -107,6 +107,9 @@ exports.loginUser = async (req, res) => {
             // Store token in session
             req.session.token = token;
             console.log('Token:', token);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+            const userRole = decoded.user_role; // Get user role from token
+            console.log('User Role:', userRole);
 
             // Redirect to the index page or any other page after successful login
             res.redirect('/index');
