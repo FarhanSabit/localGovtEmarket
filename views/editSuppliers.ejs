@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,43 +10,132 @@
     <div class="container mt-5">
         <h2>Edit Member</h2>
         <form action="/editSuppliers/<%= supplier ? supplier.id : '' %>" method="POST">
+            
+            <!-- Name -->
             <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input type="text" name="name" class="form-control" value="<%= supplier.name %>" placeholder="Name" required>
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" value="<%= supplier.name %>" placeholder="Name" required>
             </div>
+
+            <!-- Nin -->
             <div class="mb-3">
-              <label class="form-label">Nin</label>
-              <input type="text" name="nin" class="form-control" value="<%= supplier.nin %>" placeholder="Nin" required>
+                <label class="form-label">NIN</label>
+                <input type="text" name="nin" class="form-control" value="<%= supplier.nin %>" placeholder="NIN" required>
             </div>
+
+            <!-- Phone Number -->
             <div class="mb-3">
-              <label class="form-label">Phone Number</label>
-              <input type="number" name="phone_no" class="form-control" value="<%= supplier.phone_no %>" placeholder="Phone Number" required pattern="\d{10}">
+                <label class="form-label">Phone Number</label>
+                <input type="number" name="phone_no" class="form-control" value="<%= supplier.phone_no %>" placeholder="Phone Number" required pattern="\d{10}">
             </div>
+
+            <!-- Category -->
             <div class="mb-3">
-              <label class="form-label">Category</label>
-              <select name="category" class="form-control" required>
-                <option value="">Select Category</option>
-                <option value="TEXTILE" <%= supplier.category === 'TEXTILE' ? 'selected' : '' %>>TEXTILE</option>
-                <option value="FRESH FOOD" <%= supplier.category === 'FRESH FOOD' ? 'selected' : '' %>>FRESH FOOD</option>
-                <option value="DRY FISH" <%= supplier.category === 'DRY FISH' ? 'selected' : '' %>>DRY FISH</option>
-                <option value="DRY FOOD" <%= supplier.category === 'DRY FOOD' ? 'selected' : '' %>>DRY FOOD</option>
-                <option value="FF" <%= supplier.category === 'FF' ? 'selected' : '' %>>FF</option>
-                <option value="CRAFTS" <%= supplier.category === 'CRAFTS' ? 'selected' : '' %>>CRAFTS</option>
-              </select>
+                <label class="form-label">Category</label>
+                <select name="category" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <option value="TEXTILE" <%= supplier.category === 'TEXTILE' ? 'selected' : '' %>>TEXTILE</option>
+                    <option value="FRESH FOOD" <%= supplier.category === 'FRESH FOOD' ? 'selected' : '' %>>FRESH FOOD</option>
+                    <option value="DRY FISH" <%= supplier.category === 'DRY FISH' ? 'selected' : '' %>>DRY FISH</option>
+                    <option value="DRY FOOD" <%= supplier.category === 'DRY FOOD' ? 'selected' : '' %>>DRY FOOD</option>
+                    <option value="FF" <%= supplier.category === 'FF' ? 'selected' : '' %>>FF</option>
+                    <option value="CRAFTS" <%= supplier.category === 'CRAFTS' ? 'selected' : '' %>>CRAFTS</option>
+                </select>
             </div>
+
+            <!-- Lock-up Number -->
             <div class="mb-3">
-              <label class="form-label">Fc Number</label>
-              <input type="text" name="fc_no" class="form-control" value="<%= supplier.fc_no %>" placeholder="Fc Number" required>
+                <label class="form-label">Lock-up Number</label>
+                <input type="text" name="lock_up_number" class="form-control" value="<%= supplier.lock_up_number %>" placeholder="Lock-up Number" required>
             </div>
+
+            <!-- FC Number -->
             <div class="mb-3">
-              <label class="form-label">Monthly Pay (000s)</label>
-              <input type="number" name="mth_pay" class="form-control" value="<%= supplier.mth_pay %>" placeholder="Monthly Pay (000s)" required>
+                <label class="form-label">FC Number</label>
+                <input type="text" name="fc_no" class="form-control" value="<%= supplier.fc_no %>" placeholder="FC Number" required>
             </div>
+
+            <!-- Division -->
+            <div class="mb-3">
+                <label class="form-label">Division</label>
+                <input type="text" name="division" class="form-control" value="<%= supplier.division %>" placeholder="Division" required>
+            </div>
+
+            <!-- Parish -->
+            <div class="mb-3">
+                <label class="form-label">Parish</label>
+                <input type="text" name="parish" class="form-control" value="<%= supplier.parish %>" placeholder="Parish" required>
+            </div>
+
+            <!-- Village -->
+            <div class="mb-3">
+                <label class="form-label">Village</label>
+                <input type="text" name="village" class="form-control" value="<%= supplier.village %>" placeholder="Village" required>
+            </div>
+
+            <!-- Street -->
+            <div class="mb-3">
+                <label class="form-label">Street</label>
+                <input type="text" name="street" class="form-control" value="<%= supplier.street %>" placeholder="Street" required>
+            </div>
+
+            <!-- Nature of Market -->
+            <div class="mb-3">
+                <label class="form-label">Nature of Market</label>
+                <input type="text" name="nature_of_market" class="form-control" value="<%= supplier.nature_of_market %>" placeholder="Nature of Market" required>
+            </div>
+
+            <!-- Total Paid -->
+            <div class="mb-3">
+                <label class="form-label">Total Paid</label>
+                <input type="text" name="total_paid" class="form-control" value="<%= supplier.total_paid %>" placeholder="Total Paid" required>
+            </div>
+
+            <!-- Balance -->
+            <div class="mb-3">
+                <label class="form-label">Balance</label>
+                <input type="text" name="balance" class="form-control" value="<%= supplier.balance %>" placeholder="Balance" required>
+            </div>
+
+            <!-- Municipality -->
+            <div class="mb-3">
+                <label class="form-label">Municipality</label>
+                <input type="text" name="municipality" class="form-control" value="<%= supplier.municipality %>" placeholder="Municipality" required>
+            </div>
+
+            <!-- Monthly Pay -->
+            <div class="mb-3">
+                <label class="form-label">Monthly Pay (000s)</label>
+                <input type="number" name="mth_pay" class="form-control" value="<%= supplier.mth_pay %>" placeholder="Monthly Pay (000s)" required>
+            </div>
+
+            <!-- Sex -->
+            <div class="mb-3">
+                <label class="form-label">Sex</label>
+                <select name="sex" class="form-control" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male" <%= supplier.sex === 'Male' ? 'selected' : '' %>>Male</option>
+                    <option value="Female" <%= supplier.sex === 'Female' ? 'selected' : '' %>>Female</option>
+                    <option value="Other" <%= supplier.sex === 'Other' ? 'selected' : '' %>>Other</option>
+                </select>
+            </div>
+
+            <!-- FC Type -->
+            <div class="mb-3">
+                <label class="form-label">FC Type</label>
+                <input type="text" name="fc_type" class="form-control" value="<%= supplier.fc_type %>" placeholder="FC Type" required>
+            </div>
+
+            <!-- Created By -->
+            <!--<div class="mb-3">
+                <label class="form-label">Created By</label>
+                <input type="text" name="create_by" class="form-control" value="<%= supplier.create_by %>" placeholder="Created By" required>
+            </div>-->
+
+            <!-- Submit & Cancel Buttons -->
             <button type="submit" class="btn btn-primary mr-2">Submit</button>
             <a href="/SupplieReportPage" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
-          </form>
+        </form>
     </div>
-
 </body>
-
 </html>

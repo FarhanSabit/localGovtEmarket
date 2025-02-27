@@ -1,49 +1,136 @@
 <%- include('partials/header') %>
-              <div class="card w-100">
-                <div class="card-body">
-                  <h4 class="card-title">Add Members Form</h4>
-                  <p class="card-description">
-                    Add a new Member
-                  </p>
-                  <form action="/AddSuppliers" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                      <label class="form-label">Name</label>
-                      <input type="text" name="name" class="form-control"placeholder="Phone Number" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Nin</label>
-                      <input type="text" name="nin" class="form-control" placeholder="Nin" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Phone Number</label>
-                      <input type="text" name="phone_no" class="form-control" placeholder="Phone Number" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Category</label>
-                      <select name="category" class="form-control" required>
-                          <option value="">Select Category</option>
-                          <option value="TEXTILE">TEXTILE</option>
-                          <option value="FRESH FOOD">FRESH FOOD</option>
-                          <option value="DRY FISH">DRY FISH</option>
-                          <option value="DRY FOOD">DRY FOOD</option>
-                          <option value="FF">FF</option>
-                          <option value="CRAFTS">CRAFTS</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Fc Number</label>
-                      <input type="text" name="fc_no" class="form-control" placeholder="Fc Number" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Monthly Pay (000s)</label>
-                      <input type="text" name="mth_pay" class="form-control" placeholder="Monthly Pay (000s)" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <a href="/SupplieReportPage" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
-                  </form>
-                </div>
-              
+<div class="card w-100">
+  <div class="card-body">
+    <h4 class="card-title">Add Members Form</h4>
+    <p class="card-description">
+      Add a new Member
+    </p>
+    <form action="/AddSuppliers" method="POST" enctype="multipart/form-data">
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+      </div>
 
+      <!-- Nin -->
+      <div class="mb-3">
+        <label class="form-label">NIN</label>
+        <input type="text" name="nin" class="form-control" placeholder="National Identification Number" required>
+      </div>
 
+      <!-- Phone Number -->
+      <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <input type="text" name="phone_no" class="form-control" placeholder="Phone Number" required>
+      </div>
 
- <%- include('partials/footer') %>
+      <!-- Category -->
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select name="category" class="form-control" required>
+          <option value="">Select Category</option>
+          <option value="TEXTILE">TEXTILE</option>
+          <option value="FRESH FOOD">FRESH FOOD</option>
+          <option value="DRY FISH">DRY FISH</option>
+          <option value="DRY FOOD">DRY FOOD</option>
+          <option value="FF">FF</option>
+          <option value="CRAFTS">CRAFTS</option>
+        </select>
+      </div>
+
+      <!-- Lock-up Number -->
+      <div class="mb-3">
+        <label class="form-label">Lock-up Number</label>
+        <input type="text" name="lock_up_number" class="form-control" placeholder="Lock-up Number" required>
+      </div>
+
+      <!-- FC Number -->
+      <div class="mb-3">
+        <label class="form-label">FC Number</label>
+        <input type="text" name="fc_no" class="form-control" placeholder="FC Number" required>
+      </div>
+
+      <!-- Division -->
+      <div class="mb-3">
+        <label class="form-label">Division</label>
+        <input type="text" name="division" class="form-control" placeholder="Division" required>
+      </div>
+
+      <!-- Parish -->
+      <div class="mb-3">
+        <label class="form-label">Parish</label>
+        <input type="text" name="parish" class="form-control" placeholder="Parish" required>
+      </div>
+
+      <!-- Village -->
+      <div class="mb-3">
+        <label class="form-label">Village</label>
+        <input type="text" name="village" class="form-control" placeholder="Village" required>
+      </div>
+
+      <!-- Street -->
+      <div class="mb-3">
+        <label class="form-label">Street</label>
+        <input type="text" name="street" class="form-control" placeholder="Street" required>
+      </div>
+
+      <!-- Nature of Market -->
+      <div class="mb-3">
+        <label class="form-label">Nature of Market</label>
+        <input type="text" name="nature_of_market" class="form-control" placeholder="Nature of Market" required>
+      </div>
+
+      <!-- Total Paid -->
+      <div class="mb-3">
+        <label class="form-label">Total Paid</label>
+        <input type="text" name="total_paid" class="form-control" placeholder="Total Paid" required>
+      </div>
+
+      <!-- Balance -->
+      <div class="mb-3">
+        <label class="form-label">Balance</label>
+        <input type="text" name="balance" class="form-control" placeholder="Balance" required>
+      </div>
+
+      <!-- Municipality -->
+      <div class="mb-3">
+        <label class="form-label">Municipality</label>
+        <input type="text" name="municipality" class="form-control" placeholder="Municipality" required>
+      </div>
+
+      <!-- Monthly Pay -->
+      <div class="mb-3">
+        <label class="form-label">Monthly Pay (000s)</label>
+        <input type="text" name="mth_pay" class="form-control" placeholder="Monthly Pay (000s)" required>
+      </div>
+
+      <!-- Sex -->
+      <div class="mb-3">
+        <label class="form-label">Sex</label>
+        <select name="sex" class="form-control" required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- FC Type -->
+      <div class="mb-3">
+        <label class="form-label">FC Type</label>
+        <input type="text" name="fc_type" class="form-control" placeholder="FC Type" required>
+      </div>
+
+      <!-- Created By -->
+      <!--<div class="mb-3">
+        <label class="form-label">Created By</label>
+        <input type="text" name="create_by" class="form-control" placeholder="Created By" required>
+      </div>-->
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+      <a href="/SupplieReportPage" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
+    </form>
+  </div>
+</div>
+<%- include('partials/footer') %>
