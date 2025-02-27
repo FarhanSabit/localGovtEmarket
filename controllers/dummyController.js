@@ -16,6 +16,8 @@ exports.Vat_Payment = (req, res) => {res.render('Vat_Payment');};
 // Render dummy exports.GlobalMarketStockReport = (req, res) => {res.render('GlobalMarketStockReport');};
 exports.GlobalMarketStockReport = (req, res) => {res.render('GlobalMarketStockReport');};
 //exports.dummy2Page = (req, res) => {res.render('AddSuppliers');};
+//Render Payment
+exports.Payment = (req, res) => {res.render('Payment');};
 
 // Render dummy exports.addProductCategory = (req, res) => {res.render('GlobalMarketStockReport');};
 exports.addProductCategory = (req, res) => {res.render('addProductCategory');};

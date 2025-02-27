@@ -17,7 +17,8 @@ router.get('/Stock_Counter', authenticateToken, dummyController.Stock_Counter);
 
 router.get('/Vat_Payment', authenticateToken, dummyController.Vat_Payment);
 // Dummy routes
-router.get('/GlobalMarketStockReport', authenticateToken, dummyController.GlobalMarketStockReport); // Dummy page 1
+router.get('/GlobalMarketStockReport', authenticateToken, dummyController.GlobalMarketStockReport);
+router.get('/Payment', authenticateToken, dummyController.Payment); // Dummy page 1
 //router.get('/AddSuppliers', authenticateToken, dashboardController.dummy2Page); // Dummy page 2
 // addProductCategory routes
 router.get('/addProductCategory', authenticateToken, dummyController.addProductCategory);
