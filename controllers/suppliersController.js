@@ -3,16 +3,28 @@ const db = require('../db/db');
 // Render suppliers page
 exports.suppliersPage = async (req, res) => {
     try {
-        const { market_id } = req.user; // Assuming req.user contains the market_id
 
-        const suppliers = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM customer WHERE market_id = ?', [market_id], (err, results) => {
-                if (err) reject(err);
-                resolve(results);
+        const { city_id, user_role, market_id } = req.user; // Assuming req.user contains the market_id
+        if (user_role === 'admin') {
+            const suppliers = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM customer WHERE city_id = ?', [city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
             });
-        });
-
-        res.render('SupplieReportPage', { suppliers });
+    
+            res.render('SupplieReportPage', { suppliers });
+        } else {
+            const suppliers = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM customer WHERE market_id = ?', [market_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
+            });
+    
+            res.render('SupplieReportPage', { suppliers }); 
+        }
+        
     } catch (error) {
         console.error('Error fetching suppliers:', error);
         res.status(500).send('Error fetching suppliers');
@@ -60,16 +72,27 @@ exports.addSuppliers = async (req, res) => {
 exports.editSuppliersPage = async (req, res) => {
     try {
         const { id } = req.params;
-        const { market_id } = req.user;
-
-        const supplier = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM customer WHERE id = ? AND market_id = ?', [id, market_id], (err, results) => {
-                if (err) reject(err);
-                resolve(results[0]);
+        const { market_id, city_id, user_role } = req.user;
+        if (user_role === 'admin') {
+            const supplier = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM customer WHERE id = ? AND city_id = ?', [id, city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0]);
+                });
             });
-        });
-
-        res.render('editSuppliers', { supplier });
+    
+            res.render('editSuppliers', { supplier });
+        } else {
+            const supplier = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM customer WHERE id = ? AND market_id = ?', [id, market_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0]);
+                });
+            });
+    
+            res.render('editSuppliers', { supplier });
+        }
+        
     } catch (error) {
         console.error('Error fetching Supplier for edit:', error);
         res.status(500).send('Error fetching Supplier');
@@ -118,16 +141,27 @@ exports.updateSuppliers = async (req, res) => {
 exports.deleteSuppliers = async (req, res) => {
     try {
         const { id } = req.params;
-        const { market_id } = req.user;
-
-        await new Promise((resolve, reject) => {
-            db.query('DELETE FROM customer WHERE id = ? AND market_id = ?', [id, market_id], (err) => {
-                if (err) reject(err);
-                resolve();
+        const { market_id, city_id, user_role } = req.user;
+        if (user_role === 'admin') {
+            await new Promise((resolve, reject) => {
+                db.query('DELETE FROM customer WHERE id = ? AND city_id = ?', [id, city_id], (err) => {
+                    if (err) reject(err);
+                    resolve();
+                });
             });
-        });
-
-        res.redirect('/SupplieReportPage');
+    
+            res.redirect('/SupplieReportPage');
+        } else {
+            await new Promise((resolve, reject) => {
+                db.query('DELETE FROM customer WHERE id = ? AND market_id = ?', [id, market_id], (err) => {
+                    if (err) reject(err);
+                    resolve();
+                });
+            });
+    
+            res.redirect('/SupplieReportPage');
+        }
+        
     } catch (error) {
         console.error('Error deleting Supplier:', error);
         res.status(500).send('Error deleting Supplier');
@@ -138,17 +172,29 @@ exports.deleteSuppliers = async (req, res) => {
 exports.SuppliersProfile = async (req, res) => {
     try {
         const supplierId = req.params.id;
-        const { market_id } = req.user;
-
-        const supplier = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM customer WHERE id = ? AND market_id = ?', [supplierId, market_id], (err, results) => {
-                if (err) reject(err);
-                if (results.length === 0) reject(new Error('Supplier not found'));
-                resolve(results[0]);
-            });
+        const { market_id, city_id, user_role } = req.user;
+if (user_role === 'admin') {
+    const supplier = await new Promise((resolve, reject) => {
+        db.query('SELECT * FROM customer WHERE id = ? AND city_id = ?', [supplierId, city_id], (err, results) => {
+            if (err) reject(err);
+            if (results.length === 0) reject(new Error('Supplier not found'));
+            resolve(results[0]);
         });
+    });
 
-        res.render('suppliersProfile', { supplier });
+    res.render('suppliersProfile', { supplier });
+} else {
+    const supplier = await new Promise((resolve, reject) => {
+        db.query('SELECT * FROM customer WHERE id = ? AND market_id = ?', [supplierId, market_id], (err, results) => {
+            if (err) reject(err);
+            if (results.length === 0) reject(new Error('Supplier not found'));
+            resolve(results[0]);
+        });
+    });
+
+    res.render('suppliersProfile', { supplier });
+}
+        
     } catch (error) {
         console.error('Error fetching Supplier profile:', error);
         res.status(500).send(error.message || 'Error fetching Supplier profile');

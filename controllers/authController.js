@@ -65,7 +65,7 @@ exports.loginPage = (req, res) => {
 // Handle user login
 exports.loginUser = async (req, res) => {
     try {
-        const { email, password, market_id } = req.body;
+        const { email, password, market_id, city_id} = req.body;
 
         // Query to find user by email
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
@@ -76,7 +76,7 @@ exports.loginUser = async (req, res) => {
 
             // Check if user exists
             if (results.length === 0) {
-                return res.status(401).render('login', { error: 'Invalid credentials', email, market_id, markets: [] });
+                return res.status(401).render('login', { error: 'Invalid credentials', email,  markets: [] });
             }
 
             const user = results[0];
@@ -84,7 +84,7 @@ exports.loginUser = async (req, res) => {
             // Check if the password is correct
             const isPasswordValid = await bcrypt.compare(password, user.password);
             if (!isPasswordValid) {
-                return res.status(401).render('login', { error: 'Invalid credentials', email, market_id, markets: [] });
+                return res.status(401).render('login', { error: 'Invalid credentials', email,  markets: [] });
             }
 
             /*
@@ -99,7 +99,8 @@ exports.loginUser = async (req, res) => {
                 { 
                     id: user.id, 
                     user_role: user.user_role, 
-                    market_id: user.market_id 
+                    market_id: user.market_id,
+                    city_id: user.city_id
                 }, 
                 process.env.JWT_SECRET_KEY, 
                 { expiresIn: '1h' });
@@ -108,8 +109,14 @@ exports.loginUser = async (req, res) => {
             req.session.token = token;
             console.log('Token:', token);
             const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-            const userRole = decoded.user_role; // Get user role from token
-            console.log('User Role:', userRole);
+            const userRole = decoded.user_role;
+            const market_id = decoded.market_id;
+            const city_id = decoded.city_id; // Get user role from token
+
+            
+            console.log('User Role_from_auth:', userRole);
+            console.log('market_id_from_auth:', market_id);
+            console.log('city_id_from_auth:', city_id);
 
             // Redirect to the index page or any other page after successful login
             res.redirect('/index');

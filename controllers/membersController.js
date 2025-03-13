@@ -3,15 +3,26 @@ const db = require('../db/db');
 // Render suppliers page
 exports.ninMember = async (req, res) => {
     try {
-        const marketId = req.user.market_id; // Assuming `req.user.market_id` contains the logged-in user's market ID
+        const {market_id, city_id, user_role} = req.user; // Assuming `req.user.market_id` contains the logged-in user's market ID
 
-        const members = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM members WHERE market_id = ?', [marketId], (err, results) => {
-                if (err) reject(err);
-                resolve(results);
+        if(user_role === 'admin') {
+            const members = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM members WHERE city_id = ?', [city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
             });
-        });
-        res.render('ninMember', { members });
+            res.render('ninMember', { members });
+        } else {
+            const members = await new Promise((resolve, reject) => {
+                db.query('SELECT * FROM members WHERE market_id = ?', [market_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
+            });
+            res.render('ninMember', { members });
+        }
+        
     } catch (error) {
         console.error('Error fetching members:', error);
         res.status(500).send('Error fetching members');

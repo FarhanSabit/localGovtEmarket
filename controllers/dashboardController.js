@@ -10,13 +10,22 @@ exports.indexPage = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const userId = decoded.id;
         const marketId = decoded.market_id;
-        const userRole = decoded.user_role; // Get user role from token
-        //console.log('User Role:', userRole);
+        const userRole = decoded.user_role;
+        const city_id = decoded.city_id;
+        // Get user role from token
+        console.log('city_id_from_Dashboard:', city_id);
 
         const userQuery = await new Promise((resolve, reject) => {
             db.query('SELECT * FROM users WHERE id = ? AND market_id = ?', [userId, marketId], (err, results) => {
                 if (err) reject(err);
                 resolve(results[0]);
+            });
+        });
+        //get all the market name by city_id from markets table in a result
+        const allmarket = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM markets WHERE city_id = ?', [city_id] ,(err, results) => {
+                if (err) reject(err);
+                resolve(results);
             });
         });
 
@@ -30,7 +39,23 @@ exports.indexPage = async (req, res) => {
         */
         let marketQuery;
         if (userRole === 'admin') {
-            marketQuery = { name: "City Admin" }; // Set to "City Admin" if user is admin
+            const city_name_query = 'SELECT name FROM cities WHERE id = ?';
+
+            db.query(city_name_query, [city_id], (err, results) => {
+                if (err) {
+                    console.error('Database query error:', err);
+                    return;
+                }
+
+                if (results.length === 0) {
+                    console.log('No city found with this city_id');
+                } else {
+                    const city_name = results[0].name;
+                    marketQuery = { name: city_name };
+
+                    console.log('Market Query:', marketQuery); 
+                }
+            }); // Set to "City Admin" if user is admin
         } else {
             marketQuery = await new Promise((resolve, reject) => {
                 db.query('SELECT * FROM markets WHERE id = ?', [marketId], (err, results) => {
@@ -45,21 +70,22 @@ exports.indexPage = async (req, res) => {
 
         if (userRole === 'admin') {
             totalUsersQuery = await new Promise((resolve, reject) => {
-                db.query('SELECT COUNT(*) AS total_users FROM users', (err, results) => {
+                db.query('SELECT COUNT(*) AS total_users FROM users WHERE city_id = ?', [city_id], (err, results) => {
+                    // console.log(city_id);
                     if (err) reject(err);
                     resolve(results[0].total_users);
-                });
+                }); 
             });
 
             totalSuppliersQuery = await new Promise((resolve, reject) => {
-                db.query('SELECT COUNT(*) AS total_suppliers FROM customer', (err, results) => {
+                db.query('SELECT COUNT(*) AS total_suppliers FROM customer WHERE city_id = ?', [city_id], (err, results) => {
                     if (err) reject(err);
                     resolve(results[0].total_suppliers);
                 });
             });
 
             totalMembersQuery = await new Promise((resolve, reject) => {
-                db.query('SELECT COUNT(*) AS total_members FROM members', (err, results) => {
+                db.query('SELECT COUNT(*) AS total_members FROM members WHERE city_id = ?', [city_id], (err, results) => {
                     if (err) reject(err);
                     resolve(results[0].total_members);
                 });
@@ -86,19 +112,24 @@ exports.indexPage = async (req, res) => {
                 });
             });
         }
-
-        res.render('index', { 
-            user: userQuery, 
-            market: marketQuery, 
-            totalUsers: totalUsersQuery, 
-            total_suppliers: totalSuppliersQuery, 
-            total_members: totalMembersQuery 
+    
+        res.render('index', {
+            user: userQuery,
+            market: marketQuery,
+            userRole: userRole,
+            allmarket,
+            totalUsers: totalUsersQuery,
+            total_suppliers: totalSuppliersQuery,
+            total_members: totalMembersQuery,
+            
         });
+       
     } catch (error) {
         console.error('Error rendering index page:', error);
         res.status(500).send('Error rendering index page');
     }
 };
+
 
 /*
 // Dummy pages

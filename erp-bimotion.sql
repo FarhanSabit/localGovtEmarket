@@ -50,7 +50,9 @@ CREATE TABLE `customer` (
   `update_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `is_active` int(2) NOT NULL DEFAULT '1',
   `sex` varchar(10) DEFAULT NULL,
-  `fc_type` varchar(255) DEFAULT NULL
+  `fc_type` varchar(255) DEFAULT NULL,
+   `city_id` INT(11),
+  FOREIGN KEY (`city_id`) REFERENCES `cities`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -5433,9 +5435,8 @@ INSERT INTO `customer` (`id`, `name`, `nin`, `phone_no`, `category`, `lock_up_nu
 --
 -- Table structure for table `markets`
 --
-
-CREATE TABLE `markets` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `cities` (
+  `id` int(11) NOT NULL PRIMARY KEY,
   `name` varchar(255) NOT NULL,
   `is_active` int(2) NOT NULL COMMENT 'Yes = 1, No = 0',
   `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -5444,14 +5445,31 @@ CREATE TABLE `markets` (
   `update_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `cities` (`id`, `name`, `is_active`, `insert_date`, `insert_by`, `update_date`, `update_by`) VALUES
+(1, 'Dhaka', 1, '2024-12-22 06:56:21', 0, '2024-12-22 06:58:07', 0),
+(2, 'Borishal', 1, '2024-12-22 07:01:44', 0, '2024-12-22 07:09:36', 0),
+(3, 'Comilla', 1, '2025-02-13 18:37:07', 0, '2025-02-13 18:00:00', 0);
+
+CREATE TABLE `markets` (
+  `id` int(11) NOT NULL PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `is_active` int(2) NOT NULL COMMENT 'Yes = 1, No = 0',
+  `insert_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` int(11) NOT NULL,
+  `update_date` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_by` int(11) NOT NULL,
+  `city_id` INT(11),
+  FOREIGN KEY (`city_id`) REFERENCES `cities`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Dumping data for table `markets`
 --
 
-INSERT INTO `markets` (`id`, `name`, `is_active`, `insert_date`, `insert_by`, `update_date`, `update_by`) VALUES
-(1, 'Mbarara', 1, '2024-12-22 06:56:21', 0, '2024-12-22 06:58:07', 0),
-(2, 'Jinja', 1, '2024-12-22 07:01:44', 0, '2024-12-22 07:09:36', 0),
-(3, 'kabale', 1, '2025-02-13 18:37:07', 0, '2025-02-13 18:00:00', 0);
+INSERT INTO `markets` (`id`, `name`, `is_active`, `insert_date`, `insert_by`, `update_date`, `update_by`, `city_id`) VALUES
+(1, 'Mbarara', 1, '2024-12-22 06:56:21', 0, '2024-12-22 06:58:07', 0, 1),
+(2, 'Jinja', 1, '2024-12-22 07:01:44', 0, '2024-12-22 07:09:36', 0, 1),
+(3, 'kabale', 1, '2025-02-13 18:37:07', 0, '2025-02-13 18:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -5477,16 +5495,18 @@ CREATE TABLE `members` (
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_by` int(11) DEFAULT NULL,
   `update_date` timestamp NULL DEFAULT '0000-00-00 00:00:00',
-  `market_id` int(11) NOT NULL
+  `market_id` int(11) NOT NULL,
+   `city_id` INT(11),
+  FOREIGN KEY (`city_id`) REFERENCES `cities`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `members`
 --
 
-INSERT INTO `members` (`id`, `f_name`, `l_name`, `email`, `phone_no`, `nin`, `issued_card`, `gender`, `occupation`, `floor_type`, `shop_no`, `photo`, `qr`, `create_by`, `create_date`, `update_by`, `update_date`, `market_id`) VALUES
-(27, 'test new', 'asda', 'test@gmail.com', 342324234, 'sadasd', 'sadasd', 'Male', 'Public Service', 'Level 1', 'A2', NULL, NULL, NULL, '2024-12-03 13:42:49', 2, '2024-12-03 18:54:57', 1),
-(28, 'test', 'ninja', 'ninja@hshsd.ss', 342423423, 'sdsdf', 'dsfsdf', 'Male', 'Self-Employed', 'Level 2', 'A4', NULL, NULL, 5, '2024-12-23 17:34:36', NULL, '0000-00-00 00:00:00', 2);
+INSERT INTO `members` (`id`, `f_name`, `l_name`, `email`, `phone_no`, `nin`, `issued_card`, `gender`, `occupation`, `floor_type`, `shop_no`, `photo`, `qr`, `create_by`, `create_date`, `update_by`, `update_date`, `market_id`, `city_id`) VALUES
+(27, 'test new', 'asda', 'test@gmail.com', 342324234, 'sadasd', 'sadasd', 'Male', 'Public Service', 'Level 1', 'A2', NULL, NULL, NULL, '2024-12-03 13:42:49', 2, '2024-12-03 18:54:57', 1, 2),
+(28, 'test', 'ninja', 'ninja@hshsd.ss', 342423423, 'sdsdf', 'dsfsdf', 'Male', 'Self-Employed', 'Level 2', 'A4', NULL, NULL, 5, '2024-12-23 17:34:36', NULL, '0000-00-00 00:00:00', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -5549,18 +5569,21 @@ CREATE TABLE `users` (
   `photo` varchar(255) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `password` varchar(255) DEFAULT NULL,
-  `market_id` int(11) NOT NULL
+  `market_id` int(11) NOT NULL,
+  `city_id` INT(11),
+  FOREIGN KEY (`city_id`) REFERENCES `cities`(`id`) ON DELETE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `user_name`, `email`, `phone`, `user_role`, `is_active`, `photo`, `timestamp`, `password`, `market_id`) VALUES
-(2, 'Md. Tanvir Ahmed', 'Siddiqee', 'Tanvir', 'tanvirahmedsiddiqee@gmail.com', '01716532401', 'admin', 1, NULL, '2024-11-10 19:37:07', '$2a$10$5qKoVgKWUH.kXB.gzUrv8eHDnkJXrdQalUbuhKErJYE6YJr1EAuoa', 3),
-(3, 'Farhan Tahmid', 'Sabit', NULL, 'sabit@gmail.com', NULL, NULL, NULL, NULL, '2024-11-14 17:27:12', '$2a$10$DcjAwDEXhqEUikMIV.qoteuRUy6D8YePxoAfxu.z6UATuf/y2zTpC', 1),
-(4, 'asd', 'gff', NULL, 'asdsads@sd', NULL, NULL, NULL, NULL, '2024-11-16 18:42:45', '$2a$10$VSuc0nGNbTzlyGsI8L8wtOiO/hHZh.FAuzYjTcTzPgvBA4LjuyUFO', 1),
-(5, 'tanvir', 'test', NULL, 'tanvir@gmail.com', NULL, NULL, NULL, NULL, '2024-12-23 16:56:42', '$2a$10$a5oVvpJkEtIQo6l.t.gtW.uayyG2khhZC1kORL8q3oz19Au8AF17y', 2);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `user_name`, `email`, `phone`, `user_role`, `is_active`, `photo`, `timestamp`, `password`, `market_id`, `city_id`) VALUES
+(2, 'Md. Tanvir Ahmed', 'Siddiqee', 'Tanvir', 'tanvirahmedsiddiqee@gmail.com', '01716532401', 'admin', 1, NULL, '2024-11-10 19:37:07', '$2a$10$5qKoVgKWUH.kXB.gzUrv8eHDnkJXrdQalUbuhKErJYE6YJr1EAuoa', 3, 1),
+(3, 'Farhan Tahmid', 'Sabit', NULL, 'sabit@gmail.com', NULL, NULL, NULL, NULL, '2024-11-14 17:27:12', '$2a$10$DcjAwDEXhqEUikMIV.qoteuRUy6D8YePxoAfxu.z6UATuf/y2zTpC', 1, 2),
+(4, 'asd', 'gff', NULL, 'asdsads@sd', NULL, NULL, NULL, NULL, '2024-11-16 18:42:45', '$2a$10$VSuc0nGNbTzlyGsI8L8wtOiO/hHZh.FAuzYjTcTzPgvBA4LjuyUFO', 1, 3),
+(5, 'tanvir', 'test', NULL, 'tanvir@gmail.com', NULL, NULL, NULL, NULL, '2024-12-23 16:56:42', '$2a$10$a5oVvpJkEtIQo6l.t.gtW.uayyG2khhZC1kORL8q3oz19Au8AF17y', 2, 2);
 
 --
 -- Indexes for dumped tables

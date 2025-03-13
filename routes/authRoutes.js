@@ -6,7 +6,9 @@ const authController = require('../controllers/authController.js');
 // Auth routes
 router.get('/register', authController .registerPage);
 router.post('/register', authController .registerUser);
-
+router.get('/', (req, res)=>{
+    res.redirect('/login');
+});
 router.get('/login', authController .loginPage);
 router.post('/login', authController .loginUser);
 
