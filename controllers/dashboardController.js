@@ -13,7 +13,7 @@ exports.indexPage = async (req, res) => {
         const userRole = decoded.user_role;
         const city_id = decoded.city_id;
         // Get user role from token
-        console.log('city_id_from_Dashboard:', city_id);
+        
 
         const userQuery = await new Promise((resolve, reject) => {
             db.query('SELECT * FROM users WHERE id = ? AND market_id = ?', [userId, marketId], (err, results) => {
