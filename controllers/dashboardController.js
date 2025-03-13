@@ -21,7 +21,7 @@ exports.indexPage = async (req, res) => {
                 resolve(results[0]);
             });
         });
-        //get all the market name by city_id from markets table in a result
+        //get all the market name by city_id from markets table 
         const allmarket = await new Promise((resolve, reject) => {
             db.query('SELECT * FROM markets WHERE city_id = ?', [city_id] ,(err, results) => {
                 if (err) reject(err);
