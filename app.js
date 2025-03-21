@@ -6,7 +6,7 @@ const multer = require('multer'); // For file uploads
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db/db');// Import database connection
-
+const compression = require('compression')
 const app = express();
 app.set('views', path.join(__dirname, 'views')); // Ensure the views directory is properly set
 app.set('view engine', 'ejs');
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(compression())
 // Session store using MySQL
 const sessionStore = new MySQLStore({}, db);
 
@@ -43,6 +43,7 @@ const membersRoutes = require('./routes/membersRoutes');
 const dummyRoutes = require('./routes/dummyRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const occupationTypeRoutes = require('./routes/occupationTypeRoutes');
+const showmarketroute = require('./routes/showmarketroute');
 
 app.use('/',authRoutes); // Handles authentication-related routes
 app.use(userRoutes); // Handles user-related routes
@@ -52,6 +53,7 @@ app.use(membersRoutes); // Handles member-related routes
 app.use(dummyRoutes); // Handles dummy pages-related routes
 app.use(uploadRoutes);
 app.use(occupationTypeRoutes);// Handles occupation type-related routes
+app.use(showmarketroute);
 
 /*
 app.use('/', authRoutes); // Authentication routes

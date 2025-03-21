@@ -4,18 +4,43 @@ const jwt = require('jsonwebtoken');
 
 // Render users page
 exports.usersPage = async (req, res) => {
+
+    const { city_id, user_role } = req.user;
+    const marketIds = req.session.marketIds;
+    // console.log("Received marketId:", marketIds);
+    
     try {
+
         const token = req.session.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const marketId = decoded.market_id;
 
-        const users = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM users WHERE market_id = ?', [marketId], (err, results) => {
-                if (err) reject(err);
-                resolve(results);
-            });
+        let users, query, params;
+        
+        if (user_role === 'admin') {
+
+            if (marketIds) {
+                query = 'SELECT * FROM users WHERE market_id = ?';
+                params = [marketIds];
+            } else {
+                query = 'SELECT * FROM users WHERE city_id = ?';
+                params = [city_id];
+            }
+
+    } else {
+        query = 'SELECT * FROM users WHERE market_id = ?';
+        params = [marketId];
+    
+    }
+    users = await new Promise((resolve, reject) => {
+        db.query(query, params, (err, results) => {
+            if (err) reject(err);
+            resolve(results);
         });
-        res.render('users', { users });
+    });
+
+    res.render('users', { users });
+
     } catch (error) {
         console.error('Error fetching users:', error);
         res.status(500).send('Error fetching users');

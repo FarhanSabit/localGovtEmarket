@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 col-xl-6 mb-4 mb-xl-0">
       <h3 class="font-weight-bold">
-        <%= userRole==='admin' ? `${market.name} city` : `${market.name} market` %>
+        <%= userRole ==='admin' ? `${market.name} City` : `${market.name} Market` %>
       </h3>
       <h4 class="font-weight-normal mb-0">Welcome <%= user.first_name %>
           <%= user.last_name %>
@@ -11,21 +11,18 @@
     <div class="col-12 col-xl-3">
       <div class="justify-content-center d-flex">
         <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-          <% if (userRole === 'admin') { %>
-          <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <i class=""></i> All Markets 
-          </button>
-          
-            <div class="dropdown-menu dropdown-menu-center" aria-labelledby="dropdownMenuDate2">
-                <% allmarket.forEach(member => { %>
-                    <a id="<%= member.id %>" class="dropdown-item" href="#"><%= member.name %></a>
-                <% }) %>
-            </div>
-        <% } else { %>
-            <div></div>
-        <% } %>
-        
+          <% if (userRole ==='admin' ) { %>
+            <select name="marketID" id="market-select" class="form-control px-3 rounded">
+              <option value="">Select Market</option>
+              <% allmarket.forEach(member => { %>
+                 <a href="/get-market-data/<%= member.id %>"><option value="<%= member.id %>">
+                  <%= member.name %>
+              </option></a> 
+              <% }) %>
+          </select>
+            <% } else { %>
+              <div></div>
+              <% } %>
         </div>
       </div>
     </div>
@@ -42,7 +39,6 @@
             <a class="dropdown-item" href="#">June - August</a>
             <a class="dropdown-item" href="#">August - November</a>
           </div>
-
         </div>
       </div>
     </div>
@@ -70,47 +66,58 @@
     </div>
     <div class="col-md-6 grid-margin transparent">
       <div class="row">
-        <div class="col-md-6 mb-4 stretch-card transparent" onclick="window.location.href='/users';">
+        <div class="col-md-6 mb-4 stretch-card transparent" onclick="window.location.href='/users';" style="cursor: pointer;">
           <div class="card card-tale">
             <div class="card-body">
               <p class="mb-4">Total Users</p>
-              <p class="fs-30 mb-2">
+              <p class="fs-30 mb-2" id="total-users">
                 <%= totalUsers %>
               </p>
-              <p>10.00% (30 days)</p>
+              <!-- <p>10.00% (30 days)</p> -->
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-4 stretch-card transparent" onclick="window.location.href='/SupplieReportPage';">
+        <div class="col-md-6 mb-4 stretch-card transparent" onclick="window.location.href='/SupplieReportPage';" style="cursor: pointer;">
           <div class="card card-dark-blue">
             <div class="card-body">
               <p class="mb-4">Total Members</p>
-              <p class="fs-30 mb-2">
+              <p class="fs-30 mb-2" id="total-members">
                 <%= total_suppliers %>
               </p>
-              <p>22.00% (30 days)</p>
+
+              <% if (userRole === 'admin') { %>
+                <p class="total-male" id="total-male">Total Male: <%= total_male %></p>
+                <p class="total_female" id="total_female">Total Female: <%= total_female %></p>
+                <p class="total-unknown" id="total-unknown">Unspecified Gender: <%= total_unknown %></p>
+              <% } else { %>
+                <p class="total-male" id="total-male">Total Male: <%= total_male %></p>
+                <p class="total_female" id="total_female">Total Female: <%= total_female %></p>
+                <p class="total-unknown" id="total-unknown">Unspecified Gender: <%= total_unknown %></p>
+              <% } %> 
+                
+              <!-- <p>22.00% (30 days)</p> -->
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent" onclick="window.location.href='/ninMember';">
+        <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent" onclick="window.location.href='/ninMember';" style="cursor: pointer;">
           <div class="card card-light-blue">
             <div class="card-body">
               <p class="mb-4">Total Suppliers</p>
-              <p class="fs-30 mb-2">
+              <p class="fs-30 mb-2" id="total-suppliers">
                 <%= total_members %>
               </p>
-              <p>2.00% (30 days)</p>
+              <!-- <p>2.00% (30 days)</p> -->
             </div>
           </div>
         </div>
-        <div class="col-md-6 stretch-card transparent">
+        <div class="col-md-6 stretch-card transparent" style="cursor: pointer;">
           <div class="card card-light-danger">
             <div class="card-body">
               <p class="mb-4">Number of Clients</p>
               <p class="fs-30 mb-2">47033</p>
-              <p>0.22% (30 days)</p>
+              <!-- <p>0.22% (30 days)</p> -->
             </div>
           </div>
         </div>

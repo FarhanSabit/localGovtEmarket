@@ -2,27 +2,36 @@ const db = require('../db/db');
 
 // Render suppliers page
 exports.ninMember = async (req, res) => {
+
+    const marketIds = req.session.marketIds;
+
     try {
         const {market_id, city_id, user_role} = req.user; // Assuming `req.user.market_id` contains the logged-in user's market ID
+        let members, query, params;
+       if (user_role === 'admin') {
+            if (marketIds) {
+                query = 'SELECT * FROM members WHERE market_id = ?';
+                params = [marketIds];
+            } else {
+                query = 'SELECT * FROM members WHERE city_id = ?';
+                params = [city_id];
+            }
 
-        if(user_role === 'admin') {
-            const members = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM members WHERE city_id = ?', [city_id], (err, results) => {
-                    if (err) reject(err);
-                    resolve(results);
-                });
-            });
-            res.render('ninMember', { members });
         } else {
-            const members = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM members WHERE market_id = ?', [market_id], (err, results) => {
-                    if (err) reject(err);
-                    resolve(results);
-                });
-            });
-            res.render('ninMember', { members });
+            query = 'SELECT * FROM members WHERE market_id = ?';
+            params = [market_id];
+            
         }
+        members = await new Promise((resolve, reject) => {
+            db.query(query, params, (err, results) => {
+                if (err) reject(err);
+                resolve(results);
+            });
+        });
         
+
+
+        res.render('ninMember', { members });
     } catch (error) {
         console.error('Error fetching members:', error);
         res.status(500).send('Error fetching members');

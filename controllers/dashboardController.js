@@ -3,6 +3,18 @@ const db = require('../db/db');
 
 // Render index page with logged-in user
 exports.indexPage = async (req, res) => {
+    
+    // Saved marketid in session
+    if (req.session.marketIds) {
+        req.session.marketIds = null; // Clear the session value for marketId
+    }
+    //saved here
+    const marketIds = req.query.marketIds || req.session.marketIds;// Get marketId from query select market dropdown
+    if (marketIds) {
+        req.session.marketIds = marketIds; // Save marketId in session 
+    }
+    // end saved session
+
     try {
         const token = req.session.token;
         if (!token) return res.redirect('/login');
@@ -66,7 +78,7 @@ exports.indexPage = async (req, res) => {
         }
 
         // Condition to check if user is admin
-        let totalUsersQuery, totalSuppliersQuery, totalMembersQuery;
+        let totalUsersQuery, totalSuppliersQuery, totalMembersQuery, totalMaleQuery, totalFemaleQuery, totalUnknownGender, totalCityMaleQuery, totalCityFemaleQuery, totalCityUnknownGender  ;
 
         if (userRole === 'admin') {
             totalUsersQuery = await new Promise((resolve, reject) => {
@@ -90,6 +102,50 @@ exports.indexPage = async (req, res) => {
                     resolve(results[0].total_members);
                 });
             });
+
+
+            // Total Member city Count
+            // totalCityMaleQuery = await new Promise((resolve, reject) => {
+            //     db.query(`SELECT COUNT(*) AS total_city_male FROM customer WHERE sex = 'male' AND city_id = ?`, [city_id], (err, results) => {
+            //         if (err) reject(err);
+            //         resolve(results[0].total_city_male);
+            //     });
+            // });
+
+            // totalCityFemaleQuery = await new Promise((resolve, reject) => {
+            //     db.query(`SELECT COUNT(*) AS total_city_female FROM customer WHERE sex = 'female' AND city_id = ?`, [city_id], (err, results) => {
+            //         if (err) reject(err);
+            //         resolve(results[0].total_city_female);
+            //     });
+            // });
+
+            // totalCityUnknownGender = await new Promise((resolve, reject) => {
+            //     db.query(`SELECT COUNT(*) AS total_city_unknown FROM customer WHERE sex = 'unknown' AND city_id = ?`, [city_id], (err, results) => {
+            //         if (err) reject(err);
+            //         resolve(results[0].total_city_unknown);
+            //     });
+            // });
+            totalMaleQuery = await new Promise((resolve, reject) => {
+                db.query(`SELECT COUNT(*) AS total_male FROM customer WHERE sex = 'male' AND city_id = ?`, [city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_male);
+                });
+            });
+
+            totalFemaleQuery = await new Promise((resolve, reject) => {
+                db.query(`SELECT COUNT(*) AS total_female FROM customer WHERE sex = 'female' AND city_id = ?`, [city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_female);
+                });
+            });
+
+            totalUnknownGender = await new Promise((resolve, reject) => {
+                db.query(`SELECT COUNT(*) AS total_unknown FROM customer WHERE sex = 'null' AND city_id = ?`, [city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_unknown);
+                });
+            });
+
         } else {
             totalUsersQuery = await new Promise((resolve, reject) => {
                 db.query('SELECT COUNT(*) AS total_users FROM users WHERE market_id = ?', [marketId], (err, results) => {
@@ -111,6 +167,28 @@ exports.indexPage = async (req, res) => {
                     resolve(results[0].total_members);
                 });
             });
+
+            // Total Member gender Count
+            totalMaleQuery = await new Promise((resolve, reject) => {
+                db.query(`SELECT COUNT(*) AS total_male FROM customer WHERE sex = 'male' AND market_id = ?`, [marketId], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_male);
+                });
+            });
+
+            totalFemaleQuery = await new Promise((resolve, reject) => {
+                db.query(`SELECT COUNT(*) AS total_female FROM customer WHERE sex = 'female' AND market_id = ?`, [marketId], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_female);
+                });
+            });
+
+            totalUnknownGender = await new Promise((resolve, reject) => {
+                db.query(`SELECT COUNT(*) AS total_unknown FROM customer WHERE sex = 'null' AND market_id = ?`, [marketId], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_unknown);
+                });
+            });
         }
     
         res.render('index', {
@@ -121,6 +199,15 @@ exports.indexPage = async (req, res) => {
             totalUsers: totalUsersQuery,
             total_suppliers: totalSuppliersQuery,
             total_members: totalMembersQuery,
+            //pass-total-gender-count-from-market
+            total_male: totalMaleQuery,
+            total_female: totalFemaleQuery,
+            total_unknown: totalUnknownGender,
+            //pass-total-gender-count-from-city
+            total_city_male: totalCityMaleQuery,
+            total_city_female: totalCityFemaleQuery,
+            total_city_unknown: totalCityUnknownGender
+
             
         });
        

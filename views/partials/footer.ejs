@@ -48,6 +48,48 @@
     // Set the formatted date to the element with ID 'currentDate'
     document.getElementById('currentDate').textContent = formattedDate;
   </script>
+  <script>
+    // Fetch market data when the market select option changes
+    $('#market-select').change(function () {
+    const marketIds = $(this).val();
+    if (marketIds) {
+        // Fetch market data via AJAX
+        $.ajax({
+            url: '/get-market-data',
+            method: 'GET',
+            data: { marketIds: marketIds },
+            success: function (data) {
+                // Update the values on the page dynamically
+                $('#total-users').text(data.totalUsers);
+                $('#total-suppliers').text(data.totalSuppliers);
+                $('#total-members').text(data.totalMembers);
+
+                // Update total Gender
+                $('#total-male').text(`Total Male: ${data.total_male}`);
+                $('#total_female').text(`Total Female: ${data.total_female}`);
+                $('#total-unknown').text(`Unspecified Gender: ${data.total_unknown}`);
+
+                //  Send marketId to SupplieReportPage 
+                $.ajax({
+                    url: '/index',
+                    method: 'GET',
+                    data: { marketIds: marketIds },
+                    success: function (supplyData) {
+                       
+                    },
+                    error: function (err) {
+                        console.error('Error fetching supply report:', err);
+                    }
+                });
+            },
+            error: function (err) {
+                console.error('Error fetching market data:', err);
+            }
+        });
+    }
+});
+
+  </script>
 <!-- End custom js for this page-->
 </body>
 

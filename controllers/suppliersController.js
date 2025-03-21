@@ -1,35 +1,50 @@
 const db = require('../db/db');
 
-// Render suppliers page
+
 exports.suppliersPage = async (req, res) => {
+    const marketIds = req.session.marketIds; // Get marketId from query select market dropdown
+    // console.log("Received marketId:", marketId);
+
     try {
 
-        const { city_id, user_role, market_id } = req.user; // Assuming req.user contains the market_id
+        const { city_id, user_role, market_id } = req.user; // Get user details
+
+        let suppliers;
+        let query;
+        let params;
+
         if (user_role === 'admin') {
-            const suppliers = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM customer WHERE city_id = ?', [city_id], (err, results) => {
-                    if (err) reject(err);
-                    resolve(results);
-                });
-            });
-    
-            res.render('SupplieReportPage', { suppliers });
+            // If marketId is provided, filter by market_id, otherwise by city_id
+            if (marketIds) {
+                query = 'SELECT * FROM customer WHERE market_id = ?';
+                params = [marketIds];
+            } else {
+                query = 'SELECT * FROM customer WHERE city_id = ?';
+                params = [city_id];
+            }
         } else {
-            const suppliers = await new Promise((resolve, reject) => {
-                db.query('SELECT * FROM customer WHERE market_id = ?', [market_id], (err, results) => {
-                    if (err) reject(err);
-                    resolve(results);
-                });
-            });
-    
-            res.render('SupplieReportPage', { suppliers }); 
+            // For non-admin users, filter by their assigned market_id
+            query = 'SELECT * FROM customer WHERE market_id = ?';
+            params = [market_id];
         }
-        
+
+        // Execute the query
+        suppliers = await new Promise((resolve, reject) => {
+            db.query(query, params, (err, results) => {
+                if (err) reject(err);
+                resolve(results);
+            });
+        });
+
+        // Render the page with the fetched data
+        res.render('SupplieReportPage', { suppliers });
+
     } catch (error) {
         console.error('Error fetching suppliers:', error);
         res.status(500).send('Error fetching suppliers');
     }
 };
+
 
 // Render add suppliers page
 exports.addSuppliersPage = (req, res) => res.render('AddSuppliers');
