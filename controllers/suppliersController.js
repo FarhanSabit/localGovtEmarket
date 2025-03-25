@@ -37,7 +37,10 @@ exports.suppliersPage = async (req, res) => {
         });
 
         // Render the page with the fetched data
-        res.render('SupplieReportPage', { suppliers });
+        res.render('SupplieReportPage', { 
+            suppliers,
+            user_role
+         });
 
     } catch (error) {
         console.error('Error fetching suppliers:', error);

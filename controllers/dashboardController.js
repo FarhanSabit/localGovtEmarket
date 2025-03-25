@@ -78,7 +78,7 @@ exports.indexPage = async (req, res) => {
         }
 
         // Condition to check if user is admin
-        let totalUsersQuery, totalSuppliersQuery, totalMembersQuery, totalMaleQuery, totalFemaleQuery, totalUnknownGender, totalCityMaleQuery, totalCityFemaleQuery, totalCityUnknownGender  ;
+        let totalUsersQuery, totalSuppliersQuery, totalMembersQuery, totalMaleQuery, totalFemaleQuery, totalUnknownGender, totalCityMaleQuery, totalCityFemaleQuery, totalCityUnknownGender, totalShopRentsQuery  ;
 
         if (userRole === 'admin') {
             totalUsersQuery = await new Promise((resolve, reject) => {
@@ -145,6 +145,12 @@ exports.indexPage = async (req, res) => {
                     resolve(results[0].total_unknown);
                 });
             });
+            totalShopRentsQuery = await new Promise((resolve, reject) => {
+                db.query('SELECT SUM(mth_pay) AS total_shoprents FROM customer WHERE city_id = ?', [city_id], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_shoprents);
+                });
+            });
 
         } else {
             totalUsersQuery = await new Promise((resolve, reject) => {
@@ -167,7 +173,13 @@ exports.indexPage = async (req, res) => {
                     resolve(results[0].total_members);
                 });
             });
-
+//Total Shop Rents
+            totalShopRentsQuery = await new Promise((resolve, reject) => {
+                db.query('SELECT SUM(mth_pay) AS total_shoprents FROM customer WHERE market_id = ?', [marketId], (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0].total_shoprents);
+                });
+            });
             // Total Member gender Count
             totalMaleQuery = await new Promise((resolve, reject) => {
                 db.query(`SELECT COUNT(*) AS total_male FROM customer WHERE sex = 'male' AND market_id = ?`, [marketId], (err, results) => {
@@ -199,6 +211,8 @@ exports.indexPage = async (req, res) => {
             totalUsers: totalUsersQuery,
             total_suppliers: totalSuppliersQuery,
             total_members: totalMembersQuery,
+            total_shoprents: totalShopRentsQuery,
+
             //pass-total-gender-count-from-market
             total_male: totalMaleQuery,
             total_female: totalFemaleQuery,

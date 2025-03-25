@@ -26,6 +26,13 @@ exports.getMarketData = async (req, res) => {
                 resolve(results[0].total_members);
             });
         });
+//total shop rents data
+        const totalShopRentsQuery = await new Promise((resolve, reject) => {
+            db.query('SELECT SUM(mth_pay) AS total_shoprents FROM customer WHERE market_id = ?', [marketID], (err, results) => {
+                if (err) reject(err);
+                resolve(results[0].total_shoprents);
+            });
+        });
 
         //total-gender-from-market
         const totalMaleQuery = await new Promise((resolve, reject) => {
@@ -54,6 +61,7 @@ exports.getMarketData = async (req, res) => {
             totalUsers: totalUsersQuery,
             totalSuppliers: totalSuppliersQuery,
             totalMembers: totalMembersQuery,
+            total_shoprents: totalShopRentsQuery,
             //total gender
             total_male: totalMaleQuery,
             total_female: totalFemaleQuery,
