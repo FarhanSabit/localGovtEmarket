@@ -145,8 +145,10 @@ exports.indexPage = async (req, res) => {
                     resolve(results[0].total_unknown);
                 });
             });
+
+            //total shop rent query
             totalShopRentsQuery = await new Promise((resolve, reject) => {
-                db.query('SELECT SUM(mth_pay) AS total_shoprents FROM customer WHERE city_id = ?', [city_id], (err, results) => {
+                db.query('SELECT FORMAT(SUM(mth_pay), 0) AS total_shoprents FROM customer WHERE city_id = ?', [city_id], (err, results) => {
                     if (err) reject(err);
                     resolve(results[0].total_shoprents);
                 });
@@ -175,7 +177,7 @@ exports.indexPage = async (req, res) => {
             });
 //Total Shop Rents
             totalShopRentsQuery = await new Promise((resolve, reject) => {
-                db.query('SELECT SUM(mth_pay) AS total_shoprents FROM customer WHERE market_id = ?', [marketId], (err, results) => {
+                db.query('SELECT FORMAT(SUM(mth_pay), 0) AS total_shoprents FROM customer WHERE market_id = ?', [marketId], (err, results) => {
                     if (err) reject(err);
                     resolve(results[0].total_shoprents);
                 });

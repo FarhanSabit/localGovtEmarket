@@ -28,7 +28,7 @@ exports.getMarketData = async (req, res) => {
         });
 //total shop rents data
         const totalShopRentsQuery = await new Promise((resolve, reject) => {
-            db.query('SELECT SUM(mth_pay) AS total_shoprents FROM customer WHERE market_id = ?', [marketID], (err, results) => {
+            db.query('SELECT FORMAT(SUM(mth_pay), 0) AS total_shoprents FROM customer WHERE market_id = ?', [marketID], (err, results) => {
                 if (err) reject(err);
                 resolve(results[0].total_shoprents);
             });
