@@ -31,7 +31,7 @@ exports.ninMember = async (req, res) => {
         
 
 
-        res.render('ninMember', { members });
+        res.render('ninMember', { members, user_role });
     } catch (error) {
         console.error('Error fetching members:', error);
         res.status(500).send('Error fetching members');

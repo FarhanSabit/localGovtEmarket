@@ -239,7 +239,8 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <!-- users -->
+
+          <!-- users Managment  -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
               <i class="icon-head menu-icon"></i>
@@ -251,32 +252,30 @@
                 <li class="nav-item"> <a class="nav-link" href="/users"> Users</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/members"> Suppliers</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/customers"> Customers</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/Gate_Entry_Counter"> Gate Counter</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/Stock_Counter"> Stock Counter</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/Vat_Payment"> Vat Payment</a></li>
+                
+                <!-- <li class="nav-item"> <a class="nav-link" href="/Stock_Counter"> Stock Counter</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/Vat_Payment"> Vat Payment</a></li> -->
                 <!-- <li class="nav-item"> <a class="nav-link" href="/SupplieReportPage"> Members</a></li> -->
               </ul>
             </div>
+
+            <!-- Product Section -->
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                <i class="icon-columns menu-icon"></i>
+                <span class="menu-title"> Products Section</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="form-elements">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"><a class="nav-link" href="/addProductCategory"> Product Category</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/AllProductsReportPage"> All Products</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#"> Product Request List</a></li>
+                </ul>
+              </div>
+            </li>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/GlobalMarketStockReport">
-              <i class="icon-paper menu-icon"></i>
-              <span class="menu-title"> Global Market Stock</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="icon-columns menu-icon"></i>
-              <span class="menu-title"> Products Section</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="/addProductCategory"> Product Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="/AllProductsReportPage"> All Products</a></li>
-              </ul>
-            </div>
-          </li>
+          <!-- Gate Section -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-lock menu-icon"></i>
@@ -287,12 +286,15 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/VehicleTypeReportPage"> Vehicle Type</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/GateEntriesReportPage"> Gate Entries</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/Gate_Entry_Counter"> Gate Counter</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/purchaseEntryCounterPage"> Purchase Entry Counter</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/DeliveryEntryCounterPage"> Delivary Entry Counter</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/ExitEntryCounterPage"> Exit Entry Counter</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/GlobalMarketStockReport"> Global Market Stock</a></li>
               </ul>
             </div>
           </li>
+          <!-- Stock Section -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="icon-grid-2 menu-icon"></i>
@@ -302,50 +304,48 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/allStockEntry"> All Stock Entry</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/Stock_Counter"> Stock Counter</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/purchaseStockEntry"> Purchase Stock Entry</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/delivaryStockEntry"> Delivary Stock Entry</a></li>
               </ul>
             </div>
           </li>
+          <!-- Revenue Section -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="icon-briefcase menu-icon"></i>
-              <span class="menu-title">Vat Section</span>
+            <a class="nav-link" data-toggle="collapse" href="#tables1" aria-expanded="false" aria-controls="tables">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">Revnue Section</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="icons">
+            <div class="collapse" id="tables1">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/allVatEntries"> All Vat Entries</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/Vat_Payment"> Vat Payment</a>
                 <li class="nav-item"> <a class="nav-link" href="/vatPaymentCounter"> Vat Payment Counter</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#"> Due VAT</a></li>
               </ul>
             </div>
           </li>
+          <!-- Market Section -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="icon-bell menu-icon"></i>
-              <span class="menu-title">Product Request</span>
+            <a class="nav-link" data-toggle="collapse" href="#tables2" aria-expanded="false" aria-controls="tables">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">Market Section</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth">
+            <div class="collapse" id="tables2">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/addProductRequest"> Add Product Request </a></li>
-                <li class="nav-item"> <a class="nav-link" href="/productRequestList"> Product Request List </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-              <i class="icon-clipboard menu-icon"></i>
-              <span class="menu-title"> Shop Manage </span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="#"> Market List </a></li>
+                <li class="nav-item"> <a class="nav-link" href="#"> Categories </a></li>
+                
                 <li class="nav-item"> <a class="nav-link" href="/MarketLeveListPage"> Market Levels </a></li>
-                <li class="nav-item"> <a class="nav-link" href="/MarketLevelShopList"> Level Shops </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/MarketLevelShopList"> Level Shops/Facilities </a></li>
+                <li class="nav-item"> <a class="nav-link" href="#"> Facility Management </a></li>
+                
               </ul>
             </div>
           </li>
+          <!-- Member Section -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#member" aria-expanded="false" aria-controls="member">
               <i class="icon-head menu-icon"></i>
@@ -363,6 +363,44 @@
               </ul>
             </div>
           </li>
+
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/GlobalMarketStockReport">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title"> Global Market Stock</span>
+            </a>
+          </li> -->
+          
+          
+          
+          
+          <!-- <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="icon-briefcase menu-icon"></i>
+              <span class="menu-title">Vat Section</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                
+              </ul>
+            </div>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="icon-bell menu-icon"></i>
+              <span class="menu-title">Product Request</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/addProductRequest"> Add Product Request </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/productRequestList"> Product Request List </a></li>
+              </ul>
+            </div>
+          </li> -->
+          
+          
           
       
         </ul>

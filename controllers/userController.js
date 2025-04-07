@@ -39,7 +39,9 @@ exports.usersPage = async (req, res) => {
         });
     });
 
-    res.render('users', { users });
+    res.render('users', { users, 
+        user_role
+     });
 
     } catch (error) {
         console.error('Error fetching users:', error);
