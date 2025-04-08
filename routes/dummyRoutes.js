@@ -53,7 +53,7 @@ router.get('/addProductRequest', authenticateToken, dummyController.addProductRe
 router.get('/MarketLeveListPage', authenticateToken, dummyController.MarketLeveListPage);
 router.get('/AddMarketLevel', authenticateToken, dummyController.AddMarketLevel);
 
-router.get('/MarketLevelShopList', authenticateToken, dummyController.MarketLevelShopList);
+// router.get('/MarketLevelShopList', authenticateToken, dummyController.MarketLevelShopList);
 router.get('/AddLevelShops', authenticateToken, dummyController.AddLevelShops);
 
 //dummy Member Section Route

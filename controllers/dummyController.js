@@ -53,7 +53,7 @@ exports.addProductRequest = (req, res) => {res.render('addProductRequest');};
 exports.MarketLeveListPage = (req, res) => {res.render('MarketLeveListPage');};
 exports.AddMarketLevel = (req, res) => {res.render('AddMarketLevel');};
 
-exports.MarketLevelShopList = (req, res) => {res.render('MarketLevelShopList');};
+// exports.MarketLevelShopList = (req, res) => {res.render('MarketLevelShopList');};
 exports.AddLevelShops = (req, res) => {res.render('AddLevelShops');};
 
 //dummy Member Section Controller

@@ -44,6 +44,7 @@ const dummyRoutes = require('./routes/dummyRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const occupationTypeRoutes = require('./routes/occupationTypeRoutes');
 const showmarketroute = require('./routes/showmarketroute');
+const marketLevelShopListRoute = require('./routes/marketShoplistroute');
 
 app.use('/',authRoutes); // Handles authentication-related routes
 app.use(userRoutes); // Handles user-related routes
@@ -54,6 +55,7 @@ app.use(dummyRoutes); // Handles dummy pages-related routes
 app.use(uploadRoutes);
 app.use(occupationTypeRoutes);// Handles occupation type-related routes
 app.use(showmarketroute);
+app.use(marketLevelShopListRoute);
 
 /*
 app.use('/', authRoutes); // Authentication routes

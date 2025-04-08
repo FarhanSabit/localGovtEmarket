@@ -11,59 +11,98 @@
                 Add Market Level
               </a>
             </div>
-          </div>                    
+          </div>       
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="tableSearch">Search Members:</label>
+                <input type="text" id="tableSearch" class="form-control" placeholder="Search for a member...">
+              </div>
+            </div>
+          </div>
+      
+          <!-- Export Options -->
+          <div class="d-flex justify-content-between pt-3">
+            <button class="btn btn-secondary btn-sm" id="exportCSV">Export to CSV</button>
+            <button class="btn btn-secondary btn-sm" id="exportExcel">Export to Excel</button>
+            <button class="btn btn-secondary btn-sm" id="exportPDF">Export to PDF</button>
+          </div>             
         <div class="table-responsive pt-3">
-          <table class="table table-bordered">
+          <table class="table table-bordered" id="suppliersTable">
             <thead>
               <tr>
                 <th>
-                  #
+                  ID
                 </th>
+
                 <th>
-                  Level			
+                  Shop Name
                 </th>
+
                 <th>
-                  Name
+                  Owner Name
                 </th>
+
                 <th>
-                  Shop Number
+                  Shop Type
                 </th>
+
                 <th>
-                  Amount
+                  Shop No.
                 </th>
+
                 <th>
-                  Rent Status
+                  Market Level
                 </th>
+
                 <th>
-                  Status
+                  Monthly Rent
                 </th>
+
+                <th>
+                  Total Amount
+                </th>
+
+                <th>
+                  Total Due
+                </th>
+
+                <th>
+                  Status 
+                </th>
+
                 <th>
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody>
+              <% MarketLevelShopListData.forEach(shoplistData => { %>
               <tr>
                 <td>
-                  1
+                  <%= shoplistData.id %>
                 </td>
                 <td>
-                  Level 2					
+                  <%= shoplistData.name %>				
                 </td>
                 <td>
-                  ERIC RUTAHIGWA
+                  
                 </td>
                 <td>
-                  CS 1A
+                  <%= shoplistData.fc_type %>
+                </td>
+
+                <td><%= shoplistData.fc_no %></td>
+                <td></td>
+                <td><%= shoplistData.mth_pay %></td>
+                <td>
+                  
                 </td>
                 <td>
-                  100000.00	
+                  
                 </td>
                 <td>
-                  Available	
-                </td>
-                <td>
-                  Active	
+                  Not Active	
                 </td>
                 <td>
                   <a href="#" class="btn btn-success btn-sm"><i class="fas fa-view"></i> View</a>
@@ -71,6 +110,8 @@
                   <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
                 </td>
               </tr>
+
+              <% }) %>
             </tbody>
           </table>
         </div>
@@ -79,3 +120,6 @@
   </div>
   </div>
   <%- include('partials/footer') %>
+  <%- include('partials/tableProperties', {
+    table_id: 'suppliersTable'
+  }) %>
