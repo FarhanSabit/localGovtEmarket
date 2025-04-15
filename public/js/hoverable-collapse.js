@@ -30,6 +30,7 @@ $(document).ready(function () {
   // If on /index, clear the stored active link
   if (window.location.pathname === "/index" || window.location.pathname === "/index.html") {
     localStorage.removeItem("activeLink");
+    
   }
 
   // Restore from localStorage if available
