@@ -30598,3 +30598,8 @@ div.tagsinput span.tag a {
   color: #fff !important;
   border-radius: 4px; /* Optional: makes it look nice */
 }
+.sub-menu .nav-link:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-radius: 4px;
+}
