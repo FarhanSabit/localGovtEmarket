@@ -28469,7 +28469,7 @@ div.tagsinput span.tag a {
   font-family: "Nunito", sans-serif;
   font-weight: 500;
   padding: 0;
-  width: 235px;
+  width: 300px;
   z-index: 11;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
@@ -30593,3 +30593,8 @@ div.tagsinput span.tag a {
 }
 
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
+.sub-menu .nav-link.active {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-radius: 4px; /* Optional: makes it look nice */
+}
