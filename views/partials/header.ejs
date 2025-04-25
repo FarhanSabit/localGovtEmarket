@@ -233,6 +233,7 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
+          <li><p><%= showCurrentMarketName == null ? '': ` Showing ${showCurrentMarketName?.name} Market Data` %></p></li>
           <li class="nav-item">
             <a class="nav-link" href="/index">
               <i class="icon-grid menu-icon"></i>
@@ -363,6 +364,16 @@
               </ul>
             </div>
           </li>
+          <li>
+
+          </li>
+          
+          <li class="mt-5 pt-5">
+            
+           <p><span class="font-weight-bold ">Loged in: </span>  <%= userRole ==='admin' ? `${marketh.name} City` : `${marketh.name} Market` %></p> 
+           
+          </li>
+          
 
           <!-- <li class="nav-item">
             <a class="nav-link" href="/GlobalMarketStockReport">

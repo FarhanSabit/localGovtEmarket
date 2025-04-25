@@ -68,7 +68,8 @@
                 $('#total-male').text(`Total Male: ${data.total_male}`);
                 $('#total_female').text(`Total Female: ${data.total_female}`);
                 $('#total-unknown').text(`Unspecified Gender: ${data.total_unknown}`);
-                
+                // update header
+                // $('#market-name').text(`Selected Market: ${data.totalUsers}`);
                 //  Send marketId to SupplieReportPage 
                 $.ajax({
                     url: '/index',
@@ -90,6 +91,7 @@
 });
 
   </script>
+  
 <!-- End custom js for this page-->
 </body>
 

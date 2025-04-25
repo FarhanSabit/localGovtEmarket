@@ -3,13 +3,20 @@ const db = require('../db/db');
 
 // Render index page with logged-in user
 exports.indexPage = async (req, res) => {
-    
+
     // Saved marketid in session
     if (req.session.marketIds) {
-        req.session.marketIds = null; // Clear the session value for marketId
+        req.session.marketIds = null;
+        return res.redirect('/index?refresh=true'); 
+       // Clear the session value for marketId
     }
+    
+    // if (req.query.marketIds) {
+    //     req.query.marketIds = null; // Clear the session value for marketId
+    // }
     //saved here
-    const marketIds = req.query.marketIds || req.session.marketIds;// Get marketId from query select market dropdown
+    const marketIds = req.query.marketIds ;// Get marketId from query select market dropdown
+    // console.log('marketifds:', marketIds);
     if (marketIds) {
         req.session.marketIds = marketIds; // Save marketId in session 
     }
