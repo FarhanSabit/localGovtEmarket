@@ -1,7 +1,8 @@
 <%- include('partials/header') %>
 
     <div class="container mt-5">
-      <% if (user_role ==='admin' ) { %>
+      <% if (user_role ==='admin' && marketIds ) { %>
+       
       <div class="col-md-8">  
         <h1 class="mb-4">Users List</h1>
         <!--<a href="/logout" class="btn btn-secondary mb-3">Logout</a> -->
@@ -45,9 +46,12 @@
                     <td><%= user.is_active ? 'Active' : 'Inactive' %></td>
                     <% if (user_role ==='admin' ) { %>
                     <td>
-                        <a href="/profile/<%= user.id %>" class="btn btn-success btn-sm"><i class="fas fa-view"></i> View</a>
-                        <a href="/edit-user/<%= user.id %>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                        <a href="/delete-user/<%= user.id %>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
+                       
+                        <% if (user_role ==='admin' && marketIds ) { %>
+                          <a href="/profile/<%= user.id %>" class="btn btn-success btn-sm"><i class="fas fa-view"></i> View</a>
+                          <a href="/edit-user/<%= user.id %>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                          <a href="/delete-user/<%= user.id %>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
+                        <% } %>
                     </td>
                     <% } %>
                 </tr>

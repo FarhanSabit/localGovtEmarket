@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 const db = require('../db/db');
 const jwt = require('jsonwebtoken');
-
+ 
 // Render users page
 exports.usersPage = async (req, res) => {
 
     const { city_id, user_role } = req.user;
-    const marketIds = req.session.marketIds;
+    const marketIds = req.session.marketIds; //market id from ajax & its set to req.session from footer js
     // console.log("Received marketId:", marketIds);
     
     try {
@@ -40,7 +40,7 @@ exports.usersPage = async (req, res) => {
     });
 
     res.render('users', { users, 
-        user_role
+        user_role, marketIds: marketIds
      });
 
     } catch (error) {
@@ -55,16 +55,17 @@ exports.addUserPage = (req, res) => res.render('add-user');
 // Add a new user
 exports.addUser = async (req, res) => {
     try {
+        const marketIds = req.session.marketIds; //market id from ajax & its set to req.session from footer js
         const token = req.session.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const marketId = decoded.market_id;
+        // const marketId = decoded.market_id;
 
         const { first_name, last_name, user_name, email, phone, user_role, is_active } = req.body;
         const password = await bcrypt.hash(req.body.password, 10);
         const photo = req.file ? `/uploads/${req.file.filename}` : null;
 
         await new Promise((resolve, reject) => {
-            db.query('INSERT INTO users SET ?', { first_name, last_name, user_name, email, phone, user_role, is_active, photo, password, market_id: marketId }, (err) => {
+            db.query('INSERT INTO users SET ?', { first_name, last_name, user_name, email, phone, user_role, is_active, photo, password, market_id: marketIds }, (err) => {
                 if (err) reject(err);
                 resolve();
             });
@@ -80,13 +81,14 @@ exports.addUser = async (req, res) => {
 // Render edit user page
 exports.editUserPage = async (req, res) => {
     try {
+        const marketIds = req.session.marketIds; //market id from ajax & its set to req.session from footer js
         const token = req.session.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const marketId = decoded.market_id;
 
         const { id } = req.params;
         const user = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM users WHERE id = ? AND market_id = ?', [id, marketId], (err, results) => {
+            db.query('SELECT * FROM users WHERE id = ? AND market_id = ?', [id, marketIds], (err, results) => {
                 if (err) reject(err);
                 resolve(results[0]);
             });
@@ -101,6 +103,7 @@ exports.editUserPage = async (req, res) => {
 // Update an existing user
 exports.updateUser = async (req, res) => {
     try {
+        const marketIds = req.session.marketIds; //market id from ajax & its set to req.session from footer js
         const token = req.session.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const marketId = decoded.market_id;
@@ -109,7 +112,7 @@ exports.updateUser = async (req, res) => {
         const { first_name, last_name, user_name, email, phone, user_role, is_active } = req.body;
 
         await new Promise((resolve, reject) => {
-            db.query('UPDATE users SET ? WHERE id = ? AND market_id = ?', [{ first_name, last_name, user_name, email, phone, user_role, is_active }, id, marketId], (err) => {
+            db.query('UPDATE users SET ? WHERE id = ? AND market_id = ?', [{ first_name, last_name, user_name, email, phone, user_role, is_active }, id, marketIds], (err) => {
                 if (err) reject(err);
                 resolve();
             });
@@ -125,6 +128,7 @@ exports.updateUser = async (req, res) => {
 // Delete a user
 exports.deleteUser = async (req, res) => {
     try {
+        const marketIds = req.session.marketIds; //market id from ajax & its set to req.session from footer js
         const token = req.session.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const marketId = decoded.market_id;
@@ -132,7 +136,7 @@ exports.deleteUser = async (req, res) => {
         const { id } = req.params;
 
         await new Promise((resolve, reject) => {
-            db.query('DELETE FROM users WHERE id = ? AND market_id = ?', [id, marketId], (err) => {
+            db.query('DELETE FROM users WHERE id = ? AND market_id = ?', [id, marketIds], (err) => {
                 if (err) reject(err);
                 resolve();
             });
@@ -148,13 +152,17 @@ exports.deleteUser = async (req, res) => {
 // Render user profile
 exports.userProfile = async (req, res) => {
     try {
+        const marketIds = req.session.marketIds; //market id from ajax & its set to req.session from footer js
         const token = req.session.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const marketId = decoded.market_id;
 
         const userId = req.params.id;
+
+
+        
         const user = await new Promise((resolve, reject) => {
-            db.query('SELECT * FROM users WHERE id = ? AND market_id = ?', [userId, marketId], (err, results) => {
+            db.query('SELECT * FROM users WHERE id = ? AND market_id = ?', [userId, marketIds], (err, results) => {
                 if (err) reject(err);
                 if (results.length === 0) reject(new Error('User not found'));
                 resolve(results[0]);
