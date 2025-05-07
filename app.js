@@ -45,6 +45,8 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const occupationTypeRoutes = require('./routes/occupationTypeRoutes');
 const showmarketroute = require('./routes/showmarketroute');
 const marketLevelShopListRoute = require('./routes/marketShoplistroute');
+const shopRents = require('./routes/shopRents');
+
 
 app.use('/',authRoutes); // Handles authentication-related routes
 app.use(userRoutes); // Handles user-related routes
@@ -53,6 +55,7 @@ app.use(suppliersRoutes); // Handles suppliers-related routes
 app.use(membersRoutes); // Handles member-related routes
 app.use(dummyRoutes); // Handles dummy pages-related routes
 app.use(uploadRoutes);
+app.use(shopRents); //Handle Member Section Shop Rents Route
 app.use(occupationTypeRoutes);// Handles occupation type-related routes
 app.use(showmarketroute);
 app.use(marketLevelShopListRoute);

@@ -67,8 +67,8 @@ exports.addWithoutNin = (req, res) => {res.render('addWithoutNin');};
 exports.occupationType = (req, res) => {res.render('occupationType');};
 exports.addoccupationType = (req, res) => {res.render('addoccupationType');};
 
-exports.shopRents = (req, res) => {res.render('shopRents');};
-exports.addshopRents = (req, res) => {res.render('addshopRents');};
+// exports.shopRents = (req, res) => {res.render('shopRents');};
+// exports.addshopRents = (req, res) => {res.render('addshopRents');};
 
 exports.rentPayments = (req, res) => {res.render('rentPayments');};
 exports.addrentPayments = (req, res) => {res.render('addrentPayments');};

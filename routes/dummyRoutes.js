@@ -66,8 +66,8 @@ router.get('/addWithoutNin', authenticateToken, dummyController.addWithoutNin);
 router.get('/occupationType', authenticateToken, dummyController.occupationType);
 router.get('/addoccupationType', authenticateToken, dummyController.addoccupationType);
 */
-router.get('/shopRents', authenticateToken, dummyController.shopRents);
-router.get('/addshopRents', authenticateToken, dummyController.addshopRents);
+// router.get('/shopRents', authenticateToken, dummyController.shopRents); 
+// router.get('/addshopRents', authenticateToken, dummyController.addshopRents);
 
 router.get('/rentPayments', authenticateToken, dummyController.rentPayments);
 router.get('/addrentPayments', authenticateToken, dummyController.addrentPayments);

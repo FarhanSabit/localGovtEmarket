@@ -1,5 +1,4 @@
 const db = require('../db/db');
 
-exports.shoprents = async (req, res) => {
-    
-}
+exports.shopRents = (req, res) => {res.render('shopRents');};
+exports.addshopRents = (req, res) => {res.render('addshopRents');};
