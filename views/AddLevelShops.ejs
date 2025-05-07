@@ -3,58 +3,35 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Add Level Shop Form</h4>
+        <h4 class="card-title">Add Shop Rents</h4>
         <p class="card-description">
-          Add a new Level Shop
+          Add a Shop Rents
         </p>
-        <form class="forms-sample">
-          <div class="form-group">
-            <label for="exampleInputUsername1">Level</label>
-            <select class="form-control form-control-lg" id="exampleLevelSelect1">
-              <option>L1</option>
-              <option>L2</option>
-              <option>L3</option>
-              <option>L4</option>
-              <option>L5</option>
-              <option>L6</option>
-            </select>
+        <form action="/add-shop-rents" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+              <label class="form-label">ID</label>
+              <input type="text" placeholder="Enter ID" name="id" class="form-control" required>
           </div>
-          <div class="form-group">
-            <label for="exampleInputUsername1">Name</label>
-            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Name">
+          <div class="mb-3">
+              <label class="form-label">Owner Name</label>
+              <input type="text" placeholder="Enter Owner Name" name="name" class="form-control" required>
           </div>
-          <div class="form-group">
-            <label for="exampleInputUsername1">Shop Number</label>
-            <select class="form-control form-control-lg" id="exampleShopSelect1">
-              <option>A1</option>
-              <option>A2</option>
-              <option>B1</option>
-              <option>B2</option>
-              <option>C1</option>
-              <option>C2</option>
-            </select>
+          <div class="mb-3">
+              <label class="form-label">FC_No</label>
+              <input type="text" placeholder="Enter FC_No" name="fc_no" class="form-control" required>
           </div>
-          <div class="form-group">
-            <label for="exampleInputUsername1">Amount</label>
-            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Amount">
+          <div class="mb-3">
+              <label class="form-label">FC_Type</label>
+              <input type="text" placeholder="Enter FC_type" name="fc_type" class="form-control" required>
           </div>
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Rent Status</label>
-            <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-              <option>Available</option>
-              <option>N/A</option>
-            </select>
+          <div class="mb-3">
+              <label class="form-label">Amount</label>
+              <input type="text" placeholder="Enter Amount" name="mth_pay" class="form-control" required>
           </div>
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Status</label>
-            <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary mr-2">Submit</button>
-          <button class="btn btn-light">Cancel</button>
-        </form>
+          
+          <button type="submit" class="btn btn-primary">Add Shop Rents</button>
+         
+      </form>
       </div>
     </div>
   </div>
