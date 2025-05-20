@@ -28794,7 +28794,7 @@ div.tagsinput span.tag a {
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;
-  width: 235px;
+  width: 285px;
   height: 60px;
 }
 
@@ -28844,7 +28844,7 @@ div.tagsinput span.tag a {
   color: #6C7383;
   padding-right: 2.375rem;
   padding-left: 2.375rem;
-  width: calc(100% - 235px);
+  width: calc(100% - 285px);
   height: 60px;
 }
 
