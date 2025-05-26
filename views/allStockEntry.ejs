@@ -12,7 +12,33 @@
                           Table Type: <code>All Stock Entries</code>
                         </p>
                       </div>
-                    </div>                     
+                    </div>   
+                    <h1>Upload File</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <div>
+        <label for="file">Select File:</label>
+        <input type="file" id="file" name="file" required>
+      </div>
+      <button type="submit">Upload</button>
+    </form>
+
+    <!-- Search Box and Table -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="tableSearch">Search Members:</label>
+          <input type="text" id="tableSearch" class="form-control" placeholder="Search for a member...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Options -->
+    <div class="d-flex justify-content-between pt-3">
+      <button class="btn btn-secondary btn-sm" id="exportCSV">Export to CSV</button>
+      <button class="btn btn-secondary btn-sm" id="exportExcel">Export to Excel</button>
+      <button class="btn btn-secondary btn-sm" id="exportPDF">Export to PDF</button>
+    </div>
+                  
                   <div class="table-responsive pt-3">
                     <table class="table table-bordered">
                       <thead>
